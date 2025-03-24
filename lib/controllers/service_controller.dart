@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../views/base/camera.dart';
 import 'permission_controller.dart';
 
 export 'package:image_picker/image_picker.dart';
@@ -14,24 +16,44 @@ export 'package:image_picker/image_picker.dart';
 class ServiceController {
   final picker = ImagePicker();
 
-  Future<File?> pickImage(ImageSource source, BuildContext context) async {
-    XFile? pickedFile;
+  Future<File> pickImage(ImageSource source, BuildContext context) async {
+    File? pickedFile;
     bool permission = false;
+    bool isCamera = source == ImageSource.camera ? true : false;
     if (source == ImageSource.camera) {
       permission = await Get.find<PermissionController>().getPermission(Permission.camera, context);
     } else {
-      permission = await Get.find<PermissionController>().getPermission(Platform.isAndroid ? Permission.storage : Permission.photos, context);
+      // permission = await Get.find<PermissionController>().getPermission(Platform.isAndroid ? Permission.storage : Permission.photos, context);
+      if (Platform.isAndroid && source == ImageSource.gallery) {
+        permission = true;
+      }
     }
     if (permission) {
-      pickedFile = await picker.pickImage(source: source, imageQuality: 25);
+      if (isCamera) {
+        var navigator = Navigator.of(context);
+        pickedFile = await navigator.push(MaterialPageRoute(
+          builder: (context) => const CameraScreen(),
+        ));
+      } else {
+        final file = await picker.pickImage(source: ImageSource.gallery, imageQuality: 25);
+        if (file?.path != null) {
+          pickedFile = File(file!.path);
+        } else {
+          Fluttertoast.showToast(msg: "Try Again!!");
+        }
+      }
     } else {
-      Fluttertoast.showToast(msg: "User Denied Permission");
+      Fluttertoast.showToast(msg: "Permission Denied");
     }
 
+    List<File> pickedImageFile = [];
+
     if (pickedFile != null) {
-      return File(pickedFile.path);
+      File filedata = File(pickedFile.path);
+      pickedImageFile.add(filedata);
     }
-    return null;
+    log(pickedImageFile.toString(), name: "pickedImageFile.toString()");
+    return pickedImageFile.last;
   }
 
   Future<List<XFile>> getMultiImage() async {
