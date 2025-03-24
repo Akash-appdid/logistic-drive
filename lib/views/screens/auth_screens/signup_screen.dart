@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/instance_manager.dart';
@@ -19,6 +21,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   List<String> languages = ["English", "Hindi", "Marathi", "Gujarati"];
   String? selectedLanguage;
+  File? panCardFile;
+  File? drivingLicenceFile;
+
+  // Future<void> pickFile(String type) async {
+  //   FilePickerResult? result = await FilePicker.platform.pickFiles();
+  //   if (result != null && result.files.single.path != null) {
+  //     setState(() {
+  //       if (type == 'pan') {
+  //         panCardFile = File(result.files.single.path!);
+  //       } else {
+  //         drivingLicenceFile = File(result.files.single.path!);
+  //       }
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -122,6 +139,41 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     );
                   }).toList(),
                   onChanged: (value) {},
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Pan card", style: TextStyle(fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Icon(Icons.insert_drive_file, size: 30),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              panCardFile != null ? panCardFile!.path.split('/').last : 'Choose File',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                          ),
+                          CustomButton(
+                            color: Colors.white,
+                            elevation: 1,
+                            onTap: () {},
+                            child: Text('Select file'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
