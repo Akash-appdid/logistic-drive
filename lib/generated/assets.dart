@@ -2,13 +2,18 @@
 class Assets {
   Assets._();
 
+  static const String images2Wheeler = 'assets/images/2-wheeler.png';
+  static const String imagesBodyPackTruck = 'assets/images/body-pack-truck.png';
   static const String imagesDeliveryBike = 'assets/images/delivery_bike.png';
   static const String imagesDeliveryTruck = 'assets/images/delivery_truck.png';
   static const String imagesExclaim = 'assets/images/exclaim.png';
   static const String imagesIllustration = 'assets/images/Illustration.png';
   static const String imagesLogo = 'assets/images/logo.png';
+  static const String imagesMiniTruck = 'assets/images/mini-truck.png';
+  static const String imagesOpenTruck = 'assets/images/open-truck.png';
   static const String imagesPlaceholder = 'assets/images/placeholder.jpg';
   static const String imagesShimmer = 'assets/images/shimmer.gif';
   static const String svgsOtpverficationlockicon = 'assets/svgs/otpverficationlockicon.svg';
   static const String svgsProfile = 'assets/svgs/profile.svg';
+  static const String svgsTruck = 'assets/svgs/truck.svg';
 }

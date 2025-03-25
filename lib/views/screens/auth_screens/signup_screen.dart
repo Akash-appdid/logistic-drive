@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/instance_manager.dart';
 import 'package:logistic_driver/controllers/auth_controller.dart';
+import 'package:logistic_driver/services/extensions.dart';
+import 'package:logistic_driver/views/base/image_picker_sheet.dart';
+import 'package:logistic_driver/views/screens/auth_screens/vehicle_type_screen.dart';
 
 import '../../../generated/assets.dart';
 import '../../../services/input_decoration.dart';
+import '../../../services/route_helper.dart';
 import '../../base/common_button.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -33,7 +37,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Center(child: SvgPicture.asset(Assets.svgsProfile)),
+                Center(
+                    child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(color: const Color(0xFFF5F5F5), borderRadius: BorderRadius.circular(10)),
+                        child: SvgPicture.asset(Assets.svgsProfile))),
                 const SizedBox(height: 25),
                 Text(
                   "Let's Get to Know\n You Better",
@@ -128,56 +136,85 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Pan card", style: TextStyle(fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Icon(Icons.insert_drive_file, size: 30),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: Text(
-                              panCardFile != null ? panCardFile!.path.split('/').last : 'Choose File',
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                          ),
-                          CustomButton(
+                TextFormField(
+                  style: const TextStyle(color: Colors.black),
+                  controller: TextEditingController(text: panCardFile?.path.fileName ?? ""),
+                  readOnly: true,
+                  decoration: CustomDecoration.inputDecoration(
+                      floating: true,
+                      label: 'Pan Card',
+                      suffix: SizedBox(
+                        width: 120,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CustomButton(
+                            height: 20,
                             color: Colors.white,
                             elevation: 1,
-                            onTap: () {},
-                            child: Text('Select file'),
+                            onTap: () async {
+                              panCardFile = await getImageBottomSheet(context);
+                              setState(() {});
+                            },
+                            child: const Text('Select file'),
                           ),
-                        ],
+                        ),
                       ),
-                    ],
-                  ),
+                      hint: '',
+                      hintStyle: const TextStyle(color: Colors.black87)),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: CustomButton(
-                    onTap: () {
-                      // Navigator.pushReplacement(context, getCustomRoute(child: Dashboard()));
-                    },
-                    child: const Text(
-                      "Continue",
-                      style: TextStyle(color: Colors.white, fontSize: 14),
-                    ),
-                  ),
-                )
+                TextFormField(
+                  style: const TextStyle(color: Colors.black),
+                  controller: TextEditingController(text: drivingLicenceFile?.path.fileName ?? ""),
+                  readOnly: true,
+                  decoration: CustomDecoration.inputDecoration(
+                      floating: true,
+                      label: 'Driving Licence',
+                      suffix: SizedBox(
+                        width: 120,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CustomButton(
+                            height: 20,
+                            color: Colors.white,
+                            elevation: 1,
+                            onTap: () async {
+                              drivingLicenceFile = await getImageBottomSheet(context);
+                              setState(() {});
+                            },
+                            child: const Text('Select file'),
+                          ),
+                        ),
+                      ),
+                      hint: '',
+                      hintStyle: const TextStyle(color: Colors.black87)),
+                ),
+                const SizedBox(
+                  height: 80,
+                ),
               ],
             ),
           ),
+        ),
+      ),
+      bottomSheet: Container(
+        padding: EdgeInsets.all(16),
+        color: Colors.white,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CustomButton(
+              onTap: () {
+                Navigator.pushReplacement(context, getCustomRoute(child: VehicleTypeScreen()));
+              },
+              child: const Text(
+                "Continue",
+                style: TextStyle(color: Colors.white, fontSize: 14),
+              ),
+            ),
+          ],
         ),
       ),
     );
