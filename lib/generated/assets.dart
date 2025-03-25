@@ -12,7 +12,9 @@ class Assets {
   static const String imagesMiniTruck = 'assets/images/mini-truck.png';
   static const String imagesOpenTruck = 'assets/images/open-truck.png';
   static const String imagesPlaceholder = 'assets/images/placeholder.jpg';
+  static const String imagesProfileUnderReview = 'assets/images/profile_under_review.png';
   static const String imagesShimmer = 'assets/images/shimmer.gif';
+  static const String svgsBike = 'assets/svgs/bike.svg';
   static const String svgsOtpverficationlockicon = 'assets/svgs/otpverficationlockicon.svg';
   static const String svgsProfile = 'assets/svgs/profile.svg';
   static const String svgsTruck = 'assets/svgs/truck.svg';
