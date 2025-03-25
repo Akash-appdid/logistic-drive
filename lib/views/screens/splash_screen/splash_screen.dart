@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logistic_driver/services/route_helper.dart';
 import 'package:logistic_driver/services/theme.dart';
-import 'package:logistic_driver/views/screens/auth_screens/signup_screen.dart';
+import 'package:logistic_driver/views/screens/dashboard/notification_screen/notification_screen.dart';
 import 'package:logistic_driver/views/screens/welcome_screen/welcome_screen.dart';
 
 import '../../../services/constants.dart';
@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.pushReplacement(
             context,
             getCustomRoute(
-              child: const SignUpScreen(),
+              child: NotificationScreen(),
             ),
           );
         } else {
