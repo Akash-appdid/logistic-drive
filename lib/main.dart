@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:logistic_driver/services/constants.dart';
 import 'package:logistic_driver/services/theme.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'services/init.dart';
 import 'views/screens/splash_screen/splash_screen.dart';
@@ -11,6 +12,12 @@ import 'views/screens/splash_screen/splash_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Init().initialize();
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+  // AppConstants.appName = packageInfo.appName;
+  AppConstants.packageName = packageInfo.packageName;
+  AppConstants.version = packageInfo.version;
+  AppConstants.buildNumber = packageInfo.buildNumber;
   runApp(const MyApp());
 }
 
