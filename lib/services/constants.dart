@@ -1,5 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:intl/intl.dart';
+import 'package:logistic_driver/main.dart';
+
+Size size = MediaQuery.of(navigatorKey.currentContext!).size;
 
 class PriceConverter {
   static convert(price) {

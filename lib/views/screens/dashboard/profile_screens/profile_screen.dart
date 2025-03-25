@@ -21,7 +21,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -52,14 +51,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Center(
             child: Stack(
               clipBehavior: Clip.none,
               children: [
-                CustomImage(
+                const CustomImage(
                   path:
                       "https://s3-alpha-sig.figma.com/img/885b/4adb/5485ef1e61a0b521b0bd6a047e74046d?Expires=1743984000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=KDrR8SVdeRKeWZDWZktd9QCWI~qKsH~4CrO2DQyhFi-wX~OE7KEgGObqWYYiy3NjPeqnML538nR2XzdG~fvaiSCwQ7uGP0FTvliC5Q-oLodsoHDejk4Nnh-Ba9o9lNMnmp4IMX-Z3N9BsIzIbf13jddUobuh2yeMAbVF5tP0Xjv-7Pccy3-GZvmdQ06WXBsuuLRAmYQnteZr1gsx-nO8sSLrWpKUFjedbMbAQjGeD4AdmaycBYhdzyvLVqiSUoiKNgHvHvf17Bjb0nH5wl2jxmyNPiwERGImW8cZqMkTKGGR4bFqFC~HcwKRRtSuG7O0-8TArOEuEPgG5i6G-XDDRA__",
                   radius: 30,
@@ -71,9 +70,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: GestureDetector(
                       onTap: () {},
                       child: Container(
-                        padding: EdgeInsets.all(6),
+                        padding: const EdgeInsets.all(6),
                         decoration: BoxDecoration(
-                          color: Color(0xFF00C060),
+                          color: const Color(0xFF00C060),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: SvgPicture.asset(Assets.svgsEdit),
@@ -82,7 +81,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Center(
@@ -91,7 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.black, fontWeight: FontWeight.w700),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 6,
           ),
           Center(
@@ -100,10 +99,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.black, fontSize: 13),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          Divider(
+          const Divider(
             color: Color(0xFFD9D9D9),
           ),
           Padding(
@@ -116,7 +115,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   "Contact Info",
                   style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.black),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 GestureDetector(
@@ -130,7 +129,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: Colors.black.withOpacity(0.05),
                           blurRadius: 8,
                           spreadRadius: 0,
-                          offset: Offset(0, 4),
+                          offset: const Offset(0, 4),
                         ),
                       ],
                     ),
@@ -142,21 +141,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               RichText(
-                                text: TextSpan(text: "Mobile No: ", style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.black), children: [
-                                  TextSpan(
-                                    text: "+91 21323 23032",
-                                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Color(0xFF8A8A8A), fontSize: 14),
-                                  )
-                                ]),
+                                text: TextSpan(
+                                    text: "Mobile No: ",
+                                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.black),
+                                    children: [
+                                      TextSpan(
+                                        text: "+91 21323 23032",
+                                        style: Theme.of(context).textTheme.labelLarge!.copyWith(color: const Color(0xFF8A8A8A), fontSize: 14),
+                                      )
+                                    ]),
                               ),
-                              Icon(
+                              const Icon(
                                 Icons.arrow_forward_ios,
                                 size: 18,
                               )
                             ],
                           ),
                         ),
-                        Divider(
+                        const Divider(
                           color: Color(0xFFF5F5F5),
                         ),
                         Padding(
@@ -165,14 +167,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               RichText(
-                                text: TextSpan(text: "Email ID: ", style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.black), children: [
-                                  TextSpan(
-                                    text: "abc12@gmail.com",
-                                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Color(0xFF8A8A8A), fontSize: 14),
-                                  )
-                                ]),
+                                text: TextSpan(
+                                    text: "Email ID: ",
+                                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.black),
+                                    children: [
+                                      TextSpan(
+                                        text: "abc12@gmail.com",
+                                        style: Theme.of(context).textTheme.labelLarge!.copyWith(color: const Color(0xFF8A8A8A), fontSize: 14),
+                                      )
+                                    ]),
                               ),
-                              Icon(
+                              const Icon(
                                 Icons.arrow_forward_ios,
                                 size: 18,
                               )
@@ -183,14 +188,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Text(
                   "Professional info",
                   style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.black),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 GestureDetector(
@@ -204,7 +209,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: Colors.black.withOpacity(0.05),
                           blurRadius: 8,
                           spreadRadius: 0,
-                          offset: Offset(0, 4),
+                          offset: const Offset(0, 4),
                         ),
                       ],
                     ),
@@ -216,21 +221,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               RichText(
-                                text: TextSpan(text: "Pan Card: ", style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.black), children: [
-                                  TextSpan(
-                                    text: "222132323032",
-                                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Color(0xFF8A8A8A), fontSize: 14),
-                                  )
-                                ]),
+                                text: TextSpan(
+                                    text: "Pan Card: ",
+                                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.black),
+                                    children: [
+                                      TextSpan(
+                                        text: "222132323032",
+                                        style: Theme.of(context).textTheme.labelLarge!.copyWith(color: const Color(0xFF8A8A8A), fontSize: 14),
+                                      )
+                                    ]),
                               ),
-                              Icon(
+                              const Icon(
                                 Icons.arrow_forward_ios,
                                 size: 18,
                               )
                             ],
                           ),
                         ),
-                        Divider(
+                        const Divider(
                           color: Color(0xFFF5F5F5),
                         ),
                         Padding(
@@ -239,14 +247,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               RichText(
-                                text: TextSpan(text: "Driving Licence: ", style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.black), children: [
-                                  TextSpan(
-                                    text: "EXYJ345",
-                                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Color(0xFF8A8A8A), fontSize: 14),
-                                  )
-                                ]),
+                                text: TextSpan(
+                                    text: "Driving Licence: ",
+                                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.black),
+                                    children: [
+                                      TextSpan(
+                                        text: "EXYJ345",
+                                        style: Theme.of(context).textTheme.labelLarge!.copyWith(color: const Color(0xFF8A8A8A), fontSize: 14),
+                                      )
+                                    ]),
                               ),
-                              Icon(
+                              const Icon(
                                 Icons.arrow_forward_ios,
                                 size: 18,
                               )
@@ -257,14 +268,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Text(
                   "Vehicle Info",
                   style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.black),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 GestureDetector(
@@ -278,7 +289,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: Colors.black.withOpacity(0.05),
                           blurRadius: 8,
                           spreadRadius: 0,
-                          offset: Offset(0, 4),
+                          offset: const Offset(0, 4),
                         ),
                       ],
                     ),
@@ -290,21 +301,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               RichText(
-                                text: TextSpan(text: "Motor Bike: ", style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.black), children: [
-                                  TextSpan(
-                                    text: "MH-19-AG-5465",
-                                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Color(0xFF8A8A8A), fontSize: 14),
-                                  )
-                                ]),
+                                text: TextSpan(
+                                    text: "Motor Bike: ",
+                                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.black),
+                                    children: [
+                                      TextSpan(
+                                        text: "MH-19-AG-5465",
+                                        style: Theme.of(context).textTheme.labelLarge!.copyWith(color: const Color(0xFF8A8A8A), fontSize: 14),
+                                      )
+                                    ]),
                               ),
-                              Icon(
+                              const Icon(
                                 Icons.arrow_forward_ios,
                                 size: 18,
                               )
                             ],
                           ),
                         ),
-                        Divider(
+                        const Divider(
                           color: Color(0xFFF5F5F5),
                         ),
                         Padding(
@@ -313,14 +327,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               RichText(
-                                text: TextSpan(text: "Mini Truck: ", style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.black), children: [
-                                  TextSpan(
-                                    text: "MH-19-AG-5465",
-                                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Color(0xFF8A8A8A), fontSize: 14),
-                                  )
-                                ]),
+                                text: TextSpan(
+                                    text: "Mini Truck: ",
+                                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.black),
+                                    children: [
+                                      TextSpan(
+                                        text: "MH-19-AG-5465",
+                                        style: Theme.of(context).textTheme.labelLarge!.copyWith(color: const Color(0xFF8A8A8A), fontSize: 14),
+                                      )
+                                    ]),
                               ),
-                              Icon(
+                              const Icon(
                                 Icons.arrow_forward_ios,
                                 size: 18,
                               )
