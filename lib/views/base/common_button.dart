@@ -122,10 +122,14 @@ class CustomButton extends StatelessWidget {
         hoverElevation: 0,
         color: color ?? Colors.transparent,
         disabledColor: disabledColor ?? Theme.of(context).disabledColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(radius),
-          side: BorderSide(color: Theme.of(context).primaryColor),
-        ),
+        shape: elevation == 0
+            ? RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(radius),
+                side: BorderSide(color: Theme.of(context).primaryColor),
+              )
+            : RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(radius),
+              ),
         child: Center(
           child: Builder(
             builder: (context) {

@@ -14,8 +14,6 @@ class VehicleTypeScreen extends StatefulWidget {
 }
 
 class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
-  bool _isExpanded = false;
-
   List<String> languages = ["English", "Hindi", "Marathi", "Gujarati"];
   String? selectedLanguage;
   File? panCardFile;
@@ -60,7 +58,7 @@ class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
         ),
       ),
       bottomSheet: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         color: Colors.white,
         child: Column(
           mainAxisSize: MainAxisSize.min,
