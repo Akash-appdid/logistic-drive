@@ -17,25 +17,10 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  bool _isExpanded = false;
-
   List<String> languages = ["English", "Hindi", "Marathi", "Gujarati"];
   String? selectedLanguage;
   File? panCardFile;
   File? drivingLicenceFile;
-
-  // Future<void> pickFile(String type) async {
-  //   FilePickerResult? result = await FilePicker.platform.pickFiles();
-  //   if (result != null && result.files.single.path != null) {
-  //     setState(() {
-  //       if (type == 'pan') {
-  //         panCardFile = File(result.files.single.path!);
-  //       } else {
-  //         drivingLicenceFile = File(result.files.single.path!);
-  //       }
-  //     });
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
