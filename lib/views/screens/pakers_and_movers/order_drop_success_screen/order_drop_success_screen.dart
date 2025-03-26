@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:logistic_driver/views/base/common_button.dart';
 import 'package:logistic_driver/views/base/custom_image.dart';
 
+import '../../rating_dialog/rating_dialog.dart';
+
 class OrderDropSuccessScreen extends StatelessWidget {
   const OrderDropSuccessScreen({super.key});
 
@@ -46,7 +48,15 @@ class OrderDropSuccessScreen extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             child: CustomButton(
               color: const Color(0xFF0F8000),
-              onTap: () {},
+              onTap: () {
+                showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (context) {
+                    return const RatingDialog();
+                  },
+                );
+              },
               title: 'Continue',
             ),
           )
