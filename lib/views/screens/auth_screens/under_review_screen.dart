@@ -8,7 +8,6 @@ class ProfileUnderReviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       body: Center(
         child: Padding(
@@ -16,12 +15,12 @@ class ProfileUnderReviewScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CustomImage(
+              const CustomImage(
                 path: Assets.imagesProfileUnderReview,
                 fit: BoxFit.contain,
                 height: 300,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Text(
@@ -33,7 +32,7 @@ class ProfileUnderReviewScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Text(
@@ -44,7 +43,7 @@ class ProfileUnderReviewScreen extends StatelessWidget {
                       color: Colors.black,
                     ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               CustomButton(

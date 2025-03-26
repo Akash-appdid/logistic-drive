@@ -1,10 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:logistic_driver/services/route_helper.dart';
-import 'package:logistic_driver/views/screens/pakers_and_movers/pakers_and_movers_screen.dart';
 
 import '../../../../generated/assets.dart';
 import '../../../../services/theme.dart';
@@ -12,22 +8,24 @@ import '../../../../services/theme.dart';
 AppBar appBar(BuildContext context) {
   return AppBar(
     toolbarHeight: 60,
-    leading: GestureDetector(
-      onTap: () {
-        log('test');
-        Navigator.of(context).push(getCustomRoute(child: const PakersAndMoversScreen()));
-      },
-      child: SizedBox(
-        width: 20,
-        height: 20,
-        child: Center(
-          child: SvgPicture.asset(
-            Assets.svgsMenu,
-            fit: BoxFit.cover,
+    leading: Builder(builder: (ctx) {
+      return GestureDetector(
+        onTap: () {
+          Scaffold.of(ctx).openDrawer();
+          // Navigator.of(context).push(getCustomRoute(child: const PakersAndMoversScreen()));
+        },
+        child: SizedBox(
+          width: 20,
+          height: 20,
+          child: Center(
+            child: SvgPicture.asset(
+              Assets.svgsMenu,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
-      ),
-    ),
+      );
+    }),
     centerTitle: true,
     title: Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),

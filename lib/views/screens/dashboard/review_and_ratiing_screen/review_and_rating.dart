@@ -40,16 +40,8 @@ class _ReviewScreenState extends State<ReviewScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        surfaceTintColor: Colors.white,
-        backgroundColor: Colors.white,
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
-        ),
         leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(

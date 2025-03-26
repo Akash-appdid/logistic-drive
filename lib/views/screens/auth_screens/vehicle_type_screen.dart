@@ -25,14 +25,24 @@ class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
 
   dynamic selectedVehicleType;
   List vehicleType = [
-    {"vehicle_type": "Motorbike (2-wheeler)", "storage_type": "Small Parcel", "description": "You wish to deliver using a motorcycle or scooter.", "image": Assets.images2Wheeler},
+    {
+      "vehicle_type": "Motorbike (2-wheeler)",
+      "storage_type": "Small Parcel",
+      "description": "You wish to deliver using a motorcycle or scooter.",
+      "image": Assets.images2Wheeler
+    },
     {
       "vehicle_type": "Mini-Truck (Package Delivery)",
       "storage_type": "Large Package",
       "description": "you have a mini-truck and want to deliver large packages.",
       "image": Assets.imagesMiniTruck
     },
-    {"vehicle_type": "Open Truck", "storage_type": "Bulky goods", "description": "Perfect for transporting large and bulky goods.", "image": Assets.imagesOpenTruck},
+    {
+      "vehicle_type": "Open Truck",
+      "storage_type": "Bulky goods",
+      "description": "Perfect for transporting large and bulky goods.",
+      "image": Assets.imagesOpenTruck
+    },
     {
       "vehicle_type": "Body Pack Truck",
       "storage_type": "Secure Storage",
@@ -83,11 +93,11 @@ class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
                         });
                       },
                       child: Container(
-                        padding: EdgeInsets.only(left: 10, top: 10, bottom: 10),
+                        padding: const EdgeInsets.only(left: 10, top: 10, bottom: 10),
                         decoration: BoxDecoration(
                           border: Border.all(
                             width: selectedVehicleType == vehicle ? 2 : 1,
-                            color: selectedVehicleType == vehicle ? primaryColor : Color(0xFFD9D9D9),
+                            color: selectedVehicleType == vehicle ? primaryColor : const Color(0xFFD9D9D9),
                           ),
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -98,21 +108,24 @@ class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
-                                    padding: EdgeInsets.all(4),
-                                    color: Color(0xFFFFAE00),
+                                    padding: const EdgeInsets.all(4),
+                                    color: const Color(0xFFFFAE00),
                                     child: Text(
                                       vehicle["storage_type"],
                                       style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 11),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 6,
                                   ),
                                   Text(
                                     vehicle["vehicle_type"],
-                                    style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge!
+                                        .copyWith(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 6,
                                   ),
                                   Text(
@@ -122,7 +135,7 @@ class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
                                 ],
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 8,
                             ),
                             CustomImage(
@@ -136,7 +149,7 @@ class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(
+                    return const SizedBox(
                       height: 10,
                     );
                   },

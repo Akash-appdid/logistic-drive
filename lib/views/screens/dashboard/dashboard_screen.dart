@@ -5,6 +5,8 @@ import 'package:logistic_driver/views/base/common_button.dart';
 import 'package:logistic_driver/views/screens/dashboard/components/appbar_widget.dart';
 import 'package:logistic_driver/views/screens/pakers_and_movers/pakers_and_movers_booking_detail_screen/components/booking_item_widget.dart';
 
+import 'drawer_screen/drawer_screen.dart';
+
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
 
@@ -17,6 +19,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const DrawerScreen(),
       appBar: appBar(context),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

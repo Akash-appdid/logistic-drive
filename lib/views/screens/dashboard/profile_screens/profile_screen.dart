@@ -24,11 +24,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        surfaceTintColor: Colors.white,
-        backgroundColor: Colors.white,
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
-        ),
+        // surfaceTintColor: Colors.white,
+        // backgroundColor: Colors.white,
+        // systemOverlayStyle: const SystemUiOverlayStyle(
+        //   statusBarColor: Colors.transparent,
+        // ),
         leading: GestureDetector(
           onTap: () {
             Navigator.pop(context);

@@ -81,15 +81,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 fit: BoxFit.contain,
                                 height: 170,
                               )),
-                          SizedBox(
-                            height: 20,
-                          ),
+                          const SizedBox(height: 20),
                           Text(
                             slide["title"] ?? "",
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Text(
@@ -111,10 +109,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   Container(
                     height: 10,
                     width: 10,
-                    margin: EdgeInsets.only(right: 10),
+                    margin: const EdgeInsets.only(right: 10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: currentIndex == i ? primaryColor : Color(0xFFD9D9D9),
+                      color: currentIndex == i ? primaryColor : const Color(0xFFD9D9D9),
                     ),
                   )
               ],
@@ -123,7 +121,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         ),
       ),
       bottomSheet: Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         color: Colors.white,
         child: Column(
           mainAxisSize: MainAxisSize.min,
