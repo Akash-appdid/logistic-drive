@@ -12,14 +12,15 @@ class TitleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(
-          title,
-          style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
+        Expanded(
+          child: Text(
+            title,
+            style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
         ),
-        const Spacer(),
         Text(
           val,
           style: Theme.of(context).textTheme.labelMedium!.copyWith(

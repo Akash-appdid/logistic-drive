@@ -3,12 +3,12 @@ import 'package:logistic_driver/services/route_helper.dart';
 import 'package:logistic_driver/services/theme.dart';
 import 'package:logistic_driver/views/base/common_button.dart';
 import 'package:logistic_driver/views/base/custom_image.dart';
-import 'package:logistic_driver/views/screens/pakers_and_movers/order_drop_success_screen/order_drop_success_screen.dart';
+import 'package:logistic_driver/views/screens/order_drop_success_screen/order_drop_success_screen.dart';
 
-import '../../dashboard/components/location_contaner_widget.dart';
+import '../dashboard/components/location_contaner_widget.dart';
 
-class PakersAndMoversPickupLocationScreen extends StatelessWidget {
-  const PakersAndMoversPickupLocationScreen({super.key});
+class PikupLocationScreen extends StatelessWidget {
+  const PikupLocationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

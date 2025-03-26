@@ -3,7 +3,7 @@ import 'package:logistic_driver/services/route_helper.dart';
 
 import 'package:page_transition/page_transition.dart';
 
-import '../../../../../base/common_button.dart';
+import '../../../../base/common_button.dart';
 import '../home_edit_item_widget/home_edit_item_widget.dart';
 
 class HomeItemWidget extends StatelessWidget {

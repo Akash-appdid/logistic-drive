@@ -5,15 +5,16 @@ import 'package:logistic_driver/services/route_helper.dart';
 import 'package:logistic_driver/services/theme.dart';
 import 'package:logistic_driver/views/base/common_button.dart';
 import 'package:logistic_driver/views/base/custom_image.dart';
-import 'package:logistic_driver/views/screens/pakers_and_movers/pakers_and_movers_pickup_location_screen/pakers_and_movers_pickup_location_screen.dart';
 
-import '../../dashboard/components/location_contaner_widget.dart';
+import 'package:logistic_driver/views/screens/pickup_location_screen/pikup_location_screen.dart';
+
+import '../dashboard/components/location_contaner_widget.dart';
 import '../home_items_list/home_item_list_screen.dart';
 import 'components/sub_title_widget.dart';
 import 'components/title_widget.dart';
 
-class PakersAndMoversBookingDetailScreen extends StatelessWidget {
-  const PakersAndMoversBookingDetailScreen({super.key});
+class BookingDetailScreen extends StatelessWidget {
+  const BookingDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -65,22 +66,23 @@ class PakersAndMoversBookingDetailScreen extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        '- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -',
-                        style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                              color: Colors.white,
-                            ),
-                      ),
-                      const SizedBox(width: 4),
-                      SvgPicture.asset(
-                        Assets.svgsTruck,
-                        colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                      ),
-                    ],
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Text(
+                          '- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -',
+                          style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                                color: Colors.white,
+                              ),
+                        ),
+                        const SizedBox(width: 4),
+                        SvgPicture.asset(
+                          Assets.svgsTruck,
+                          colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                        ),
+                      ],
+                    ),
                   ),
-                  const Spacer(),
                   Text(
                     'On-Time',
                     style: Theme.of(context).textTheme.labelMedium!.copyWith(
@@ -350,7 +352,7 @@ class PakersAndMoversBookingDetailScreen extends StatelessWidget {
             child: CustomButton(
               color: const Color(0xFF0F8000),
               onTap: () {
-                Navigator.of(context).push(getCustomRoute(child: const PakersAndMoversPickupLocationScreen()));
+                Navigator.of(context).push(getCustomRoute(child: const PikupLocationScreen()));
               },
               title: 'Pick up Location',
             ),

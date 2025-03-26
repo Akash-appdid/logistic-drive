@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:logistic_driver/services/extra_methods.dart';
+import 'package:logistic_driver/services/route_helper.dart';
 import 'package:logistic_driver/views/base/common_button.dart';
 import 'package:logistic_driver/views/base/custom_image.dart';
+import 'package:logistic_driver/views/screens/dashboard/dashboard_screen.dart';
 
 class ProfileUnderReviewScreen extends StatelessWidget {
   const ProfileUnderReviewScreen({super.key});
@@ -48,7 +49,11 @@ class ProfileUnderReviewScreen extends StatelessWidget {
               ),
               CustomButton(
                 onTap: () {
-                  ExtraMethods().makeCall("+919876543210");
+                  // ExtraMethods().makeCall("+919876543210");
+                  Navigator.of(context).pushAndRemoveUntil(
+                    getCustomRoute(child: const DashboardScreen()),
+                    (route) => false,
+                  );
                 },
                 child: Text(
                   "Support",
