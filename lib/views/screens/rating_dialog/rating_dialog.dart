@@ -1,13 +1,11 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:logistic_driver/services/route_helper.dart';
 
 import 'package:logistic_driver/views/base/common_button.dart';
-import 'package:logistic_driver/views/base/custom_image.dart';
 import 'package:logistic_driver/views/screens/dashboard/dashboard_screen.dart';
 
 import '../../../services/input_decoration.dart';
+import 'components/star_rating.dart';
 
 class RatingDialog extends StatefulWidget {
   const RatingDialog({
@@ -37,11 +35,12 @@ class _RatingDialogState extends State<RatingDialog> {
           children: [
             const SizedBox(height: 10),
             Container(
-              width: 60, height: 7,
+              width: 60,
+              height: 7,
               decoration: BoxDecoration(
                 color: Colors.grey.shade300,
                 borderRadius: BorderRadius.circular(10),
-              ), //const Color(0xFFF2F2F2),
+              ),
             ),
             const SizedBox(height: 10),
             Text(
@@ -91,41 +90,6 @@ class _RatingDialogState extends State<RatingDialog> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class StarRating extends StatefulWidget {
-  const StarRating({super.key});
-
-  @override
-  State<StarRating> createState() => _StarRatingState();
-}
-
-class _StarRatingState extends State<StarRating> {
-  int selectedStars = 0;
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(5, (index) {
-        return GestureDetector(
-          onTap: () {
-            setState(() {
-              selectedStars = index + 1;
-            });
-            log('$selectedStars');
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 2),
-            child: Image.asset(
-              index < selectedStars ? Assets.imagesFillStar : Assets.imagesStar,
-              width: 35,
-              height: 35,
-            ),
-          ),
-        );
-      }),
     );
   }
 }
