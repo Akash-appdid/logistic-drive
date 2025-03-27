@@ -197,7 +197,8 @@ class CustomDrawerTileWidget extends StatelessWidget {
                 title,
                 style: Theme.of(context).textTheme.labelLarge!.copyWith(
                       color: Colors.black,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
                     ),
               ),
             ),

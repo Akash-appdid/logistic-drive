@@ -9,6 +9,7 @@ Color secondaryColor = const Color(0xff2a4e57);
 Color backgroundDark = const Color(0xff231F20);
 Color backgroundLight = const Color(0xffffffff);
 Color buttonGreen = const Color(0xff0d6c00);
+Color green = const Color(0xff0F8000);
 
 const Color textPrimary = Color(0xff000000);
 const Color textSecondary = Color(0xffffffff);

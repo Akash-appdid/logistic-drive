@@ -21,7 +21,7 @@ class BookingButtonWidget extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(getCustomRoute(child: const PikupLocationScreen()));
             },
-            title: 'Pick up Location',
+            title: 'Go to the pickup location',
           ),
         )
       ],

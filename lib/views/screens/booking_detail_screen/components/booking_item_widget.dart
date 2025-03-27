@@ -6,7 +6,9 @@ import '../../dashboard/components/location_contaner_widget.dart';
 class BookingItemWidget extends StatelessWidget {
   const BookingItemWidget({
     super.key,
+    this.isComplete = false,
   });
+  final bool isComplete;
 
   @override
   Widget build(BuildContext context) {
@@ -68,12 +70,34 @@ class BookingItemWidget extends StatelessWidget {
             address: "Worli Shivaji Nagar, Worli Mumbai, Maharashtra 400030",
           ),
           Divider(color: Colors.grey.shade200),
-          Text(
-            'Delivery Date: 25 March 2025',
-            style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Delivery Date: 25 March 2025',
+                  style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                      ),
                 ),
+              ),
+              Row(
+                children: [
+                  CircleAvatar(
+                    radius: 7,
+                    backgroundColor: green,
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    isComplete ? 'Completed' : 'On Time',
+                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
+                  ),
+                ],
+              ),
+            ],
           )
         ],
       ),

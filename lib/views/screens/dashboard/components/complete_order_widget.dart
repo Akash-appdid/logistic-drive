@@ -14,7 +14,9 @@ class CompleteOrderWidget extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: 1,
       itemBuilder: (context, index) {
-        return const BookingItemWidget();
+        return const BookingItemWidget(
+          isComplete: true,
+        );
       },
     );
   }

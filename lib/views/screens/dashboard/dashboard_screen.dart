@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:logistic_driver/controllers/basic_controller.dart';
 import 'package:logistic_driver/services/theme.dart';
 
 import 'package:logistic_driver/views/base/common_button.dart';
@@ -36,47 +38,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   const EarningCardWidget(),
                   //--------------Bookings--------------------
                   const SizedBox(height: 15),
-                  Text(
-                    'Bookings',
-                    style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
-                  const SizedBox(height: 15),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CustomButton(
-                          radius: 10,
-                          elevation: 2,
-                          color: isOnGoingOrder ? primaryColor : Colors.white,
-                          type: isOnGoingOrder ? ButtonType.primary : ButtonType.secondary,
-                          onTap: () {
-                            isOnGoingOrder = true;
-                            setState(() {});
-                          },
-                          title: 'On Going',
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: CustomButton(
-                          elevation: 2,
-                          radius: 10,
-                          color: !isOnGoingOrder ? primaryColor : Colors.white,
-                          type: !isOnGoingOrder ? ButtonType.primary : ButtonType.secondary,
-                          onTap: () {
-                            isOnGoingOrder = false;
-                            setState(() {});
-                          },
-                          title: 'Completed',
-                        ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 6),
-                  isOnGoingOrder ? const OngoingOrderWidget() : const CompleteOrderWidget()
+                  BookingsListSectionWidget()
                 ],
               ),
             ),
@@ -84,5 +46,60 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ],
       ),
     );
+  }
+}
+
+class BookingsListSectionWidget extends StatelessWidget {
+  const BookingsListSectionWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<BasicController>(builder: (controller) {
+      return Column(
+        children: [
+          Text(
+            'Bookings',
+            style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+          const SizedBox(height: 15),
+          Row(
+            children: [
+              Expanded(
+                child: CustomButton(
+                  radius: 10,
+                  elevation: 2,
+                  color: controller.isOnGoingOrder ? primaryColor : Colors.white,
+                  type: controller.isOnGoingOrder ? ButtonType.primary : ButtonType.secondary,
+                  onTap: () {
+                    controller.setIsComplete(true);
+                  },
+                  title: 'On Going',
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: CustomButton(
+                  elevation: 2,
+                  radius: 10,
+                  color: !controller.isOnGoingOrder ? primaryColor : Colors.white,
+                  type: !controller.isOnGoingOrder ? ButtonType.primary : ButtonType.secondary,
+                  onTap: () {
+                    controller.setIsComplete(false);
+                  },
+                  title: 'Completed',
+                ),
+              )
+            ],
+          ),
+          const SizedBox(height: 6),
+          controller.isOnGoingOrder ? const OngoingOrderWidget() : const CompleteOrderWidget()
+        ],
+      );
+    });
   }
 }

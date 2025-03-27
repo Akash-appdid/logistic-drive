@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:logistic_driver/services/constants.dart';
 import 'package:logistic_driver/services/theme.dart';
@@ -14,7 +13,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Init().initialize();
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
-
   // AppConstants.appName = packageInfo.appName;
   AppConstants.packageName = packageInfo.packageName;
   AppConstants.version = packageInfo.version;

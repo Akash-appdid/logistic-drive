@@ -43,12 +43,12 @@ AppBar appBar(BuildContext context) {
             'On Duty',
             style: Theme.of(context).textTheme.displayMedium!.copyWith(
                   color: buttonGreen,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w800,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600,
                 ),
           ),
           Transform.scale(
-            scale: .8,
+            scale: .7,
             child: CupertinoSwitch(
               activeColor: buttonGreen,
               value: true,
