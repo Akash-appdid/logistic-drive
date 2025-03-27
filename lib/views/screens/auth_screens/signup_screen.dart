@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/instance_manager.dart';
 import 'package:logistic_driver/controllers/auth_controller.dart';
-import 'package:logistic_driver/services/extensions.dart';
-import 'package:logistic_driver/views/base/image_picker_sheet.dart';
 import 'package:logistic_driver/views/screens/auth_screens/vehicle_type_screen.dart';
 
 import '../../../generated/assets.dart';
@@ -21,7 +19,6 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  List<String> languages = ["English", "Hindi", "Marathi", "Gujarati"];
   String? selectedLanguage;
   File? panCardFile;
   File? drivingLicenceFile;
@@ -112,84 +109,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(
                   height: 20,
-                ),
-                DropdownButtonFormField(
-                  value: selectedLanguage,
-                  dropdownColor: Colors.white,
-                  decoration: CustomDecoration.dropdown(
-                    floating: true,
-                    context,
-                    label: "Language",
-                  ),
-                  icon: const Icon(Icons.keyboard_arrow_down),
-                  items: languages.map((String value) {
-                    return DropdownMenuItem(
-                      value: value,
-                      child: Text(
-                        value,
-                        style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 16, color: Colors.black),
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (value) {},
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  style: const TextStyle(color: Colors.black),
-                  controller: TextEditingController(text: panCardFile?.path.fileName ?? ""),
-                  readOnly: true,
-                  decoration: CustomDecoration.inputDecoration(
-                      floating: true,
-                      label: 'Pan Card',
-                      suffix: SizedBox(
-                        width: 120,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CustomButton(
-                            height: 20,
-                            color: Colors.white,
-                            elevation: 1,
-                            onTap: () async {
-                              panCardFile = await getImageBottomSheet(context);
-                              setState(() {});
-                            },
-                            child: const Text('Select file'),
-                          ),
-                        ),
-                      ),
-                      hint: '',
-                      hintStyle: const TextStyle(color: Colors.black87)),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  style: const TextStyle(color: Colors.black),
-                  controller: TextEditingController(text: drivingLicenceFile?.path.fileName ?? ""),
-                  readOnly: true,
-                  decoration: CustomDecoration.inputDecoration(
-                      floating: true,
-                      label: 'Driving Licence',
-                      suffix: SizedBox(
-                        width: 120,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CustomButton(
-                            height: 20,
-                            color: Colors.white,
-                            elevation: 1,
-                            onTap: () async {
-                              drivingLicenceFile = await getImageBottomSheet(context);
-                              setState(() {});
-                            },
-                            child: const Text('Select file'),
-                          ),
-                        ),
-                      ),
-                      hint: '',
-                      hintStyle: const TextStyle(color: Colors.black87)),
                 ),
                 const SizedBox(
                   height: 80,
