@@ -1,10 +1,9 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logistic_driver/services/route_helper.dart';
 import 'package:logistic_driver/services/theme.dart';
-import 'package:logistic_driver/views/screens/dashboard/notification_screen/notification_screen.dart';
+
 import 'package:logistic_driver/views/screens/welcome_screen/welcome_screen.dart';
 
 import '../../../services/constants.dart';
@@ -23,21 +22,21 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer.run(() {
       Future.delayed(const Duration(seconds: 2), () {
-        if (kDebugMode) {
-          Navigator.pushReplacement(
-            context,
-            getCustomRoute(
-              child: NotificationScreen(),
-            ),
-          );
-        } else {
-          Navigator.pushReplacement(
-            context,
-            getCustomRoute(
-              child: const WelcomeScreen(),
-            ),
-          );
-        }
+        // if (kDebugMode) {
+        //   Navigator.pushReplacement(
+        //     context,
+        //     getCustomRoute(
+        //       child: NotificationScreen(),
+        //     ),
+        //   );
+        // } else {
+        Navigator.pushReplacement(
+          context,
+          getCustomRoute(
+            child: const WelcomeScreen(),
+          ),
+        );
+        // }
       });
       /*if (Get.find<AuthController>().isLoggedIn()) {
         Get.find<AuthController>().getUserProfileData().then((value) {

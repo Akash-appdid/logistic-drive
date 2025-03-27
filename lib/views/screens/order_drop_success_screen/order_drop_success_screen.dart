@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:logistic_driver/views/base/common_button.dart';
 import 'package:logistic_driver/views/base/custom_image.dart';
 
-import '../../rating_dialog/rating_dialog.dart';
+import '../rating_dialog/rating_dialog.dart';
 
 class OrderDropSuccessScreen extends StatelessWidget {
   const OrderDropSuccessScreen({super.key});

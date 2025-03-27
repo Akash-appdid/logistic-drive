@@ -1,9 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:logistic_driver/services/route_helper.dart';
 
 import 'package:logistic_driver/views/base/common_button.dart';
 import 'package:logistic_driver/views/base/custom_image.dart';
+import 'package:logistic_driver/views/screens/dashboard/dashboard_screen.dart';
 
 import '../../../services/input_decoration.dart';
 
@@ -76,7 +78,12 @@ class _RatingDialogState extends State<RatingDialog> {
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               child: CustomButton(
                 color: const Color(0xFF0F8000),
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pushAndRemoveUntil(
+                    getCustomRoute(child: const DashboardScreen()),
+                    (route) => false,
+                  );
+                },
                 title: 'Submit',
               ),
             ),

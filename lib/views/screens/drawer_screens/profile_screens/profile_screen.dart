@@ -1,9 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:logistic_driver/views/base/custom_image.dart';
+
+import '../../../../services/constants.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -58,15 +61,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Stack(
               clipBehavior: Clip.none,
               children: [
-                const CustomImage(
-                  path:
-                      "https://s3-alpha-sig.figma.com/img/885b/4adb/5485ef1e61a0b521b0bd6a047e74046d?Expires=1743984000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=KDrR8SVdeRKeWZDWZktd9QCWI~qKsH~4CrO2DQyhFi-wX~OE7KEgGObqWYYiy3NjPeqnML538nR2XzdG~fvaiSCwQ7uGP0FTvliC5Q-oLodsoHDejk4Nnh-Ba9o9lNMnmp4IMX-Z3N9BsIzIbf13jddUobuh2yeMAbVF5tP0Xjv-7Pccy3-GZvmdQ06WXBsuuLRAmYQnteZr1gsx-nO8sSLrWpKUFjedbMbAQjGeD4AdmaycBYhdzyvLVqiSUoiKNgHvHvf17Bjb0nH5wl2jxmyNPiwERGImW8cZqMkTKGGR4bFqFC~HcwKRRtSuG7O0-8TArOEuEPgG5i6G-XDDRA__",
-                  radius: 30,
-                  height: 100,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: const CustomImage(
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.cover,
+                    path: AppConstants.profile,
+                  ),
                 ),
                 Positioned(
-                    top: -8,
-                    right: -8,
+                    top: 0,
+                    right: 0,
                     child: GestureDetector(
                       onTap: () {},
                       child: Container(
@@ -81,9 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             ),
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 10),
           Center(
             child: Text(
               "Kunal Pawar",

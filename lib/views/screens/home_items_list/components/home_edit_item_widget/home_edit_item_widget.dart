@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../services/theme.dart';
-import '../../../../../base/common_button.dart';
+import '../../../../../services/theme.dart';
+import '../../../../base/common_button.dart';
 import 'components/home_edit_sub_item_widget.dart';
 
 class HomeEditItemWidget extends StatelessWidget {

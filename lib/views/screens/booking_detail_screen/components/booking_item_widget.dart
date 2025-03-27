@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../services/theme.dart';
-import '../../../dashboard/components/location_contaner_widget.dart';
+import '../../../../services/theme.dart';
+import '../../dashboard/components/location_contaner_widget.dart';
 
 class BookingItemWidget extends StatelessWidget {
   const BookingItemWidget({
