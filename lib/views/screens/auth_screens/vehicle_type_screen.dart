@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logistic_driver/services/theme.dart';
 import 'package:logistic_driver/views/base/custom_image.dart';
 import 'package:logistic_driver/views/screens/auth_screens/vehicle_info_screen.dart';
@@ -25,24 +24,14 @@ class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
 
   dynamic selectedVehicleType;
   List vehicleType = [
-    {
-      "vehicle_type": "Motorbike (2-wheeler)",
-      "storage_type": "Small Parcel",
-      "description": "You wish to deliver using a motorcycle or scooter.",
-      "image": Assets.images2Wheeler
-    },
+    {"vehicle_type": "Motorbike (2-wheeler)", "storage_type": "Small Parcel", "description": "You wish to deliver using a motorcycle or scooter.", "image": Assets.images2Wheeler},
     {
       "vehicle_type": "Mini-Truck (Package Delivery)",
       "storage_type": "Large Package",
       "description": "you have a mini-truck and want to deliver large packages.",
       "image": Assets.imagesMiniTruck
     },
-    {
-      "vehicle_type": "Open Truck",
-      "storage_type": "Bulky goods",
-      "description": "Perfect for transporting large and bulky goods.",
-      "image": Assets.imagesOpenTruck
-    },
+    {"vehicle_type": "Open Truck", "storage_type": "Bulky goods", "description": "Perfect for transporting large and bulky goods.", "image": Assets.imagesOpenTruck},
     {
       "vehicle_type": "Body Pack Truck",
       "storage_type": "Secure Storage",
@@ -120,10 +109,7 @@ class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
                                   ),
                                   Text(
                                     vehicle["vehicle_type"],
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelLarge!
-                                        .copyWith(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+                                    style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
                                   ),
                                   const SizedBox(
                                     height: 6,
@@ -168,16 +154,7 @@ class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
           children: [
             CustomButton(
               onTap: () {
-                if (selectedVehicleType != null) {
-                  Navigator.push(
-                      context,
-                      getCustomRoute(
-                          child: VehicleInfoScreen(
-                        vehicleType: selectedVehicleType,
-                      )));
-                } else {
-                  Fluttertoast.showToast(msg: "Please select a vehicle type!");
-                }
+                Navigator.push(context, getCustomRoute(child: VehicleInfoScreen()));
               },
               child: const Text(
                 "Continue",
