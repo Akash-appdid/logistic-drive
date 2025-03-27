@@ -50,6 +50,8 @@ class CustomTheme {
       onError: const Color(0xFFCF6679),
       surface: backgroundLight,
       onSurface: Colors.black,
+      background: Colors.white,
+      onBackground: Colors.white,
     ),
     appBarTheme: AppBarTheme(
       surfaceTintColor: Colors.white,
