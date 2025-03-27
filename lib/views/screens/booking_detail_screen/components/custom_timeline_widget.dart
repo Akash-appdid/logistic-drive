@@ -20,37 +20,43 @@ class CustomTImelineWidget extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         itemCount: status.length,
         itemBuilder: (context, index) {
+          bool isFirst = index == 0;
+          bool isLast = index == status.length - 1;
+          double circleSize = isFirst || isLast ? 40 : 30;
           return Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     margin: const EdgeInsets.only(top: 4),
-                    width: 25,
-                    height: 25,
+                    width: circleSize,
+                    height: circleSize,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: !status[index].status ? const Color(0xFFEB0404) : const Color(0xFF00C060),
+                      color: status[index].status ? const Color(0xFF00C060) : const Color(0xFFEB0404),
                     ),
                     child: Icon(
-                      !status[index].status ? Icons.location_on : Icons.check,
+                      status[index].status ? Icons.check : Icons.location_on,
                       color: Colors.white,
-                      size: 15,
+                      size: 18,
                     ),
                   ),
-                  if (index != status.length - 1)
-                    DottedBorder(
-                      strokeWidth: 2,
-                      dashPattern: const [5, 5],
-                      color: Colors.black.withOpacity(0.7),
-                      customPath: (size) {
-                        return Path()
-                          ..moveTo(size.width / 2, 4)
-                          ..lineTo(size.width / 2, 50);
-                      },
-                      child: const SizedBox(height: 30, width: 2),
+                  if (!isLast)
+                    SizedBox(
+                      height: 30,
+                      width: 40,
+                      child: DottedBorder(
+                        strokeWidth: 2,
+                        dashPattern: const [5, 5],
+                        color: Colors.black.withOpacity(0.7),
+                        customPath: (size) {
+                          return Path()
+                            ..moveTo(size.width / 2, 8)
+                            ..lineTo(size.width / 2, 50);
+                        },
+                        child: const SizedBox.shrink(),
+                      ),
                     ),
                 ],
               ),

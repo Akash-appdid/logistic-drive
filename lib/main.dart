@@ -2,10 +2,11 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:logistic_driver/services/constants.dart';
 import 'package:logistic_driver/services/theme.dart';
-import 'package:logistic_driver/views/screens/welcome_screen/welcome_screen.dart';
+
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'services/init.dart';
+import 'views/screens/auth_screens/signup_screen/signup_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -84,7 +85,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         themeMode: ThemeMode.light,
         theme: CustomTheme.light,
         debugShowCheckedModeBanner: false,
-        home: const WelcomeScreen(),
+        home: const SignupScreen(),
       ),
     );
   }

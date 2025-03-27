@@ -4,21 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:logistic_driver/services/extensions.dart';
 import 'package:logistic_driver/views/base/custom_image.dart';
-import 'package:logistic_driver/views/screens/auth_screens/bank_details_screen.dart';
 
-import '../../../services/input_decoration.dart';
-import '../../../services/route_helper.dart';
-import '../../base/common_button.dart';
-import '../../base/image_picker_sheet.dart';
+import '../../../../../services/input_decoration.dart';
+import '../../../../base/common_button.dart';
+import '../../../../base/image_picker_sheet.dart';
 
-class KycDetailsScreen extends StatefulWidget {
-  const KycDetailsScreen({super.key});
+class SignupPageFour extends StatefulWidget {
+  const SignupPageFour({super.key});
 
   @override
-  State<KycDetailsScreen> createState() => _KycDetailsScreenState();
+  State<SignupPageFour> createState() => _SignupPageFourState();
 }
 
-class _KycDetailsScreenState extends State<KycDetailsScreen> {
+class _SignupPageFourState extends State<SignupPageFour> {
   File? drivingLicence;
   File? panCard;
   File? aadhaarCard;
@@ -147,24 +145,6 @@ class _KycDetailsScreenState extends State<KycDetailsScreen> {
               ],
             ),
           ),
-        ),
-      ),
-      bottomSheet: Container(
-        padding: const EdgeInsets.all(16),
-        color: Colors.white,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CustomButton(
-              onTap: () {
-                Navigator.pushReplacement(context, getCustomRoute(child: const BankDetailsScreen()));
-              },
-              child: const Text(
-                "Continue",
-                style: TextStyle(color: Colors.white, fontSize: 14),
-              ),
-            ),
-          ],
         ),
       ),
     );

@@ -4,19 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:logistic_driver/services/theme.dart';
 import 'package:logistic_driver/views/base/custom_image.dart';
-import 'package:logistic_driver/views/screens/auth_screens/vehicle_info_screen.dart';
 
-import '../../../services/route_helper.dart';
-import '../../base/common_button.dart';
-
-class VehicleTypeScreen extends StatefulWidget {
-  const VehicleTypeScreen({super.key});
+class SignUpPageThree extends StatefulWidget {
+  const SignUpPageThree({super.key});
 
   @override
-  State<VehicleTypeScreen> createState() => _VehicleTypeScreenState();
+  State<SignUpPageThree> createState() => _SignUpPageThreeState();
 }
 
-class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
+class _SignUpPageThreeState extends State<SignUpPageThree> {
   List<String> languages = ["English", "Hindi", "Marathi", "Gujarati"];
   String? selectedLanguage;
   File? panCardFile;
@@ -24,14 +20,24 @@ class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
 
   dynamic selectedVehicleType;
   List vehicleType = [
-    {"vehicle_type": "Motorbike (2-wheeler)", "storage_type": "Small Parcel", "description": "You wish to deliver using a motorcycle or scooter.", "image": Assets.images2Wheeler},
+    {
+      "vehicle_type": "Motorbike (2-wheeler)",
+      "storage_type": "Small Parcel",
+      "description": "You wish to deliver using a motorcycle or scooter.",
+      "image": Assets.images2Wheeler
+    },
     {
       "vehicle_type": "Mini-Truck (Package Delivery)",
       "storage_type": "Large Package",
       "description": "you have a mini-truck and want to deliver large packages.",
       "image": Assets.imagesMiniTruck
     },
-    {"vehicle_type": "Open Truck", "storage_type": "Bulky goods", "description": "Perfect for transporting large and bulky goods.", "image": Assets.imagesOpenTruck},
+    {
+      "vehicle_type": "Open Truck",
+      "storage_type": "Bulky goods",
+      "description": "Perfect for transporting large and bulky goods.",
+      "image": Assets.imagesOpenTruck
+    },
     {
       "vehicle_type": "Body Pack Truck",
       "storage_type": "Secure Storage",
@@ -109,7 +115,10 @@ class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
                                   ),
                                   Text(
                                     vehicle["vehicle_type"],
-                                    style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge!
+                                        .copyWith(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
                                   ),
                                   const SizedBox(
                                     height: 6,
@@ -144,24 +153,6 @@ class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
               ],
             ),
           ),
-        ),
-      ),
-      bottomSheet: Container(
-        padding: const EdgeInsets.all(16),
-        color: Colors.white,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CustomButton(
-              onTap: () {
-                Navigator.push(context, getCustomRoute(child: VehicleInfoScreen()));
-              },
-              child: const Text(
-                "Continue",
-                style: TextStyle(color: Colors.white, fontSize: 14),
-              ),
-            ),
-          ],
         ),
       ),
     );

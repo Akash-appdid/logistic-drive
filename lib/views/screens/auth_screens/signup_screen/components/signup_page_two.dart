@@ -5,21 +5,20 @@ import 'package:flutter_svg/svg.dart';
 import 'package:logistic_driver/services/extensions.dart';
 import 'package:logistic_driver/views/base/custom_image.dart';
 import 'package:logistic_driver/views/base/date_picker_widget.dart';
-import 'package:logistic_driver/views/screens/auth_screens/kyc_details_screen.dart';
 
-import '../../../services/input_decoration.dart';
-import '../../../services/route_helper.dart';
-import '../../base/common_button.dart';
-import '../../base/image_picker_sheet.dart';
+import '../../../../../services/input_decoration.dart';
 
-class VehicleInfoScreen extends StatefulWidget {
-  const VehicleInfoScreen({super.key});
+import '../../../../base/common_button.dart';
+import '../../../../base/image_picker_sheet.dart';
+
+class SignupPageTwo extends StatefulWidget {
+  const SignupPageTwo({super.key});
 
   @override
-  State<VehicleInfoScreen> createState() => _VehicleInfoScreenState();
+  State<SignupPageTwo> createState() => _SignupPageTwoState();
 }
 
-class _VehicleInfoScreenState extends State<VehicleInfoScreen> {
+class _SignupPageTwoState extends State<SignupPageTwo> {
   File? registrationCertificate;
   TextEditingController vehicleNumber = TextEditingController();
   TextEditingController vehicleBuildYear = TextEditingController();
@@ -210,24 +209,6 @@ class _VehicleInfoScreenState extends State<VehicleInfoScreen> {
               ],
             ),
           ),
-        ),
-      ),
-      bottomSheet: Container(
-        padding: const EdgeInsets.all(16),
-        color: Colors.white,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CustomButton(
-              onTap: () {
-                Navigator.pushReplacement(context, getCustomRoute(child: const KycDetailsScreen()));
-              },
-              child: const Text(
-                "Continue",
-                style: TextStyle(color: Colors.white, fontSize: 14),
-              ),
-            ),
-          ],
         ),
       ),
     );

@@ -4,21 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:logistic_driver/services/extensions.dart';
 import 'package:logistic_driver/views/base/custom_image.dart';
-import 'package:logistic_driver/views/screens/auth_screens/under_review_screen.dart';
 
-import '../../../services/input_decoration.dart';
-import '../../../services/route_helper.dart';
-import '../../base/common_button.dart';
-import '../../base/image_picker_sheet.dart';
+import '../../../../../services/input_decoration.dart';
+import '../../../../base/common_button.dart';
+import '../../../../base/image_picker_sheet.dart';
 
-class BankDetailsScreen extends StatefulWidget {
-  const BankDetailsScreen({super.key});
+class SignUpPageFive extends StatefulWidget {
+  const SignUpPageFive({super.key});
 
   @override
-  State<BankDetailsScreen> createState() => _BankDetailsScreenState();
+  State<SignUpPageFive> createState() => _SignUpPageFiveState();
 }
 
-class _BankDetailsScreenState extends State<BankDetailsScreen> {
+class _SignUpPageFiveState extends State<SignUpPageFive> {
   TextEditingController payeeNameController = TextEditingController();
   TextEditingController accountNumberController = TextEditingController();
   TextEditingController confirmAccountNumberController = TextEditingController();
@@ -195,24 +193,6 @@ class _BankDetailsScreenState extends State<BankDetailsScreen> {
               ],
             ),
           ),
-        ),
-      ),
-      bottomSheet: Container(
-        padding: const EdgeInsets.all(16),
-        color: Colors.white,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CustomButton(
-              onTap: () {
-                Navigator.pushReplacement(context, getCustomRoute(child: const ProfileUnderReviewScreen()));
-              },
-              child: const Text(
-                "Continue (Skip)",
-                style: TextStyle(color: Colors.white, fontSize: 14),
-              ),
-            ),
-          ],
         ),
       ),
     );

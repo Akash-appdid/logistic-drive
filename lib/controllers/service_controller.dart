@@ -8,7 +8,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../views/base/camera.dart';
 import 'permission_controller.dart';
 
 export 'package:image_picker/image_picker.dart';
@@ -30,10 +29,10 @@ class ServiceController {
     }
     if (permission) {
       if (isCamera) {
-        var navigator = Navigator.of(context);
-        pickedFile = await navigator.push(MaterialPageRoute(
-          builder: (context) => const CameraScreen(),
-        ));
+        // var navigator = Navigator.of(context);
+        // pickedFile = await navigator.push(MaterialPageRoute(
+        //   builder: (context) => const CameraScreen(),
+        // ));
       } else {
         final file = await picker.pickImage(source: ImageSource.gallery, imageQuality: 25);
         if (file?.path != null) {

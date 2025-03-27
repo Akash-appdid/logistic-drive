@@ -58,6 +58,7 @@ class BookingsListSectionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<BasicController>(builder: (controller) {
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             'Bookings',

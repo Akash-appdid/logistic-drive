@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:logistic_driver/controllers/auth_controller.dart';
-import 'package:logistic_driver/views/screens/auth_screens/signup_screen.dart';
+
+import 'package:logistic_driver/views/screens/auth_screens/signup_screen/signup_screen.dart';
+
 import 'package:pinput/pinput.dart'; // Import pinput package
 
 import '../../../generated/assets.dart';
@@ -144,7 +146,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                     ? const Color(0xff09596F) // Resend button enabled
                                     : Colors.grey, // Change color to gray while waiting
                               ),
-                          recognizer: TapGestureRecognizer()..onTap = _isResendOtpEnabled ? _startResendOtpTimer : null, // Only allow resend after 30 seconds
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = _isResendOtpEnabled ? _startResendOtpTimer : null, // Only allow resend after 30 seconds
                         ),
                       ],
                     ),
@@ -170,7 +173,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   onTap: () {
                     Navigator.pushAndRemoveUntil(
                       context,
-                      getCustomRoute(child: SignUpScreen()),
+                      getCustomRoute(child: const SignupScreen()),
                       (route) => false,
                     );
                   },
