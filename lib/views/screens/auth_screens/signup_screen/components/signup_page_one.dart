@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:logistic_driver/generated/assets.dart';
-
+import 'package:logistic_driver/services/extensions.dart';
 import '../../../../../controllers/auth_controller.dart';
 import '../../../../../services/input_decoration.dart';
 
@@ -17,10 +17,12 @@ class SignupPageOne extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Center(
-              child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(color: const Color(0xFFF5F5F5), borderRadius: BorderRadius.circular(10)),
-                  child: SvgPicture.asset(Assets.svgsProfile))),
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(color: const Color(0xFFF5F5F5), borderRadius: BorderRadius.circular(10)),
+              child: SvgPicture.asset(Assets.svgsProfile),
+            ),
+          ),
           const SizedBox(height: 25),
           Text(
             "Let's Get to Know\n You Better",
@@ -37,64 +39,75 @@ class SignupPageOne extends StatelessWidget {
           TextFormField(
             keyboardType: TextInputType.text,
             decoration: CustomDecoration.inputDecoration(
-                floating: true,
-                label: 'Name',
-                icon: const Icon(
-                  Icons.person_outline,
-                  size: 25,
-                  color: Color(0xff000000),
-                ),
-                hint: 'Enter Your Name',
-                hintStyle: const TextStyle(color: Color(0xff8A8A8A))),
+              floating: true,
+              label: 'Name',
+              icon: const Icon(
+                Icons.person_outline,
+                size: 25,
+                color: Color(0xff000000),
+              ),
+              hint: 'Enter Your Name',
+            ),
+            validator: (val) {
+              if (val!.isEmpty) {
+                return "Name can't be empty!";
+              }
+              return null;
+            },
           ),
           const SizedBox(height: 20),
           TextFormField(
             decoration: CustomDecoration.inputDecoration(
-                floating: true,
-                label: 'Email(Optional)',
-                icon: const Icon(
-                  Icons.email_outlined,
-                  size: 25,
-                  color: Color(0xff000000),
-                ),
-                hint: 'Enter Your Email',
-                hintStyle: const TextStyle(color: Color(0xff8A8A8A))),
+              floating: true,
+              label: 'Email(Optional)',
+              icon: const Icon(
+                Icons.email_outlined,
+                size: 25,
+                color: Color(0xff000000),
+              ),
+              hint: 'Enter Your Email',
+            ),
+            validator: (val) {
+              if (val!.isNotEmpty && val.isNotEmail) {
+                return "Enter valid email";
+              }
+              return null;
+            },
           ),
           const SizedBox(height: 20),
           TextFormField(
             decoration: CustomDecoration.inputDecoration(
-                floating: true,
-                label: 'Address',
-                icon: const Icon(
-                  Icons.location_on_outlined,
-                  size: 25,
-                  color: Color(0xff000000),
-                ),
-                hint: 'Enter Your Address',
-                hintStyle: const TextStyle(color: Color(0xff8A8A8A))),
+              floating: true,
+              label: 'Address',
+              icon: const Icon(
+                Icons.location_on_outlined,
+                size: 25,
+                color: Color(0xff000000),
+              ),
+              hint: 'Enter Your Address',
+            ),
+            validator: (val) {
+              if (val!.isEmpty) {
+                return "Address can't be empty!";
+              }
+              return null;
+            },
           ),
           const SizedBox(height: 20),
           TextFormField(
-            style: const TextStyle(color: Colors.black),
-            controller: TextEditingController(text: '+91 ${Get.find<AuthController>().numberController.text}'),
+            readOnly: true,
             enabled: false,
+            controller: TextEditingController(text: '+91 ${Get.find<AuthController>().numberController.text}'),
             decoration: CustomDecoration.inputDecoration(
-                floating: true,
-                label: 'Mobile Number',
-                icon: const Icon(
-                  Icons.phone,
-                  size: 25,
-                  color: Color(0xff000000),
-                ),
-                hint: '+91 25652 232262 ',
-                hintStyle: const TextStyle(color: Colors.black87)),
+              label: 'Mobile Number',
+              icon: const Icon(
+                Icons.phone,
+                size: 25,
+                color: Color(0xff000000),
+              ),
+            ),
           ),
-          const SizedBox(
-            height: 20,
-          ),
-          const SizedBox(
-            height: 80,
-          ),
+          const SizedBox(height: 20),
         ],
       ),
     );

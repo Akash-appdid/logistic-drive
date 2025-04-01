@@ -103,6 +103,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
           ),
         ),
         bottomNavigationBar: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
             GestureDetector(
@@ -154,9 +155,14 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 ),
               ),
             ),
-            Text(
-              "Version ${AppConstants.version}:${AppConstants.buildNumber}",
-              style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.black),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(5),
+                child: Text(
+                  "Version ${AppConstants.version}:${AppConstants.buildNumber}",
+                  style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.black),
+                ),
+              ),
             ),
           ],
         ),

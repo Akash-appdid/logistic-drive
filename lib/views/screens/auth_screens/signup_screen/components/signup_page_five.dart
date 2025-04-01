@@ -6,7 +6,7 @@ import 'package:logistic_driver/services/extensions.dart';
 import 'package:logistic_driver/views/base/custom_image.dart';
 
 import '../../../../../services/input_decoration.dart';
-import '../../../../base/common_button.dart';
+
 import '../../../../base/image_picker_sheet.dart';
 
 class SignUpPageFive extends StatefulWidget {
@@ -63,10 +63,9 @@ class _SignUpPageFiveState extends State<SignUpPageFive> {
                   controller: payeeNameController,
                   style: const TextStyle(color: Colors.black),
                   decoration: CustomDecoration.inputDecoration(
-                    borderWidth: 0,
-                    borderColor: const Color(0xFFF8F8F8),
                     bgColor: const Color(0xFFF8F8F8),
-                    floating: true,
+                    borderColor: Colors.grey,
+                    borderRadius: 6,
                     label: 'Payee name',
                     hint: 'Enter Your Name',
                     hintStyle: const TextStyle(
@@ -80,10 +79,9 @@ class _SignUpPageFiveState extends State<SignUpPageFive> {
                   controller: accountNumberController,
                   style: const TextStyle(color: Colors.black),
                   decoration: CustomDecoration.inputDecoration(
-                    borderWidth: 0,
-                    borderColor: const Color(0xFFF8F8F8),
                     bgColor: const Color(0xFFF8F8F8),
-                    floating: true,
+                    borderColor: Colors.grey,
+                    borderRadius: 6,
                     label: 'Account number',
                     hint: 'Enter account number',
                     hintStyle: const TextStyle(
@@ -97,10 +95,9 @@ class _SignUpPageFiveState extends State<SignUpPageFive> {
                   controller: confirmAccountNumberController,
                   style: const TextStyle(color: Colors.black),
                   decoration: CustomDecoration.inputDecoration(
-                    borderWidth: 0,
-                    borderColor: const Color(0xFFF8F8F8),
                     bgColor: const Color(0xFFF8F8F8),
-                    floating: true,
+                    borderColor: Colors.grey,
+                    borderRadius: 6,
                     label: 'Confirm account number',
                     hint: 'Enter confirm account number',
                     hintStyle: const TextStyle(
@@ -114,10 +111,9 @@ class _SignUpPageFiveState extends State<SignUpPageFive> {
                   controller: ifscController,
                   style: const TextStyle(color: Colors.black),
                   decoration: CustomDecoration.inputDecoration(
-                    borderWidth: 0,
-                    borderColor: const Color(0xFFF8F8F8),
                     bgColor: const Color(0xFFF8F8F8),
-                    floating: true,
+                    borderColor: Colors.grey,
+                    borderRadius: 6,
                     label: 'IFSC code',
                     hint: 'Enter ifsc code',
                     hintStyle: const TextStyle(
@@ -131,10 +127,9 @@ class _SignUpPageFiveState extends State<SignUpPageFive> {
                   controller: bankNameController,
                   style: const TextStyle(color: Colors.black),
                   decoration: CustomDecoration.inputDecoration(
-                    borderWidth: 0,
-                    borderColor: const Color(0xFFF8F8F8),
                     bgColor: const Color(0xFFF8F8F8),
-                    floating: true,
+                    borderColor: Colors.grey,
+                    borderRadius: 6,
                     label: 'Bank name',
                     hint: 'Enter bank name',
                     hintStyle: const TextStyle(
@@ -148,10 +143,9 @@ class _SignUpPageFiveState extends State<SignUpPageFive> {
                   controller: bankBranchController,
                   style: const TextStyle(color: Colors.black),
                   decoration: CustomDecoration.inputDecoration(
-                    borderWidth: 0,
-                    borderColor: const Color(0xFFF8F8F8),
                     bgColor: const Color(0xFFF8F8F8),
-                    floating: true,
+                    borderColor: Colors.grey,
+                    borderRadius: 6,
                     label: 'Bank branch',
                     hint: 'Enter bank branch',
                     hintStyle: const TextStyle(
@@ -166,18 +160,19 @@ class _SignUpPageFiveState extends State<SignUpPageFive> {
                   controller: TextEditingController(text: cancelledCheck?.path.fileName ?? ""),
                   readOnly: true,
                   decoration: CustomDecoration.inputDecoration(
-                      floating: true,
                       label: 'Cancelled Check',
-                      borderWidth: 0,
-                      borderColor: const Color(0xFFF8F8F8),
                       bgColor: const Color(0xFFF8F8F8),
-                      suffix: SizedBox(
+                      borderColor: Colors.grey,
+                      borderRadius: 6,
+                      suffix: Container(
                         width: 120,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CustomButton(
-                            height: 20,
-                            color: Colors.white,
+                        margin: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: GestureDetector(
                             onTap: () async {
                               cancelledCheck = await getImageBottomSheet(context);
                               setState(() {});

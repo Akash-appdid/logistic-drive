@@ -8,7 +8,6 @@ import 'package:logistic_driver/views/base/date_picker_widget.dart';
 
 import '../../../../../services/input_decoration.dart';
 
-import '../../../../base/common_button.dart';
 import '../../../../base/image_picker_sheet.dart';
 
 class SignupPageTwo extends StatefulWidget {
@@ -77,12 +76,14 @@ class _SignupPageTwoState extends State<SignupPageTwo> {
                 ),
                 const SizedBox(height: 15),
                 DropdownButtonFormField(
+                  borderRadius: BorderRadius.circular(4),
                   value: selectedVehicleWeight,
                   dropdownColor: Colors.white,
-                  decoration: CustomDecoration.dropdown(
+                  decoration: CustomDecoration.inputDecoration(
+                    borderRadius: 10,
                     floating: true,
-                    context,
                     label: "Select Vehicle here",
+                    hint: 'Select Vehicle here',
                   ),
                   icon: const Icon(Icons.keyboard_arrow_down),
                   items: vehicleWeightType.map((Map<String, String> value) {
@@ -129,15 +130,10 @@ class _SignupPageTwoState extends State<SignupPageTwo> {
                         controller: vehicleNumber,
                         style: const TextStyle(color: Colors.black),
                         decoration: CustomDecoration.inputDecoration(
-                          borderWidth: 0,
-                          borderColor: const Color(0xFFF8F8F8),
-                          bgColor: const Color(0xFFF8F8F8),
                           floating: true,
+                          borderRadius: 4,
                           label: 'Vehicle Number',
-                          hint: 'MH-19-AG-5465',
-                          hintStyle: const TextStyle(
-                            color: Colors.black38,
-                          ),
+                          hint: 'Enter vehicle number',
                         ),
                       ),
                       const SizedBox(
@@ -148,28 +144,22 @@ class _SignupPageTwoState extends State<SignupPageTwo> {
                         controller: TextEditingController(text: registrationCertificate?.path.fileName ?? ""),
                         readOnly: true,
                         decoration: CustomDecoration.inputDecoration(
-                            floating: true,
-                            label: 'Registration Certificate',
-                            borderWidth: 0,
-                            borderColor: const Color(0xFFF8F8F8),
-                            bgColor: const Color(0xFFF8F8F8),
-                            suffix: SizedBox(
-                              width: 120,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: CustomButton(
-                                  height: 20,
-                                  color: Colors.white,
+                          floating: true,
+                          borderRadius: 4,
+                          label: 'Registration Certificate',
+                          suffix: SizedBox(
+                            width: 120,
+                            child: Center(
+                              child: GestureDetector(
+                                  child: const Text('Select file'),
                                   onTap: () async {
                                     registrationCertificate = await getImageBottomSheet(context);
-                                    setState(() {});
-                                  },
-                                  child: const Text('Select file'),
-                                ),
-                              ),
+                                    // setState(() {});
+                                  }),
                             ),
-                            hint: '',
-                            hintStyle: const TextStyle(color: Colors.black87)),
+                          ),
+                          hint: 'Registration Certificate',
+                        ),
                       ),
                       const SizedBox(
                         height: 16,
@@ -190,15 +180,10 @@ class _SignupPageTwoState extends State<SignupPageTwo> {
                           enabled: false,
                           readOnly: true,
                           decoration: CustomDecoration.inputDecoration(
-                            borderWidth: 0,
-                            borderColor: const Color(0xFFF8F8F8),
-                            bgColor: const Color(0xFFF8F8F8),
+                            borderRadius: 4,
                             floating: true,
                             label: 'Build Year',
-                            hint: '2022',
-                            hintStyle: const TextStyle(
-                              color: Colors.black38,
-                            ),
+                            hint: 'Select Year',
                           ),
                         ),
                       ),

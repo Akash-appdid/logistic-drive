@@ -16,7 +16,7 @@ class DashboardScreen extends StatefulWidget {
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
-}
+}   
 
 class _DashboardScreenState extends State<DashboardScreen> {
   bool isOnGoingOrder = true;
@@ -29,15 +29,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Divider(color: Colors.grey.shade200),
-          Expanded(
+          const Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 14),
+              padding: EdgeInsets.symmetric(horizontal: 14),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const EarningCardWidget(),
+                  EarningCardWidget(),
                   //--------------Bookings--------------------
-                  const SizedBox(height: 15),
+                  SizedBox(height: 15),
                   BookingsListSectionWidget()
                 ],
               ),

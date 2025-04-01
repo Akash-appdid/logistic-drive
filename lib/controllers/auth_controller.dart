@@ -133,4 +133,9 @@ class AuthController extends GetxController implements GetxService {
     }
     return false;
   }
+
+  //-------------------Signup page------------------------ 
+  TextEditingController name = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController address = TextEditingController();
 }

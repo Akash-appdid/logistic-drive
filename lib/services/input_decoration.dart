@@ -93,12 +93,7 @@ class CustomDecoration {
             )
           : null,
       hintText: hint,
-      hintStyle: hintStyle ??
-          GoogleFonts.montserrat(
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            color: textSecondary,
-          ),
+      hintStyle: hintStyle ?? GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.grey),
       floatingLabelBehavior: floating ? FloatingLabelBehavior.always : FloatingLabelBehavior.auto,
       contentPadding: contentPadding,
     );
@@ -111,28 +106,29 @@ class CustomDecoration {
     bool filled = true,
     TextStyle? hintStyle,
     bool floating = false,
+    double borderRadius = 12,
   }) {
     return InputDecoration(
       fillColor: Colors.white,
       filled: filled,
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: Colors.grey, width: 1),
+        borderRadius: BorderRadius.circular(borderRadius),
+        borderSide: const BorderSide(color: Colors.grey, width: 1),
       ),
       disabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(borderRadius),
         borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 2),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(borderRadius),
         borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 2),
       ),
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(borderRadius),
         borderSide: const BorderSide(color: Colors.redAccent, width: 0.4),
       ),
       focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(borderRadius),
         borderSide: const BorderSide(color: Colors.redAccent, width: 0.4),
       ),
       prefixIcon: icon != null

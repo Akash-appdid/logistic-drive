@@ -1,72 +1,29 @@
-import 'dart:async';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:logistic_driver/controllers/auth_controller.dart';
+import 'package:logistic_driver/controllers/otp_autofill_controller.dart';
 
 import 'package:logistic_driver/views/screens/auth_screens/signup_screen/signup_screen.dart';
 
-import 'package:pinput/pinput.dart'; // Import pinput package
+import 'package:sms_autofill/sms_autofill.dart';
 
 import '../../../generated/assets.dart';
 import '../../../services/route_helper.dart';
 import '../../base/common_button.dart';
 
-class OtpVerificationScreen extends StatefulWidget {
+class OtpVerificationScreen extends StatelessWidget {
   const OtpVerificationScreen({super.key});
-
-  @override
-  State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
-}
-
-class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
-  final TextEditingController _otpController = TextEditingController();
-  bool _isResendOtpEnabled = false;
-  int _resendOtpTimer = 30;
-  Timer? _timer;
-  bool _isTextVisible = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _startResendOtpTimer(); // Start the countdown when screen loads
-  }
-
-  void _startResendOtpTimer() {
-    setState(() {
-      _isResendOtpEnabled = false;
-      _isTextVisible = true;
-      _resendOtpTimer = 30;
-    });
-
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_resendOtpTimer == 0) {
-        setState(() {
-          _isResendOtpEnabled = true;
-          _isTextVisible = false;
-        });
-        timer.cancel();
-      } else {
-        setState(() {
-          _resendOtpTimer--;
-        });
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
-      body: GetBuilder<AuthController>(builder: (authController) {
+      body: GetBuilder<OTPAutofillController>(initState: (_) {
+        Get.find<OTPAutofillController>().startResendOtpTimer();
+      }, builder: (otpController) {
         return SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -88,7 +45,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     style: Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 14),
                     children: [
                       TextSpan(
-                        text: '+91 ${authController.numberController.text}',
+                        text: '+91 ${Get.find<AuthController>().numberController.text}',
                         style: Theme.of(context).textTheme.displaySmall!.copyWith(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -109,32 +66,34 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Pinput(
-                  controller: _otpController,
-                  length: 6,
-                  onCompleted: (pin) {
-                    print('OTP entered: $pin');
-                  },
-                  onChanged: (pin) {
-                    print('OTP is changing: $pin');
-                  },
-                  defaultPinTheme: PinTheme(
-                    width: 45,
-                    height: 60,
-                    textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: const Color(0xff3B4652)),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                PinFieldAutoFill(
+                  currentCode: otpController.currentCode,
+                  decoration: BoxLooseDecoration(
+                    strokeColorBuilder: const FixedColorBuilder(Colors.grey),
                   ),
+                  onCodeChanged: (code) async {
+                    if (code == null) return;
+                    otpController.updateCurrentCode(code);
+                    if (otpController.currentCode.length == 6) {
+                      FocusScope.of(context).unfocus();
+                      // dynamic data = {
+                      //   'type': "user",
+                      //   'phone': auth.numberController.text.trim(),
+                      //   'otp': currentCode,
+                      //   'device_id': await Get.find<OneSingleController>().getDeviceId(),
+                      // };
+                      // log('$data');
+                    }
+                  },
+                  codeLength: 6,
                 ),
                 const SizedBox(height: 20),
-                // "Please wait for..." Text Visibility Control
-                if (_isTextVisible)
+
+                if (otpController.isTextVisible)
                   RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
-                      text: 'Please wait for $_resendOtpTimer seconds to resend the OTP',
+                      text: 'Please wait for ${otpController.resendOtpTimer} seconds to resend the OTP',
                       style: Theme.of(context).textTheme.displaySmall!.copyWith(fontSize: 14),
                       children: [
                         TextSpan(
@@ -142,18 +101,19 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                           style: Theme.of(context).textTheme.displaySmall!.copyWith(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w800,
-                                color: _isResendOtpEnabled
+                                color: otpController.isResendOtpEnabled
                                     ? const Color(0xff09596F) // Resend button enabled
                                     : Colors.grey, // Change color to gray while waiting
                               ),
                           recognizer: TapGestureRecognizer()
-                            ..onTap = _isResendOtpEnabled ? _startResendOtpTimer : null, // Only allow resend after 30 seconds
+                            ..onTap =
+                                otpController.isResendOtpEnabled ? otpController.startResendOtpTimer : null, // Only allow resend after 30 seconds
                         ),
                       ],
                     ),
                   ),
                 // If the "Please wait for..." text is hidden, just show the "Resend OTP" button
-                if (!_isTextVisible)
+                if (!otpController.isTextVisible)
                   RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
@@ -161,21 +121,25 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       style: Theme.of(context).textTheme.displaySmall!.copyWith(
                             fontSize: 16,
                             fontWeight: FontWeight.w800,
-                            color: _isResendOtpEnabled
+                            color: otpController.isResendOtpEnabled
                                 ? const Color(0xff09596F) // Resend button enabled
                                 : Colors.grey, // Change color to gray while waiting
                           ),
-                      recognizer: TapGestureRecognizer()..onTap = _startResendOtpTimer, // Restart the timer
+                      recognizer: TapGestureRecognizer()..onTap = otpController.startResendOtpTimer, // Restart the timer
                     ),
                   ),
                 const SizedBox(height: 20),
                 CustomButton(
                   onTap: () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      getCustomRoute(child: const SignupScreen()),
-                      (route) => false,
-                    );
+                    if (otpController.currentCode.isNotEmpty) {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        getCustomRoute(child: const SignupScreen()),
+                        (route) => false,
+                      );
+                    } else {
+                      Fluttertoast.showToast(msg: 'Please Enter OTP!');
+                    }
                   },
                   child: const Text(
                     "Next",

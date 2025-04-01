@@ -4,7 +4,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:logistic_driver/main.dart';
 
-Size size = MediaQuery.of(navigatorKey.currentContext!).size;
+double appSizeHeight = MediaQuery.sizeOf(navigatorKey.currentContext!).height;
+double sizeSizeWidth = MediaQuery.sizeOf(navigatorKey.currentContext!).width;
 
 class PriceConverter {
   static convert(price) {
@@ -46,7 +47,7 @@ class AppConstants {
   static String baseUrl = 'https://www.base-url.in/';
   // static String baseUrl = 'http://192.168.1.5:9000/'; ///USE FOR LOCAL
   //TODO: Change Base Url
-  static String appName = 'Logistic Driver';
+  static String appName = 'Transpotation';
   static String packageName = '';
   static String version = '';
   static String buildNumber = '';

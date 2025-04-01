@@ -5,14 +5,7 @@ class ConfirmationDialog extends StatelessWidget {
   final Widget? headingWidget;
   final TextAlign? bodyTextAlign;
   final double? dialogHeight, okButton;
-  final Color? headingColor,
-      headingTextColor,
-      bodyColor,
-      bodyTextColor,
-      button1Color,
-      button1TextColor,
-      button2Color,
-      button2TextColor;
+  final Color? headingColor, headingTextColor, bodyColor, bodyTextColor, button1Color, button1TextColor, button2Color, button2TextColor;
 
   const ConfirmationDialog(
       {Key? key,
@@ -69,10 +62,7 @@ class ConfirmationDialog extends StatelessWidget {
                                 child: Center(
                                   child: Text(
                                     heading!,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .copyWith(fontSize: 18),
+                                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 18),
                                   ),
                                 ),
                               ),
@@ -105,11 +95,8 @@ class ConfirmationDialog extends StatelessWidget {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    okButton == null
-                                        ? button1Text ?? "No"
-                                        : "Ok",
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium!,
+                                    okButton == null ? button1Text ?? "No" : "Ok",
+                                    style: Theme.of(context).textTheme.bodyMedium!,
                                   ),
                                 ),
                               ),
@@ -123,8 +110,7 @@ class ConfirmationDialog extends StatelessWidget {
                                   width: 70,
                                   height: 35,
                                   decoration: BoxDecoration(
-                                    color: button2Color ??
-                                        Theme.of(context).primaryColor,
+                                    color: button2Color ?? Theme.of(context).primaryColor,
                                     border: Border.all(
                                       color: Theme.of(context).hintColor,
                                     ),
@@ -133,10 +119,7 @@ class ConfirmationDialog extends StatelessWidget {
                                   child: Center(
                                     child: Text(
                                       button2Text ?? "Yes",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .copyWith(color: Colors.white),
+                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
                                     ),
                                   ),
                                 ),

@@ -6,7 +6,7 @@ import 'package:logistic_driver/services/extensions.dart';
 import 'package:logistic_driver/views/base/custom_image.dart';
 
 import '../../../../../services/input_decoration.dart';
-import '../../../../base/common_button.dart';
+
 import '../../../../base/image_picker_sheet.dart';
 
 class SignupPageFour extends StatefulWidget {
@@ -60,28 +60,29 @@ class _SignupPageFourState extends State<SignupPageFour> {
                   controller: TextEditingController(text: panCard?.path.fileName ?? ""),
                   readOnly: true,
                   decoration: CustomDecoration.inputDecoration(
-                      floating: true,
-                      label: 'Pan Card',
-                      borderWidth: 0,
-                      borderColor: const Color(0xFFF8F8F8),
-                      bgColor: const Color(0xFFF8F8F8),
-                      suffix: SizedBox(
-                        width: 120,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CustomButton(
-                            height: 20,
-                            color: Colors.white,
-                            onTap: () async {
-                              panCard = await getImageBottomSheet(context);
-                              setState(() {});
-                            },
-                            child: const Text('Select file'),
-                          ),
+                    bgColor: const Color(0xFFF8F8F8),
+                    borderColor: Colors.grey,
+                    borderRadius: 6,
+                    label: 'Pan Card',
+                    suffix: Container(
+                      width: 120,
+                      margin: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                        child: GestureDetector(
+                          onTap: () async {
+                            panCard = await getImageBottomSheet(context);
+                            setState(() {});
+                          },
+                          child: const Text('Select file'),
                         ),
                       ),
-                      hint: '',
-                      hintStyle: const TextStyle(color: Colors.black87)),
+                    ),
+                    hint: 'Pan Card',
+                  ),
                 ),
                 const SizedBox(height: 15),
                 TextFormField(
@@ -89,18 +90,19 @@ class _SignupPageFourState extends State<SignupPageFour> {
                   controller: TextEditingController(text: drivingLicence?.path.fileName ?? ""),
                   readOnly: true,
                   decoration: CustomDecoration.inputDecoration(
-                      floating: true,
-                      label: 'Driving Licence',
-                      borderWidth: 0,
-                      borderColor: const Color(0xFFF8F8F8),
                       bgColor: const Color(0xFFF8F8F8),
-                      suffix: SizedBox(
+                      borderColor: Colors.grey,
+                      borderRadius: 6,
+                      label: 'Driving Licence',
+                      suffix: Container(
                         width: 120,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CustomButton(
-                            height: 20,
-                            color: Colors.white,
+                        margin: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: GestureDetector(
                             onTap: () async {
                               drivingLicence = await getImageBottomSheet(context);
                               setState(() {});
@@ -118,18 +120,19 @@ class _SignupPageFourState extends State<SignupPageFour> {
                   controller: TextEditingController(text: aadhaarCard?.path.fileName ?? ""),
                   readOnly: true,
                   decoration: CustomDecoration.inputDecoration(
-                      floating: true,
-                      label: 'Aadhaar Card',
-                      borderWidth: 0,
-                      borderColor: const Color(0xFFF8F8F8),
                       bgColor: const Color(0xFFF8F8F8),
-                      suffix: SizedBox(
+                      borderColor: Colors.grey,
+                      borderRadius: 6,
+                      label: 'Aadhaar Card',
+                      suffix: Container(
                         width: 120,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CustomButton(
-                            height: 20,
-                            color: Colors.white,
+                        margin: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: GestureDetector(
                             onTap: () async {
                               aadhaarCard = await getImageBottomSheet(context);
                               setState(() {});
