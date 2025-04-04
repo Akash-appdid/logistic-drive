@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:logistic_driver/services/constants.dart';
 import 'package:logistic_driver/views/base/custom_image.dart';
 import 'package:logistic_driver/views/screens/drawer_screens/profile_screens/profile_screen.dart';
+import 'package:logistic_driver/views/screens/splash_screen/splash_screen.dart';
 
 import '../../../services/route_helper.dart';
 import '../../base/dialogs/delete_account_dialog.dart';
@@ -58,7 +59,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 title: "My Profile",
                 icon: Assets.svgsMyProfile,
                 onTap: () {
-                  Navigator.push(context, getCustomRoute(child: const ProfileScreen()));
+                  Navigator.push(
+                      context, getCustomRoute(child: const ProfileScreen()));
                 },
               ),
               CustomDrawerTileWidget(
@@ -70,7 +72,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 title: "Review & Ratings",
                 icon: Assets.svgsReviewRating,
                 onTap: () {
-                  Navigator.push(context, getCustomRoute(child: ReviewScreen()));
+                  Navigator.push(
+                      context, getCustomRoute(child: ReviewScreen()));
                 },
               ),
               CustomDrawerTileWidget(
@@ -107,10 +110,15 @@ class _DrawerScreenState extends State<DrawerScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             GestureDetector(
-              onTap: () async {},
+              onTap: () async {
+                Navigator.of(context).pushAndRemoveUntil(
+                    getCustomRoute(child: const SplashScreen()),
+                    (route) => false);
+              },
               child: Container(
                 margin: const EdgeInsets.symmetric(vertical: 4),
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                 color: Colors.transparent,
                 child: Row(
                   children: [
@@ -124,7 +132,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     ),
                     Text(
                       "Logout",
-                      style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.red, fontWeight: FontWeight.w600),
+                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                          color: Colors.red, fontWeight: FontWeight.w600),
                     )
                   ],
                 ),
@@ -141,7 +150,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
               },
               child: Container(
                 margin: const EdgeInsets.symmetric(vertical: 4),
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                 color: Colors.transparent,
                 child: Row(
                   children: [
@@ -149,7 +159,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     const SizedBox(width: 14),
                     Text(
                       "Delete Account",
-                      style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.red, fontWeight: FontWeight.w600),
+                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                          color: Colors.red, fontWeight: FontWeight.w600),
                     ),
                   ],
                 ),
@@ -160,7 +171,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 padding: const EdgeInsets.all(5),
                 child: Text(
                   "Version ${AppConstants.version}:${AppConstants.buildNumber}",
-                  style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.black),
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelLarge!
+                      .copyWith(color: Colors.black),
                 ),
               ),
             ),

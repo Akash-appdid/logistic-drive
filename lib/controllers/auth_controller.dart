@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
@@ -30,9 +31,11 @@ class AuthController extends GetxController implements GetxService {
 
   Future<ResponseModel> login(String? phone, {String? otp}) async {
     ResponseModel responseModel;
-    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.loginUri}", name: "login");
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.loginUri}",
+        name: "login");
     try {
-      Response response = await authRepo.login(await authRepo.getDeviceId(), phone: phone, otp: otp);
+      Response response = await authRepo.login(await authRepo.getDeviceId(),
+          phone: phone, otp: otp);
       /*if(response.body.containsKey('errors')){
         return ResponseModel(false, response.statusText!,response.body['errors']);
       }*/
@@ -44,18 +47,21 @@ class AuthController extends GetxController implements GetxService {
         if (response.body.containsKey('errors')) {
           _isLoading = false;
           update();
-          return ResponseModel(false, response.statusText!, response.body['errors']);
+          return ResponseModel(
+              false, response.statusText!, response.body['errors']);
         }
         if (response.body.containsKey('token')) {
           authRepo.saveUserToken(response.body['token'].toString());
         }
-        responseModel = ResponseModel(true, '${response.body['msg']}', response.body);
+        responseModel =
+            ResponseModel(true, '${response.body['msg']}', response.body);
       } else {
         responseModel = ResponseModel(false, response.statusText!);
       }
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
-      log('++++++++++++++++++++++++++++++++++++++++++++ ${e.toString()} +++++++++++++++++++++++++++++++++++++++++++++', name: "ERROR AT login()");
+      log('++++++++++++++++++++++++++++++++++++++++++++ ${e.toString()} +++++++++++++++++++++++++++++++++++++++++++++',
+          name: "ERROR AT login()");
     }
     _isLoading = false;
     // update();
@@ -134,8 +140,23 @@ class AuthController extends GetxController implements GetxService {
     return false;
   }
 
-  //-------------------Signup page------------------------ 
+  //-------------------Signup page------------------------
+  //----signup page 01------
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController address = TextEditingController();
+  TextEditingController vehicleNumber = TextEditingController();
+  //----signup page 02------
+  TextEditingController buildYear = TextEditingController();
+  //----signup page 04-------
+  File? pancard;
+  File? drivingLicense;
+  File? aadhaarCard;
+  //---signup page 05------
+  TextEditingController payeeName = TextEditingController();
+  TextEditingController accountNumber = TextEditingController();
+  TextEditingController ifscCode = TextEditingController();
+  TextEditingController bankName = TextEditingController();
+  TextEditingController branchName = TextEditingController();
+  File? check;
 }
