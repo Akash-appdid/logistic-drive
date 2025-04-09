@@ -1,12 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+
 import 'package:get/get_utils/src/platform/platform.dart';
+import 'package:get/instance_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logistic_driver/controllers/basic_controller.dart';
 
 import '../../../generated/assets.dart';
 import '../../../services/extra_methods.dart';
 
 class UpdateDialog extends StatelessWidget {
-  const UpdateDialog({Key? key, required this.skip, this.remark = ''}) : super(key: key);
+  const UpdateDialog({super.key, required this.skip, this.remark = ''});
 
   final bool skip;
   final String remark;
@@ -15,6 +20,7 @@ class UpdateDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Dialog(
+      backgroundColor: Colors.white,
       child: IntrinsicHeight(
         child: SizedBox(
           width: size.width,
@@ -22,15 +28,22 @@ class UpdateDialog extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: Column(
               children: [
-                Image(
-                  image: const AssetImage(Assets.imagesLogo),
-                  height: size.height * 0.1,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: Image(
+                    image: const AssetImage(Assets.imagesLogo),
+                    height: size.height * 0.16,
+                  ),
                 ),
+                const SizedBox(height: 10),
                 Center(
                   child: Text(
                     "Update App",
                     textAlign: TextAlign.justify,
-                    style: GoogleFonts.poppins(fontSize: 14.0, fontWeight: FontWeight.w400, color: Colors.grey[900]),
+                    style: GoogleFonts.poppins(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.grey[900]),
                   ),
                 ),
                 const SizedBox(
@@ -39,7 +52,10 @@ class UpdateDialog extends StatelessWidget {
                 Text(
                   remark,
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.quicksand(fontSize: 12.0, fontWeight: FontWeight.w700, color: Colors.grey[800]),
+                  style: GoogleFonts.quicksand(
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.grey[800]),
                 ),
                 const SizedBox(
                   height: 20,
@@ -50,12 +66,14 @@ class UpdateDialog extends StatelessWidget {
                     if (skip)
                       InkWell(
                         onTap: () {
-                          Navigator.pop(context);
+                          Navigator.pop(context, true);
                         },
                         child: Container(
                           height: 40,
                           width: size.width * 0.3,
-                          decoration: BoxDecoration(color: Colors.grey.shade100, borderRadius: BorderRadius.circular(5)),
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade100,
+                              borderRadius: BorderRadius.circular(5)),
                           child: Center(
                             child: Text(
                               'Later',
@@ -72,18 +90,33 @@ class UpdateDialog extends StatelessWidget {
                       ),
                     InkWell(
                       onTap: () async {
+                        //
+
                         if (GetPlatform.isAndroid) {
                           //TODO: CHANGE ANDROID LINK
-                          ExtraMethods.launchInBrowser('https://play.google.com/store/apps/details?id=com.jaihobabag');
+                          final appDownloadLink = Get.find<BasicController>()
+                              .getAppLinkAndAppVersion(
+                                  'user_app_download_link');
+                          log('$appDownloadLink');
+                          if (appDownloadLink != null) {
+                            ExtraMethods.launchInBrowser(appDownloadLink);
+                          }
                         } else {
                           //TODO: CHANGE IOS LINK
-                          ExtraMethods.launchInBrowser('https://apps.apple.com/us/app/way2sports/id1630920516');
+                          final iosDownloadLink = Get.find<BasicController>()
+                              .getAppLinkAndAppVersion('ios_app_download_link');
+                          log('$iosDownloadLink');
+                          if (iosDownloadLink != null) {
+                            ExtraMethods.launchInBrowser(iosDownloadLink);
+                          }
                         }
                       },
                       child: Container(
                         height: 40,
                         width: size.width * 0.3,
-                        decoration: BoxDecoration(color: Theme.of(context).primaryColor, borderRadius: BorderRadius.circular(5)),
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            borderRadius: BorderRadius.circular(5)),
                         child: const Center(
                           child: Text(
                             'Update Now',

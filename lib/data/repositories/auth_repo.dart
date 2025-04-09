@@ -15,12 +15,17 @@ class AuthRepo {
 
   /// Methods to deal with Remote Data ///
 
-  Future<Response> login(String? deviceId, {String? phone, String? otp}) async =>
-      await apiClient.postData(AppConstants.loginUri, {"phone": phone ?? '', "device_id": await getDeviceId(), "otp": otp});
+  Future<Response> login({required Map<String, dynamic> data}) async =>
+      await apiClient.postData(AppConstants.loginUri, data);
+  Future<Response> otpVerification(
+          {required Map<String, dynamic> data}) async =>
+      await apiClient.postData(AppConstants.otpVerifyUri, data);
 
-  Future<Response> getUser() async => await apiClient.getData(AppConstants.profileUri);
+  Future<Response> getUserData() async =>
+      await apiClient.getData(AppConstants.profileUri);
 
-  Future<Response> getExtras() async => await apiClient.getData(AppConstants.extras);
+  Future<Response> getExtras() async =>
+      await apiClient.getData(AppConstants.extras);
 
   /// Methods to deal with Remote Data ///
 

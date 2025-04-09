@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -40,24 +41,28 @@ String getStringFromList(List<dynamic>? data) {
 }
 
 class AppConstants {
+  static bool isProduction =
+      false; //if want to use live url in debug mode set to production mode true
   String get getBaseUrl => baseUrl;
   set setBaseUrl(String url) => baseUrl = url;
+  static const String liveUrl = 'https://prynzo.appdid.com/';
+  static const String localUrl = 'http://192.168.1.23:8001/';
+  static String baseUrl = (kReleaseMode || isProduction) ? liveUrl : localUrl;
 
-  //TODO: Change Base Url
-  static String baseUrl = 'https://www.base-url.in/';
-  // static String baseUrl = 'http://192.168.1.5:9000/'; ///USE FOR LOCAL
-  //TODO: Change Base Url
+  //--------auth-----------\\
+  static const String loginUri = 'api/driver/v1/auth/otp/send';
+  static const String otpVerifyUri = 'api/driver/v1/auth/otp/verify';
+  static const String registerUri = 'api/user/v1/auth/register';
+  static const String profileUri = 'api/driver/v1/basic/profile';
+  static const String businessSettingUri = 'api/v1/settings';
+
+  ///
   static String appName = 'Transpotation';
   static String packageName = '';
   static String version = '';
   static String buildNumber = '';
-
   static const String agoraAppId = 'c87b710048c049f59570bd1895b7e561';
-
-  static const String loginUri = 'api/v1/user/login';
-  static const String profileUri = 'api/v1/user/profile';
   static const String extras = 'api/v1/extra';
-
   // Shared Key
   static const String token = 'user_app_token';
   static const String userId = 'user_app_id';

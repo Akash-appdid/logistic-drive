@@ -3,8 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../generated/assets.dart';
+import '../../../services/constants.dart';
+
 class MaintenanceDialog extends StatelessWidget {
-  const MaintenanceDialog({Key? key}) : super(key: key);
+  const MaintenanceDialog({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,16 +22,22 @@ class MaintenanceDialog extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: Column(
               children: [
-                Lottie.asset(
-                  'assets/Lottie/maintenance.json',
-                  height: size.height * 0.1,
-                  width: size.height * 0.1,
+                Center(
+                  child: Lottie.asset(
+                    Assets.lottiesMaintenance,
+                    height: size.height * 0.1,
+                    width: size.width,
+                  ),
                 ),
+                const SizedBox(height: 10),
                 Center(
                   child: Text(
-                    "Way 2 Sports",
+                    AppConstants.appName,
                     textAlign: TextAlign.justify,
-                    style: GoogleFonts.poppins(fontSize: 16.0, fontWeight: FontWeight.w400, color: Colors.grey[900]),
+                    style: GoogleFonts.poppins(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.grey[900]),
                   ),
                 ),
                 const SizedBox(
@@ -35,7 +46,10 @@ class MaintenanceDialog extends StatelessWidget {
                 Text(
                   "App is Under Maintenance",
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.quicksand(fontSize: 14.0, fontWeight: FontWeight.w700, color: Colors.grey[800]),
+                  style: GoogleFonts.quicksand(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.grey[800]),
                 ),
                 const SizedBox(
                   height: 20,
@@ -50,7 +64,9 @@ class MaintenanceDialog extends StatelessWidget {
                       child: Container(
                         height: 40,
                         width: size.width * 0.3,
-                        decoration: BoxDecoration(color: Theme.of(context).primaryColor, borderRadius: BorderRadius.circular(5)),
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            borderRadius: BorderRadius.circular(5)),
                         child: const Center(
                           child: Text(
                             'OK',

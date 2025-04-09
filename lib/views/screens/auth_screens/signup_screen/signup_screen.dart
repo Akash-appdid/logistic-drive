@@ -7,8 +7,8 @@ import 'package:logistic_driver/views/screens/dashboard/dashboard_screen.dart';
 
 import '../../../base/common_button.dart';
 import 'components/signup_page_one.dart';
-import 'components/signup_page_three.dart';
 import 'components/signup_page_two.dart';
+import 'components/signup_page_three.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -22,8 +22,8 @@ class _SignupScreenState extends State<SignupScreen> {
   final PageController controller = PageController();
   List<Widget> signupPages = [
     const SignupPageOne(),
-    const SignupPageTwo(),
-    const SignUpPageThree(),
+    const SignUpPageTwo(),
+    const SignupPageThree(),
     const SignupPageFour(),
     const SignUpPageFive(),
   ];
@@ -52,17 +52,24 @@ class _SignupScreenState extends State<SignupScreen> {
                             children: [
                               Expanded(
                                 child: Container(
-                                  color: selectedIndex < i ? Colors.grey : primaryColor,
+                                  color: selectedIndex < i
+                                      ? Colors.grey
+                                      : primaryColor,
                                   height: 2,
                                 ),
                               ),
                               CircleAvatar(
                                 radius: 12,
-                                backgroundColor: selectedIndex < i ? Colors.grey : primaryColor,
+                                backgroundColor: selectedIndex < i
+                                    ? Colors.grey
+                                    : primaryColor,
                                 child: Center(
                                   child: Text(
                                     '${i + 1}',
-                                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
+                                        .copyWith(
                                           fontSize: 10,
                                           fontWeight: FontWeight.w500,
                                           color: Colors.white,
@@ -72,7 +79,9 @@ class _SignupScreenState extends State<SignupScreen> {
                               ),
                               Expanded(
                                 child: Container(
-                                  color: selectedIndex < i ? Colors.grey : primaryColor,
+                                  color: selectedIndex < i
+                                      ? Colors.grey
+                                      : primaryColor,
                                   height: 2,
                                 ),
                               ),

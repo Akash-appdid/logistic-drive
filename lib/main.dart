@@ -1,10 +1,8 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:logistic_driver/services/constants.dart';
 import 'package:logistic_driver/services/theme.dart';
-
 import 'controllers/one_signal_controller.dart';
 import 'services/init.dart';
 import 'views/screens/splash_screen/splash_screen.dart';
@@ -18,7 +16,8 @@ void main() async {
 }
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-final GlobalKey<ScaffoldMessengerState> snackBarKey = GlobalKey<ScaffoldMessengerState>();
+final GlobalKey<ScaffoldMessengerState> snackBarKey =
+    GlobalKey<ScaffoldMessengerState>();
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
 class MyApp extends StatefulWidget {

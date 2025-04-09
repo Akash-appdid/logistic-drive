@@ -17,7 +17,6 @@ class AuthController extends GetxController implements GetxService {
   final AuthRepo authRepo;
   AuthController({required this.authRepo});
 
-  bool _isLoading = false;
   bool _acceptTerms = true;
 
   late final number = ContactNumber(number: '', countryCode: '+91');
@@ -26,35 +25,23 @@ class AuthController extends GetxController implements GetxService {
   UserModel? _userModel;
   UserModel? get userModel => _userModel;
 
+  bool _isLoading = false;
   bool get isLoading => _isLoading;
   bool get acceptTerms => _acceptTerms;
 
-  Future<ResponseModel> login(String? phone, {String? otp}) async {
+//-------------Login
+  Future<ResponseModel> login({required Map<String, dynamic> data}) async {
     ResponseModel responseModel;
+    _isLoading = true;
+    update();
     log("response.body.toString()${AppConstants.baseUrl}${AppConstants.loginUri}",
         name: "login");
     try {
-      Response response = await authRepo.login(await authRepo.getDeviceId(),
-          phone: phone, otp: otp);
-      /*if(response.body.containsKey('errors')){
-        return ResponseModel(false, response.statusText!,response.body['errors']);
-      }*/
-      log(response.statusCode.toString());
-      log(response.body.toString());
-      if (response.statusCode == 200) {
-        log(response.body.toString());
+      Response response = await authRepo.login(data: data);
 
-        if (response.body.containsKey('errors')) {
-          _isLoading = false;
-          update();
-          return ResponseModel(
-              false, response.statusText!, response.body['errors']);
-        }
-        if (response.body.containsKey('token')) {
-          authRepo.saveUserToken(response.body['token'].toString());
-        }
+      if (response.statusCode == 200 && response.body['success']) {
         responseModel =
-            ResponseModel(true, '${response.body['msg']}', response.body);
+            ResponseModel(true, '${response.body['message']}', response.body);
       } else {
         responseModel = ResponseModel(false, response.statusText!);
       }
@@ -64,23 +51,54 @@ class AuthController extends GetxController implements GetxService {
           name: "ERROR AT login()");
     }
     _isLoading = false;
-    // update();
+    update();
     return responseModel;
   }
 
+  //-------------OTP Verification------------------
+  String? type;
+  Future<ResponseModel> verifyOTP(Map<String, dynamic> data) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    try {
+      Response response = await authRepo.otpVerification(data: data);
+      if (response.statusCode == 200) {
+        if (response.body['success'] == true &&
+            response.body['otp_verified'] == true &&
+            response.body['token'] != null) {
+          setUserToken(response.body['token']);
+          type = response.body['user_type'];
+          responseModel = ResponseModel(
+              true, '${response.body['user_type']}', response.body);
+        } else {
+          responseModel = ResponseModel(
+              false, '${response.body['message']}', response.body);
+        }
+      } else {
+        responseModel = ResponseModel(false, response.body['message']);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++++++++++++++++++++++++++++++++++++++++++ ${e.toString()} +++++++++++++++++++++++++++++++++++++++++++++',
+          name: "ERROR AT verifyOTP()");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+//
   Future<ResponseModel> getUserProfileData() async {
     ResponseModel responseModel;
     _isLoading = true;
+    update();
     try {
-      Response response = await authRepo.getUser();
-      // log(response.bodyString ?? "NULL", name: "UserModel");
-      // log(response.statusCode.toString(), name: "statusCode");
-      if (response.statusCode == 200) {
-        log(response.bodyString!, name: "UserModel");
-        // log(response.statusCode.toString(), name: "statusCode");
-        _userModel = userModelFromJson(response.bodyString!);
-        authRepo.saveUserId('${_userModel!.user.id}');
-        update();
+      Response response = await authRepo.getUserData();
+      if (response.statusCode == 200 && response.body['success']) {
+        log(response.bodyString.toString(), name: "UserModel");
+        _userModel =
+            UserModel.fromJson(response.body['data'] as Map<String, dynamic>);
         responseModel = ResponseModel(true, 'success');
       } else {
         ApiChecker.checkApi(response);
@@ -90,7 +108,6 @@ class AuthController extends GetxController implements GetxService {
       log('---- ${e.toString()} ----', name: "ERROR AT getUserProfileData()");
       responseModel = ResponseModel(false, "$e");
     }
-
     _isLoading = false;
     update();
     return responseModel;
@@ -119,11 +136,9 @@ class AuthController extends GetxController implements GetxService {
 
   bool checkUserData() {
     try {
-      if (_userModel!.user.name.isValid &&
-          _userModel!.user.phone.isValid &&
-          _userModel!.user.company.isValid &&
-          _userModel!.user.dob.isNotNull &&
-          _userModel!.user.gender.isValid) {
+      if (_userModel!.name.isValid &&
+          _userModel!.phone.isValid &&
+          _userModel!.email.isValid) {
         return true;
       } else {
         return false;
@@ -131,13 +146,6 @@ class AuthController extends GetxController implements GetxService {
     } catch (e) {
       return false;
     }
-  }
-
-  bool isAdmin() {
-    if (_userModel?.user.isAdmin == '1') {
-      return true;
-    }
-    return false;
   }
 
   //-------------------Signup page------------------------
@@ -159,4 +167,14 @@ class AuthController extends GetxController implements GetxService {
   TextEditingController bankName = TextEditingController();
   TextEditingController branchName = TextEditingController();
   File? check;
+
+  //-------- accepet tearm and condition
+  bool _acceptTermAndCondition = false;
+
+  bool get acceptTermAndCondition => _acceptTermAndCondition;
+
+  void updateAcceptTermAndCondition(bool value) {
+    _acceptTermAndCondition = value;
+    update();
+  }
 }

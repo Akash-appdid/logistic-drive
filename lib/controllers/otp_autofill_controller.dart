@@ -6,7 +6,9 @@ import 'package:get/get.dart';
 
 import 'package:sms_autofill/sms_autofill.dart';
 
-class OTPAutofillController extends GetxController with CodeAutoFill implements GetxService {
+class OTPAutofillController extends GetxController
+    with CodeAutoFill
+    implements GetxService {
   String currentCode = '';
 
   final TextEditingController otpController = TextEditingController();
@@ -51,6 +53,8 @@ class OTPAutofillController extends GetxController with CodeAutoFill implements 
   }
 
   //-------------------timer--------------
+
+  //
   void startResendOtpTimer() {
     isResendOtpEnabled = false;
     isTextVisible = true;
@@ -68,5 +72,9 @@ class OTPAutofillController extends GetxController with CodeAutoFill implements 
         update();
       }
     });
+  }
+
+  Future<String> getAppSignature() async {
+    return await SmsAutoFill().getAppSignature;
   }
 }

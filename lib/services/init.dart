@@ -8,6 +8,7 @@ import 'package:logistic_driver/controllers/basic_controller.dart';
 import 'package:logistic_driver/controllers/otp_autofill_controller.dart';
 import 'package:logistic_driver/data/api/api_client.dart';
 import 'package:logistic_driver/data/repositories/auth_repo.dart';
+import 'package:logistic_driver/data/repositories/basic_repo.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,7 +20,10 @@ import 'constants.dart';
 class Init {
   getBaseUrl() async {
     ApiCalls calls = ApiCalls();
-    await calls.apiCallWithResponseGet('https://fishcary.com/fishcary/api/link2.php?for=true').then((value) {
+    await calls
+        .apiCallWithResponseGet(
+            'https://fishcary.com/fishcary/api/link2.php?for=true')
+        .then((value) {
       log(value.toString());
       AppConstants().setBaseUrl = jsonDecode(value)['link'];
       log(AppConstants().getBaseUrl, name: 'BASE');
@@ -31,14 +35,18 @@ class Init {
     Get.lazyPut<SharedPreferences>(() => sharedPreferences);
     try {
       //-------Repo
-      Get.lazyPut(() => ApiClient(appBaseUrl: AppConstants.baseUrl, sharedPreferences: Get.find()));
-      Get.lazyPut(() => AuthRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+      Get.lazyPut(() => ApiClient(
+          appBaseUrl: AppConstants.baseUrl, sharedPreferences: Get.find()));
+      Get.lazyPut(
+          () => AuthRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+      Get.lazyPut(() =>
+          BasicRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
 
       //--------Controller
       Get.lazyPut(() => PermissionController());
       Get.lazyPut(() => OneSingleController());
       Get.lazyPut(() => AuthController(authRepo: Get.find()));
-      Get.lazyPut(() => BasicController());
+      Get.lazyPut(() => BasicController(basicRepo: Get.find()));
       Get.lazyPut(() => OTPAutofillController());
     } catch (e) {
       log('---- ${e.toString()} ----', name: "ERROR AT initialize()");
@@ -46,7 +54,8 @@ class Init {
   }
 
   stopAppRotation() async {
-    await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    await SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   }
 
   intializeAppBuildInfo() async {

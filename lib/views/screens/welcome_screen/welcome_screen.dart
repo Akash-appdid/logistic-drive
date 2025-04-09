@@ -6,7 +6,7 @@ import 'package:logistic_driver/services/route_helper.dart';
 import 'package:logistic_driver/services/theme.dart';
 import 'package:logistic_driver/views/base/common_button.dart';
 import 'package:logistic_driver/views/base/custom_image.dart';
-import 'package:logistic_driver/views/screens/auth_screens/login_screen.dart';
+import 'package:logistic_driver/views/screens/auth_screens/login_screen/login_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -26,22 +26,26 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     {
       "image": Assets.imagesDeliveryBike,
       "title": "On-Demand Logistics Made Easy",
-      "subtitle": "Need to transport goods? Book a ride in seconds and get hassle-free delivery at your doorstep."
+      "subtitle":
+          "Need to transport goods? Book a ride in seconds and get hassle-free delivery at your doorstep."
     },
     {
       "image": Assets.imagesDeliveryTruck,
       "title": "Reliable & Affordable",
-      "subtitle": "Trusted delivery partners ensure your goods reach safely and on time, at the best prices."
+      "subtitle":
+          "Trusted delivery partners ensure your goods reach safely and on time, at the best prices."
     },
     {
       "image": Assets.imagesIllustration,
       "title": "Track & Manage Deliveries",
-      "subtitle": "Track your delivery in real time, manage bookings, and get instant updates—all in one place."
+      "subtitle":
+          "Track your delivery in real time, manage bookings, and get instant updates—all in one place."
     },
   ];
   int currentIndex = 0;
 
-  CarouselSliderController carouselSliderController = CarouselSliderController();
+  CarouselSliderController carouselSliderController =
+      CarouselSliderController();
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +89,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           Text(
                             slide["title"] ?? "",
                             textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black),
                           ),
                           const SizedBox(
                             height: 10,
@@ -93,7 +103,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           Text(
                             slide["subtitle"] ?? "",
                             textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 12, color: Colors.black),
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(fontSize: 12, color: Colors.black),
                           ),
                         ],
                       ),
@@ -112,7 +125,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     margin: const EdgeInsets.only(right: 10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: currentIndex == i ? primaryColor : const Color(0xFFD9D9D9),
+                      color: currentIndex == i
+                          ? primaryColor
+                          : const Color(0xFFD9D9D9),
                     ),
                   )
               ],
@@ -143,7 +158,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               radius: 8,
               child: Text(
                 "Next",
-                style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.white),
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge!
+                    .copyWith(color: Colors.white),
               ),
             )
           ],

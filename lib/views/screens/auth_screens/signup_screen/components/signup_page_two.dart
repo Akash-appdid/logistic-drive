@@ -2,49 +2,50 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:logistic_driver/services/extensions.dart';
+import 'package:logistic_driver/services/theme.dart';
 import 'package:logistic_driver/views/base/custom_image.dart';
-import 'package:logistic_driver/views/base/date_picker_widget.dart';
 
-import '../../../../../services/input_decoration.dart';
-
-import '../../../../base/image_picker_sheet.dart';
-
-class SignupPageTwo extends StatefulWidget {
-  const SignupPageTwo({super.key});
+class SignUpPageTwo extends StatefulWidget {
+  const SignUpPageTwo({super.key});
 
   @override
-  State<SignupPageTwo> createState() => _SignupPageTwoState();
+  State<SignUpPageTwo> createState() => _SignUpPageTwoState();
 }
 
-class _SignupPageTwoState extends State<SignupPageTwo> {
-  File? registrationCertificate;
-  TextEditingController vehicleNumber = TextEditingController();
-  TextEditingController vehicleBuildYear = TextEditingController();
+class _SignUpPageTwoState extends State<SignUpPageTwo> {
+  List<String> languages = ["English", "Hindi", "Marathi", "Gujarati"];
+  String? selectedLanguage;
+  File? panCardFile;
+  File? drivingLicenceFile;
 
-  List<Map<String, String>> vehicleWeightType = [
+  dynamic selectedVehicleType;
+  List vehicleType = [
     {
-      "name": "Tata Ace",
-      "weight": "1000 kg",
+      "vehicle_type": "Motorbike (2-wheeler)",
+      "storage_type": "Small Parcel",
+      "description": "You wish to deliver using a motorcycle or scooter.",
+      "image": Assets.images2Wheeler
     },
     {
-      "name": "Pick Up",
-      "weight": "1900 kg",
+      "vehicle_type": "Mini-Truck (Package Delivery)",
+      "storage_type": "Large Package",
+      "description":
+          "you have a mini-truck and want to deliver large packages.",
+      "image": Assets.imagesMiniTruck
     },
     {
-      "name": "Tata 407",
-      "weight": "2000 kg",
+      "vehicle_type": "Open Truck",
+      "storage_type": "Bulky goods",
+      "description": "Perfect for transporting large and bulky goods.",
+      "image": Assets.imagesOpenTruck
     },
     {
-      "name": "14 Feet",
-      "weight": "3000 kg",
+      "vehicle_type": "Body Pack Truck",
+      "storage_type": "Secure Storage",
+      "description": "Ideal for high-volume deliveries with secure storage.",
+      "image": Assets.imagesBodyPackTruck
     },
   ];
-  Map<String, String>? selectedVehicleWeight;
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,135 +61,115 @@ class _SignupPageTwoState extends State<SignupPageTwo> {
                 Center(
                     child: Container(
                         padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(color: const Color(0xFFF5F5F5), borderRadius: BorderRadius.circular(10)),
+                        decoration: BoxDecoration(
+                            color: const Color(0xFFF5F5F5),
+                            borderRadius: BorderRadius.circular(10)),
                         child: SvgPicture.asset(Assets.svgsTruck))),
                 const SizedBox(height: 25),
                 Text(
-                  "Tell Us About Your Vehicle",
+                  "Choose Your Vehicle to Start Delivering!",
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.displayLarge!.copyWith(fontWeight: FontWeight.normal, fontSize: 30),
+                  style: Theme.of(context)
+                      .textTheme
+                      .displayLarge!
+                      .copyWith(fontWeight: FontWeight.normal, fontSize: 30),
                 ),
                 const SizedBox(height: 15),
                 Text(
-                  "Fill in the details to get started with quick and easy deliveries.",
+                  "Become a delivery partner by selecting the vehicle you’ll use.",
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.displaySmall!.copyWith(fontWeight: FontWeight.w500, fontSize: 14),
+                  style: Theme.of(context)
+                      .textTheme
+                      .displaySmall!
+                      .copyWith(fontWeight: FontWeight.w500, fontSize: 14),
                 ),
                 const SizedBox(height: 15),
-                DropdownButtonFormField(
-                  borderRadius: BorderRadius.circular(4),
-                  value: selectedVehicleWeight,
-                  dropdownColor: Colors.white,
-                  decoration: CustomDecoration.inputDecoration(
-                    borderRadius: 10,
-                    floating: true,
-                    label: "Select Vehicle here",
-                    hint: 'Select Vehicle here',
-                  ),
-                  icon: const Icon(Icons.keyboard_arrow_down),
-                  items: vehicleWeightType.map((Map<String, String> value) {
-                    return DropdownMenuItem(
-                      value: value,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            value["name"].toString(),
-                            style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 16, color: Colors.black),
+                ListView.separated(
+                  itemCount: vehicleType.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    final vehicle = vehicleType[index];
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedVehicleType = vehicle;
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                            left: 10, top: 10, bottom: 10),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: selectedVehicleType == vehicle ? 2 : 1,
+                            color: selectedVehicleType == vehicle
+                                ? primaryColor
+                                : const Color(0xFFD9D9D9),
                           ),
-                          Text(
-                            value["weight"].toString(),
-                            style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 16, color: Colors.black),
-                          ),
-                        ],
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(4),
+                                    color: const Color(0xFFFFAE00),
+                                    child: Text(
+                                      vehicle["storage_type"],
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge!
+                                          .copyWith(fontSize: 11),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 6,
+                                  ),
+                                  Text(
+                                    vehicle["vehicle_type"],
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge!
+                                        .copyWith(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black),
+                                  ),
+                                  const SizedBox(
+                                    height: 6,
+                                  ),
+                                  Text(
+                                    vehicle["description"],
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge!
+                                        .copyWith(
+                                            fontSize: 12, color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            CustomImage(
+                              path: vehicle["image"],
+                              fit: BoxFit.contain,
+                              height: 50,
+                            ),
+                          ],
+                        ),
                       ),
                     );
-                  }).toList(),
-                  onChanged: (value) {},
-                ),
-                const SizedBox(height: 15),
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1,
-                      color: const Color(0xFFD9D9D9),
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Vehicle Details",
-                        style: Theme.of(context).textTheme.labelLarge!.copyWith(fontWeight: FontWeight.bold, color: Colors.black),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      TextFormField(
-                        controller: vehicleNumber,
-                        style: const TextStyle(color: Colors.black),
-                        decoration: CustomDecoration.inputDecoration(
-                          floating: true,
-                          borderRadius: 4,
-                          label: 'Vehicle Number',
-                          hint: 'Enter vehicle number',
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      TextFormField(
-                        style: const TextStyle(color: Colors.black),
-                        controller: TextEditingController(text: registrationCertificate?.path.fileName ?? ""),
-                        readOnly: true,
-                        decoration: CustomDecoration.inputDecoration(
-                          floating: true,
-                          borderRadius: 4,
-                          label: 'Registration Certificate',
-                          suffix: SizedBox(
-                            width: 120,
-                            child: Center(
-                              child: GestureDetector(
-                                  child: const Text('Select file'),
-                                  onTap: () async {
-                                    registrationCertificate = await getImageBottomSheet(context);
-                                    // setState(() {});
-                                  }),
-                            ),
-                          ),
-                          hint: 'Registration Certificate',
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      CustomDatePicker(
-                        datePickerMode: DatePickerMode.year,
-                        onChanged: (DateTime? dateTime) {
-                          if (dateTime != null) {
-                            setState(() {
-                              vehicleBuildYear.text = dateTime.year.toString();
-                            });
-                          }
-                        },
-                        today: false,
-                        child: TextFormField(
-                          controller: vehicleBuildYear,
-                          style: const TextStyle(color: Colors.black),
-                          enabled: false,
-                          readOnly: true,
-                          decoration: CustomDecoration.inputDecoration(
-                            borderRadius: 4,
-                            floating: true,
-                            label: 'Build Year',
-                            hint: 'Select Year',
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(
+                      height: 10,
+                    );
+                  },
                 ),
                 const SizedBox(height: 75),
               ],
