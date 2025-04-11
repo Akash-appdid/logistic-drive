@@ -6,11 +6,12 @@ import 'package:get/get.dart';
 import 'package:logistic_driver/data/models/body/vehicle_model.dart';
 import 'package:logistic_driver/data/models/response/vehicle_master_model.dart';
 import 'package:logistic_driver/data/repositories/register_repo.dart';
+import 'package:logistic_driver/services/extensions.dart';
 
 import '../data/models/response/response_model.dart';
-
 import '../generated/assets.dart';
 import '../services/constants.dart';
+import 'auth_controller.dart';
 
 class RegisterController extends GetxController implements GetxService {
   final RegisterRepo registerRepo;
@@ -41,26 +42,22 @@ class RegisterController extends GetxController implements GetxService {
   TextEditingController branchName = TextEditingController();
   File? selecedCancelCheck;
 
-  Future<ResponseModel> registerUser(
-      {required Map<String, dynamic> data}) async {
+  Future<ResponseModel> registerUser({required Map<String, dynamic> data}) async {
     ResponseModel responseModel;
     _isLoading = true;
     update();
-    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.registerUri}",
-        name: "login");
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.registerUri}", name: "login");
     try {
       Response response = await registerRepo.register(data: data);
 
       if (response.statusCode == 200 && response.body['success']) {
-        responseModel =
-            ResponseModel(true, '${response.body['message']}', response.body);
+        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
       } else {
         responseModel = ResponseModel(false, response.statusText!);
       }
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
-      log('++++++++++++++++++++++++++++++++++++++++++++ ${e.toString()} +++++++++++++++++++++++++++++++++++++++++++++',
-          name: "ERROR AT registerUser()");
+      log('++++++++++++++++++++++++++++++++++++++++++++ ${e.toString()} +++++++++++++++++++++++++++++++++++++++++++++', name: "ERROR AT registerUser()");
     }
     _isLoading = false;
     update();
@@ -113,30 +110,24 @@ class RegisterController extends GetxController implements GetxService {
   ];
   //get vehicle master
   List<VehicleMasterModel> vehicleMasterData = [];
-  Future<ResponseModel> getVehicleMasterData(
-      {required String vehicleType}) async {
+  Future<ResponseModel> getVehicleMasterData({required String vehicleType}) async {
     ResponseModel responseModel;
     _isLoading = true;
     update();
     try {
-      Response response =
-          await registerRepo.getVehicleMasteData(vehicleType: vehicleType);
+      Response response = await registerRepo.getVehicleMasteData(vehicleType: vehicleType);
       if (response.statusCode == 200 && response.body['success']) {
         log("${response.bodyString}", name: 'getVehicleMasterData');
 
-        vehicleMasterData = (response.body['data'] as List<dynamic>)
-            .map((response) => VehicleMasterModel.fromJson(response))
-            .toList();
+        vehicleMasterData = (response.body['data'] as List<dynamic>).map((response) => VehicleMasterModel.fromJson(response)).toList();
 
-        responseModel =
-            ResponseModel(true, '${response.body['message']}', response.body);
+        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
       } else {
         responseModel = ResponseModel(false, response.statusText!);
       }
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
-      log('++++++++++++++++++++++++++++++++++++++++++++ ${e.toString()} +++++++++++++++++++++++++++++++++++++++++++++',
-          name: "ERROR AT getVehicleMasterData()");
+      log('++++++++++++++++++++++++++++++++++++++++++++ ${e.toString()} +++++++++++++++++++++++++++++++++++++++++++++', name: "ERROR AT getVehicleMasterData()");
     }
     _isLoading = false;
     update();
@@ -225,5 +216,73 @@ class RegisterController extends GetxController implements GetxService {
     vehicleMasterModel = null;
 
     update();
+  }
+
+  //-------pick date----------\\
+  Future<void> selectYear(BuildContext context) async {
+    final DateTime now = DateTime.now();
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime(now.year),
+      firstDate: DateTime(now.year),
+      lastDate: DateTime(now.year + 50),
+      initialDatePickerMode: DatePickerMode.year,
+    );
+
+    if (picked != null) {
+      log("Selected year: ${picked.year}");
+      buildYear.text = picked.year.toString();
+    }
+    update();
+  }
+  //-----------clean signup page three --------\\
+
+  void cleanSignupPageThree() {
+    vehicleMasterModel = null;
+    vehicleNumber.clear();
+    buildYear.clear();
+    update();
+  }
+
+  //---------validate image-------\\
+  bool isPanValid = false;
+  bool isAadharCardFrontValid = false;
+  bool isAadharCardBackValid = false;
+  bool isRegistrationCertificateValid = false;
+  bool isDrivingLicenseValid = false;
+
+  void validateDocuments({isPan = false}) {
+    if (isPan) {}
+    update();
+  }
+  //get multipart file function------
+
+  MultipartFile? getMultipartFile(File? file) {
+    if (file == null) return null;
+    return MultipartFile(file, filename: file.path.fileName);
+  }
+
+  //
+  void initInitializeSignupField() {
+    final controller = Get.find<AuthController>();
+    log('CHECKDATA ${controller.userModel?.phone}');
+    final userData = controller.userModel;
+    name.text = userData?.name ?? '';
+    email.text = userData?.email ?? "";
+    //selectedVehicle?.key = userData?.vehicleType!;
+    vehicleMasterModel?.id = userData?.vehicleId ?? "";
+    vehicleNumber.text = userData?.vehicleNumber ?? "";
+    buildYear.text = userData?.buildYear.toString() ?? "";
+    // selectedRegistrationFile = userData?.registrationCertificate!;
+    // selectedDrivingLicense = userData?.drivingLicence!;
+    // selectedAadhaarCard = userData?.aadharCardFront!;
+    // selecedCancelCheck = userData?.cancelCheck!;
+    // selectedAadhaarBackCard = userData?.aadharCardBack!;
+    // selectedPancard = userData?.panCard!;
+    // payeeName.text = userData?.payeeName!;
+    // accountNumber.text = userData?.accountNumber!;
+    ifscCode.text = userData?.ifscCode ?? "";
+    branchName.text = userData?.bankName ?? "";
+    branchName.text = userData?.bankName ?? "";
   }
 }

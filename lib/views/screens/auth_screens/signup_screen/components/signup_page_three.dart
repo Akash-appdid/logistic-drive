@@ -1,12 +1,13 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:logistic_driver/controllers/register_controller.dart';
 import 'package:logistic_driver/data/models/response/vehicle_master_model.dart';
+import 'package:logistic_driver/services/extensions.dart';
 import 'package:logistic_driver/views/base/custom_image.dart';
-import 'package:logistic_driver/views/base/date_picker_widget.dart';
+
+import 'package:logistic_driver/views/base/dialogs/custom_nodata_found.dart';
 
 import '../../../../../services/input_decoration.dart';
 
@@ -25,7 +26,7 @@ class _SignupPageThreeState extends State<SignupPageThree> {
     super.initState();
     Timer.run(() async {
       final controller = Get.find<RegisterController>();
-      controller.selectedVehicleMaster(null);
+      controller.cleanSignupPageThree();
       if (controller.selectedVehicle != null) {
         await controller
             .getVehicleMasterData(
@@ -50,8 +51,16 @@ class _SignupPageThreeState extends State<SignupPageThree> {
               child: CircularProgressIndicator(),
             );
           }
+          if (controller.vehicleMasterData.isEmpty) {
+            return const CustomNoDataFoundWidget(
+              text:
+                  'Sorry, no vehicles are available for your selection. Please choose a different vehicle.',
+            );
+          }
           return RefreshIndicator(
+            color: Colors.white,
             onRefresh: () async {
+              controller.cleanSignupPageThree();
               controller.getVehicleMasterData(
                   vehicleType: controller.selectedVehicle?.key ?? '');
             },
@@ -117,7 +126,7 @@ class _SignupPageThreeState extends State<SignupPageThree> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  value.name.toString(),
+                                  (value.name ?? 'NA').capitalizeFirstOfEach,
                                   style: Theme.of(context)
                                       .textTheme
                                       .labelLarge!
@@ -126,7 +135,7 @@ class _SignupPageThreeState extends State<SignupPageThree> {
                                 ),
                                 const SizedBox(width: 10),
                                 Text(
-                                  "${value.weight}",
+                                  "${value.weight}Kg",
                                   style: Theme.of(context)
                                       .textTheme
                                       .labelLarge!
@@ -190,13 +199,10 @@ class _SignupPageThreeState extends State<SignupPageThree> {
                             ),
                             const CertificateImageWidget(),
                             const SizedBox(height: 16),
-                            CustomDatePicker(
-                              datePickerMode: DatePickerMode.year,
-                              onChanged: (DateTime? dateTime) {
-                                if (dateTime == null) return;
-                                controller.selectBuildYear(dateTime);
+                            GestureDetector(
+                              onTap: () {
+                                controller.selectYear(context);
                               },
-                              today: false,
                               child: TextFormField(
                                 controller: controller.buildYear,
                                 style: const TextStyle(color: Colors.black),

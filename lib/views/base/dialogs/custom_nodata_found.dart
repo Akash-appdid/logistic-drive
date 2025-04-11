@@ -27,6 +27,7 @@ class CustomNoDataFoundWidget extends StatelessWidget {
         Text(
           text,
           style: Theme.of(context).textTheme.titleMedium!.copyWith(),
+          textAlign: TextAlign.center,
         )
       ],
     ));

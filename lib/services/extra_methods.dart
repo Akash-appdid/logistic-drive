@@ -8,28 +8,26 @@ class ExtraMethods {
     return 'https://wa.me/91$number?text=$msg';
   }
 
-/// Also Add Queries in AndroidManifest Refer Url Launcher Package Documentation
+  /// Also Add Queries in AndroidManifest Refer Url Launcher Package Documentation
   void makeCall(String number) async {
     final url = Uri(scheme: 'tel', path: number);
     if (await canLaunchUrl(url)) {
       launchUrl(url);
     }
   }
-  
-  
- /* void makeCall(String number) {
+
+  /* void makeCall(String number) {
     if (number.startsWith('+91')) {
       launchInBrowser("tel:$number");
     } else {
       launchInBrowser("tel:+91$number");
     }
   }*/
-  
-  
 
   void makeMail(String email, [String subject = '']) {
     try {
-      Uri emailLaunchUri = Uri(scheme: 'mailto', path: email, queryParameters: {'subject': subject});
+      Uri emailLaunchUri = Uri(
+          scheme: 'mailto', path: email, queryParameters: {'subject': subject});
       var url = emailLaunchUri.toString().replaceAll('+', ' ');
       launchInBrowser(url);
     } catch (e) {
@@ -68,4 +66,9 @@ class ExtraMethods {
       log('Could not launch $url');
     }
   }
+}
+
+String getInitialLetter(String? name) {
+  if (name == null || name.isEmpty) return '';
+  return name[0].toUpperCase();
 }

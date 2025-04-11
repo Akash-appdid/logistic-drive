@@ -35,7 +35,7 @@ class CustomTheme {
     hintColor: Colors.grey[700],
     canvasColor: secondaryColor,
     primaryColorLight: secondaryColor,
-    // splashColor: secondaryColor,
+    splashColor: backgroundLight,
     shadowColor: Colors.grey[600],
     cardColor: Colors.grey[100],
     primaryColor: primaryColor,

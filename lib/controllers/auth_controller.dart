@@ -33,21 +33,18 @@ class AuthController extends GetxController implements GetxService {
     ResponseModel responseModel;
     _isLoading = true;
     update();
-    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.loginUri}",
-        name: "login");
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.loginUri}", name: "login");
     try {
       Response response = await authRepo.login(data: data);
 
       if (response.statusCode == 200 && response.body['success']) {
-        responseModel =
-            ResponseModel(true, '${response.body['message']}', response.body);
+        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
       } else {
         responseModel = ResponseModel(false, response.statusText!);
       }
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
-      log('++++++++++++++++++++++++++++++++++++++++++++ ${e.toString()} +++++++++++++++++++++++++++++++++++++++++++++',
-          name: "ERROR AT login()");
+      log('++++++++++++++++++++++++++++++++++++++++++++ ${e.toString()} +++++++++++++++++++++++++++++++++++++++++++++', name: "ERROR AT login()");
     }
     _isLoading = false;
     update();
@@ -63,24 +60,19 @@ class AuthController extends GetxController implements GetxService {
     try {
       Response response = await authRepo.otpVerification(data: data);
       if (response.statusCode == 200) {
-        if (response.body['success'] == true &&
-            response.body['otp_verified'] == true &&
-            response.body['token'] != null) {
+        if (response.body['success'] == true && response.body['otp_verified'] == true && response.body['token'] != null) {
           setUserToken(response.body['token']);
           type = response.body['user_type'];
-          responseModel = ResponseModel(
-              true, '${response.body['user_type']}', response.body);
+          responseModel = ResponseModel(true, '${response.body['user_type']}', response.body);
         } else {
-          responseModel = ResponseModel(
-              false, '${response.body['message']}', response.body);
+          responseModel = ResponseModel(false, '${response.body['message']}', response.body);
         }
       } else {
         responseModel = ResponseModel(false, response.body['message']);
       }
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
-      log('++++++++++++++++++++++++++++++++++++++++++++ ${e.toString()} +++++++++++++++++++++++++++++++++++++++++++++',
-          name: "ERROR AT verifyOTP()");
+      log('++++++++++++++++++++++++++++++++++++++++++++ ${e.toString()} +++++++++++++++++++++++++++++++++++++++++++++', name: "ERROR AT verifyOTP()");
     }
     _isLoading = false;
     update();
@@ -96,8 +88,8 @@ class AuthController extends GetxController implements GetxService {
       Response response = await authRepo.getUserData();
       if (response.statusCode == 200 && response.body['success']) {
         log(response.bodyString.toString(), name: "UserModel");
-        _userModel =
-            UserModel.fromJson(response.body['data'] as Map<String, dynamic>);
+        _userModel = UserModel.fromJson(response.body['data'] as Map<String, dynamic>);
+        log('User $_userModel');
         responseModel = ResponseModel(true, 'success');
       } else {
         ApiChecker.checkApi(response);
@@ -137,9 +129,7 @@ class AuthController extends GetxController implements GetxService {
 
   bool checkUserData() {
     try {
-      if (_userModel!.name.isValid &&
-          _userModel!.phone.isValid &&
-          _userModel!.email.isValid) {
+      if (_userModel!.name.isValid && _userModel!.phone.isValid) {
         return true;
       } else {
         return false;

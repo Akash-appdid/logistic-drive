@@ -1,23 +1,25 @@
 import 'dart:async';
 import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:logistic_driver/controllers/auth_controller.dart';
 import 'package:logistic_driver/controllers/register_controller.dart';
-import 'package:logistic_driver/services/extensions.dart';
 import 'package:logistic_driver/services/theme.dart';
 import 'package:logistic_driver/views/screens/auth_screens/signup_screen/components/signup_page_five.dart';
 import 'package:logistic_driver/views/screens/auth_screens/signup_screen/components/signup_page_four.dart';
+
 import '../../../../services/route_helper.dart';
 import '../../../base/common_button.dart';
 import '../../dashboard/dashboard_screen.dart';
 import 'components/signup_page_one.dart';
-import 'components/signup_page_two.dart';
 import 'components/signup_page_three.dart';
+import 'components/signup_page_two.dart';
 
 class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+  final bool? isEdit;
+  const SignupScreen({super.key, this.isEdit = false});
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
@@ -43,6 +45,10 @@ class _SignupScreenState extends State<SignupScreen> {
       if (controller.userModel != null) {
         controller.setNumber();
       }
+      if (widget.isEdit == true) {
+        final registerController = Get.find<RegisterController>();
+        registerController.initInitializeSignupField();
+      }
     });
   }
 
@@ -63,30 +69,26 @@ class _SignupScreenState extends State<SignupScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // if (widget.isEdit == true)
+                      //   const SizedBox()
+                      // else
                       for (int i = 0; i < signupPages.length; i++)
                         Expanded(
                           child: Row(
                             children: [
                               Expanded(
                                 child: Container(
-                                  color: selectedIndex < i
-                                      ? Colors.grey
-                                      : primaryColor,
+                                  color: selectedIndex < i ? Colors.grey : primaryColor,
                                   height: 2,
                                 ),
                               ),
                               CircleAvatar(
                                 radius: 12,
-                                backgroundColor: selectedIndex < i
-                                    ? Colors.grey
-                                    : primaryColor,
+                                backgroundColor: selectedIndex < i ? Colors.grey : primaryColor,
                                 child: Center(
                                   child: Text(
                                     '${i + 1}',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium!
-                                        .copyWith(
+                                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
                                           fontSize: 10,
                                           fontWeight: FontWeight.w500,
                                           color: Colors.white,
@@ -96,9 +98,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               ),
                               Expanded(
                                 child: Container(
-                                  color: selectedIndex < i
-                                      ? Colors.grey
-                                      : primaryColor,
+                                  color: selectedIndex < i ? Colors.grey : primaryColor,
                                   height: 2,
                                 ),
                               ),
@@ -144,8 +144,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                     const SizedBox(width: 10),
                     Expanded(
-                      child:
-                          GetBuilder<RegisterController>(builder: (controller) {
+                      child: GetBuilder<RegisterController>(builder: (controller) {
                         return CustomButton(
                           isLoading: controller.isLoading,
                           onTap: () {
@@ -153,8 +152,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               if (selectedIndex < signupPages.length - 1) {
                                 if (selectedIndex == 1) {
                                   if (controller.selectedVehicle == null) {
-                                    Fluttertoast.showToast(
-                                        msg: 'Select vehicle');
+                                    Fluttertoast.showToast(msg: 'Select vehicle');
                                   } else {
                                     selectedIndex++;
                                     setState(() {});
@@ -167,87 +165,32 @@ class _SignupScreenState extends State<SignupScreen> {
                                 dynamic data = {
                                   'name': controller.name.text,
                                   'email': controller.email.text,
-                                  'vehicle_type':
-                                      controller.selectedVehicle?.key,
-                                  'vehicle_id':
-                                      controller.vehicleMasterModel?.id,
-                                  'vehicle_number':
-                                      controller.vehicleNumber.text,
+                                  'vehicle_type': controller.selectedVehicle?.key,
+                                  'vehicle_id': controller.vehicleMasterModel?.id,
+                                  'vehicle_number': controller.vehicleNumber.text,
                                   'build_year': controller.buildYear.text,
-                                  'registration_certificate': controller
-                                              .selectedRegistrationFile !=
-                                          null
-                                      ? MultipartFile(
-                                          controller.selectedRegistrationFile,
-                                          filename: controller
-                                              .selectedRegistrationFile!
-                                              .path
-                                              .fileName)
-                                      : null,
-                                  'driving_licence':
-                                      controller.selectedDrivingLicense != null
-                                          ? MultipartFile(
-                                              controller.selectedDrivingLicense,
-                                              filename: controller
-                                                  .selectedDrivingLicense!
-                                                  .path
-                                                  .fileName)
-                                          : null,
-                                  'aadhar_card_front':
-                                      controller.selectedAadhaarCard != null
-                                          ? MultipartFile(
-                                              controller.selectedAadhaarCard,
-                                              filename: controller
-                                                  .selectedAadhaarCard!
-                                                  .path
-                                                  .fileName)
-                                          : null,
-                                  'cancel_check':
-                                      controller.selecedCancelCheck != null
-                                          ? MultipartFile(
-                                              controller.selecedCancelCheck,
-                                              filename: controller
-                                                  .selecedCancelCheck!
-                                                  .path
-                                                  .fileName)
-                                          : null,
-                                  'aadhar_card_back': controller
-                                              .selectedRegistrationFile !=
-                                          null
-                                      ? MultipartFile(
-                                          controller.selectedRegistrationFile,
-                                          filename: controller
-                                              .selectedRegistrationFile!
-                                              .path
-                                              .fileName)
-                                      : null,
-                                  'pan_card': controller.selectedPancard != null
-                                      ? MultipartFile(
-                                          controller.selectedPancard,
-                                          filename: controller
-                                              .selectedPancard!.path.fileName)
-                                      : null,
+                                  'registration_certificate': controller.getMultipartFile(controller.selectedRegistrationFile),
+                                  'driving_licence': controller.getMultipartFile(controller.selectedDrivingLicense),
+                                  'aadhar_card_front': controller.getMultipartFile(controller.selectedAadhaarCard),
+                                  'cancel_check': controller.getMultipartFile(controller.selecedCancelCheck),
+                                  'aadhar_card_back': controller.getMultipartFile(controller.selectedAadhaarBackCard),
+                                  'pan_card': controller.getMultipartFile(controller.selectedPancard),
                                   'payee_name': controller.payeeName.text,
-                                  'account_number':
-                                      controller.accountNumber.text,
+                                  'account_number': controller.accountNumber.text,
                                   'ifsc_code': controller.ifscCode.text,
                                   'bank_name': controller.bankName.text,
                                   'bank_branch': controller.branchName.text,
                                 };
                                 log("$data");
-                                controller
-                                    .registerUser(data: data)
-                                    .then((value) {
+                                controller.registerUser(data: data).then((value) {
                                   if (value.isSuccess) {
                                     Fluttertoast.showToast(msg: value.message);
 
                                     Navigator.of(context).pushAndRemoveUntil(
-                                      getCustomRoute(
-                                          child: const DashboardScreen()),
+                                      getCustomRoute(child: const DashboardScreen()),
                                       (route) => false,
                                     );
-                                    Get.find<AuthController>()
-                                        .getUserProfileData();
+                                    Get.find<AuthController>().getUserProfileData();
                                   }
                                 });
                               }

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logistic_driver/controllers/auth_controller.dart';
 import 'package:logistic_driver/services/constants.dart';
-import 'package:logistic_driver/views/base/custom_image.dart';
+import 'package:logistic_driver/services/extensions.dart';
+import 'package:logistic_driver/services/extra_methods.dart';
 import 'package:logistic_driver/views/screens/drawer_screens/components/icon_and_title_widget.dart';
 import 'package:logistic_driver/views/screens/drawer_screens/profile_screens/profile_screen.dart';
 
@@ -39,26 +40,33 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const CircleAvatar(
-                            radius: 30,
-                            backgroundColor: Colors.transparent,
-                            child: CustomImage(
-                              path: Assets.imagesProfile,
-                              fit: BoxFit.cover,
+                      GetBuilder<AuthController>(builder: (controller) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            CircleAvatar(
+                              radius: 25,
+                              backgroundColor: Colors.grey.shade200,
+                              child: Text(
+                                getInitialLetter(controller.userModel?.name),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .copyWith(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 15),
-                          GetBuilder<AuthController>(builder: (controller) {
-                            return Column(
+                            const SizedBox(width: 15),
+                            Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  controller.userModel?.name ?? 'NA',
+                                  (controller.userModel?.name ?? 'NA')
+                                      .capitalizeFirstOfEach,
                                   style: Theme.of(context)
                                       .textTheme
                                       .displayMedium!
@@ -68,6 +76,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                         fontWeight: FontWeight.w300,
                                       ),
                                 ),
+                                const SizedBox(height: 4),
                                 Text(
                                   controller.userModel?.phone ?? 'NA',
                                   style: Theme.of(context)
@@ -80,10 +89,10 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                       ),
                                 ),
                               ],
-                            );
-                          })
-                        ],
-                      ),
+                            ),
+                          ],
+                        );
+                      }),
                       const Divider(color: Color(0xffDAD9D9)),
                       IconAndTitleWidget(
                           title: "Home",
