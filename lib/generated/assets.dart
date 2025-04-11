@@ -62,6 +62,10 @@ class Assets {
   /// assets/images/placeholder.jpg
   static const String imagesPlaceholder = "assets/images/placeholder.jpg";
 
+  /// Assets for imagesProfile
+  /// assets/images/profile.png
+  static const String imagesProfile = "assets/images/profile.png";
+
   /// Assets for imagesProfileUnderReview
   /// assets/images/profile_under_review.png
   static const String imagesProfileUnderReview = "assets/images/profile_under_review.png";
@@ -81,6 +85,10 @@ class Assets {
   /// Assets for lottiesMaintenance
   /// assets/lotties/maintenance.json
   static const String lottiesMaintenance = "assets/lotties/maintenance.json";
+
+  /// Assets for lottiesNoDataFound
+  /// assets/lotties/no_data_found.json
+  static const String lottiesNoDataFound = "assets/lotties/no_data_found.json";
 
   /// Assets for svgsAboutUs
   /// assets/svgs/about-us.svg

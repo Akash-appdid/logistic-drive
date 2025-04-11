@@ -11,7 +11,6 @@ AppBar appBar(BuildContext context) {
       return GestureDetector(
         onTap: () {
           Scaffold.of(ctx).openDrawer();
-          // Navigator.of(context).push(getCustomRoute(child: const PakersAndMoversScreen()));
         },
         child: SizedBox(
           width: 20,

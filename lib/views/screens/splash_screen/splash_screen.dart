@@ -92,6 +92,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void initMethod() {
     final auth = Get.find<AuthController>();
+
     if (auth.isLoggedIn()) {
       auth.getUserProfileData().then((value) {
         if (value.isSuccess) {
@@ -100,6 +101,9 @@ class _SplashScreenState extends State<SplashScreen> {
                 getCustomRoute(child: const DashboardScreen()),
                 (route) => false);
           } else {
+            if (auth.userModel != null) {
+              auth.setNumber();
+            }
             Navigator.of(context).pushAndRemoveUntil(
                 getCustomRoute(child: const SignupScreen()), (route) => false);
           }

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -15,44 +14,31 @@ export 'package:image_picker/image_picker.dart';
 class ServiceController {
   final picker = ImagePicker();
 
-  Future<File> pickImage(ImageSource source, BuildContext context) async {
-    File? pickedFile;
+  Future<File?> pickImage(ImageSource source, BuildContext context) async {
+    XFile? pickedFile;
     bool permission = false;
-    bool isCamera = source == ImageSource.camera ? true : false;
     if (source == ImageSource.camera) {
-      permission = await Get.find<PermissionController>().getPermission(Permission.camera, context);
+      permission = await Get.find<PermissionController>()
+          .getPermission(Permission.camera, context);
     } else {
-      // permission = await Get.find<PermissionController>().getPermission(Platform.isAndroid ? Permission.storage : Permission.photos, context);
-      if (Platform.isAndroid && source == ImageSource.gallery) {
+      if (Platform.isAndroid) {
         permission = true;
+      } else {
+        permission = await Get.find<PermissionController>().getPermission(
+            Platform.isAndroid ? Permission.storage : Permission.photos,
+            context);
       }
     }
     if (permission) {
-      if (isCamera) {
-        // var navigator = Navigator.of(context);
-        // pickedFile = await navigator.push(MaterialPageRoute(
-        //   builder: (context) => const CameraScreen(),
-        // ));
-      } else {
-        final file = await picker.pickImage(source: ImageSource.gallery, imageQuality: 25);
-        if (file?.path != null) {
-          pickedFile = File(file!.path);
-        } else {
-          Fluttertoast.showToast(msg: "Try Again!!");
-        }
-      }
+      pickedFile = await picker.pickImage(source: source, imageQuality: 25);
     } else {
-      Fluttertoast.showToast(msg: "Permission Denied");
+      Fluttertoast.showToast(msg: "User Denied Permission");
     }
-
-    List<File> pickedImageFile = [];
 
     if (pickedFile != null) {
-      File filedata = File(pickedFile.path);
-      pickedImageFile.add(filedata);
+      return File(pickedFile.path);
     }
-    log(pickedImageFile.toString(), name: "pickedImageFile.toString()");
-    return pickedImageFile.last;
+    return null;
   }
 
   Future<List<XFile>> getMultiImage() async {
@@ -60,7 +46,8 @@ class ServiceController {
     return pickedFile;
   }
 
-  Future<DateTime> selectDate(context, {DateTime? startData, DateTime? endDate}) async {
+  Future<DateTime> selectDate(context,
+      {DateTime? startData, DateTime? endDate}) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
       firstDate: DateTime.now(),

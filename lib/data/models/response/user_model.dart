@@ -6,13 +6,13 @@ String userModelToJson(UserModel data) => json.encode(data.toJson());
 
 class UserModel {
   int? id;
-  dynamic name;
+  String? name;
   String? phone;
   String? email;
   String? vehicleType;
   String? vehicleNumber;
   String? registrationCertificate;
-  String? buildYear;
+  int? buildYear;
   String? panCard;
   String? drivingLicence;
   String? aadharCardFront;
@@ -27,6 +27,7 @@ class UserModel {
   String? status;
   DateTime? createdAt;
   DateTime? updatedAt;
+  dynamic vehicleId;
 
   UserModel({
     this.id,
@@ -51,6 +52,7 @@ class UserModel {
     this.status,
     this.createdAt,
     this.updatedAt,
+    this.vehicleId,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -80,6 +82,7 @@ class UserModel {
         updatedAt: json["updated_at"] == null
             ? null
             : DateTime.parse(json["updated_at"]),
+        vehicleId: json["vehicle_id"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -105,5 +108,6 @@ class UserModel {
         "status": status,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
+        "vehicle_id": vehicleId,
       };
 }

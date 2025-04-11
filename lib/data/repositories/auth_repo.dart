@@ -14,15 +14,18 @@ class AuthRepo {
   AuthRepo({required this.sharedPreferences, required this.apiClient});
 
   /// Methods to deal with Remote Data ///
-
   Future<Response> login({required Map<String, dynamic> data}) async =>
       await apiClient.postData(AppConstants.loginUri, data);
+
   Future<Response> otpVerification(
           {required Map<String, dynamic> data}) async =>
       await apiClient.postData(AppConstants.otpVerifyUri, data);
 
   Future<Response> getUserData() async =>
       await apiClient.getData(AppConstants.profileUri);
+
+  Future<Response> getLogOut() async =>
+      await apiClient.getData(AppConstants.logOutUri);
 
   Future<Response> getExtras() async =>
       await apiClient.getData(AppConstants.extras);

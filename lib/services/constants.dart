@@ -46,17 +46,23 @@ class AppConstants {
   String get getBaseUrl => baseUrl;
   set setBaseUrl(String url) => baseUrl = url;
   static const String liveUrl = 'https://prynzo.appdid.com/';
-  static const String localUrl = 'http://192.168.1.23:8001/';
+  static const String localUrl = 'http://192.168.1.23:8000/';
   static String baseUrl = (kReleaseMode || isProduction) ? liveUrl : localUrl;
 
   //--------auth-----------\\
   static const String loginUri = 'api/driver/v1/auth/otp/send';
   static const String otpVerifyUri = 'api/driver/v1/auth/otp/verify';
-  static const String registerUri = 'api/user/v1/auth/register';
   static const String profileUri = 'api/driver/v1/basic/profile';
+  static const String logOutUri = 'api/driver/v1/auth/logout';
+
+  //--------basic---------
   static const String businessSettingUri = 'api/v1/settings';
 
-  ///
+  //-------resister-----------
+  static const String registerUri = 'api/driver/v1/auth/register';
+  static const String vehiclesMaterUri = 'api/driver/v1/basic/vehicles';
+
+  //-------app details-------
   static String appName = 'Transpotation';
   static String packageName = '';
   static String version = '';

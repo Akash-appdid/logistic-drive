@@ -10,7 +10,6 @@ class OTPAutofillController extends GetxController
     with CodeAutoFill
     implements GetxService {
   String currentCode = '';
-
   final TextEditingController otpController = TextEditingController();
   bool isResendOtpEnabled = false;
   int resendOtpTimer = 30;
@@ -53,8 +52,6 @@ class OTPAutofillController extends GetxController
   }
 
   //-------------------timer--------------
-
-  //
   void startResendOtpTimer() {
     isResendOtpEnabled = false;
     isTextVisible = true;

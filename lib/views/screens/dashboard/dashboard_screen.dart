@@ -16,14 +16,14 @@ class DashboardScreen extends StatefulWidget {
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
-}   
+}
 
 class _DashboardScreenState extends State<DashboardScreen> {
   bool isOnGoingOrder = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const DrawerScreen(),
+      drawer: const DrawerWidget(),
       appBar: appBar(context),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,8 +74,11 @@ class BookingsListSectionWidget extends StatelessWidget {
                 child: CustomButton(
                   radius: 10,
                   elevation: 2,
-                  color: controller.isOnGoingOrder ? primaryColor : Colors.white,
-                  type: controller.isOnGoingOrder ? ButtonType.primary : ButtonType.secondary,
+                  color:
+                      controller.isOnGoingOrder ? primaryColor : Colors.white,
+                  type: controller.isOnGoingOrder
+                      ? ButtonType.primary
+                      : ButtonType.secondary,
                   onTap: () {
                     controller.setIsComplete(true);
                   },
@@ -87,8 +90,11 @@ class BookingsListSectionWidget extends StatelessWidget {
                 child: CustomButton(
                   elevation: 2,
                   radius: 10,
-                  color: !controller.isOnGoingOrder ? primaryColor : Colors.white,
-                  type: !controller.isOnGoingOrder ? ButtonType.primary : ButtonType.secondary,
+                  color:
+                      !controller.isOnGoingOrder ? primaryColor : Colors.white,
+                  type: !controller.isOnGoingOrder
+                      ? ButtonType.primary
+                      : ButtonType.secondary,
                   onTap: () {
                     controller.setIsComplete(false);
                   },
@@ -98,7 +104,9 @@ class BookingsListSectionWidget extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 6),
-          controller.isOnGoingOrder ? const OngoingOrderWidget() : const CompleteOrderWidget()
+          controller.isOnGoingOrder
+              ? const OngoingOrderWidget()
+              : const CompleteOrderWidget()
         ],
       );
     });

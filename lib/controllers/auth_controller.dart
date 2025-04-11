@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
@@ -112,7 +111,9 @@ class AuthController extends GetxController implements GetxService {
     update();
     return responseModel;
   }
+  //
 
+  ///
   void toggleTerms() {
     _acceptTerms = !_acceptTerms;
     update();
@@ -148,26 +149,6 @@ class AuthController extends GetxController implements GetxService {
     }
   }
 
-  //-------------------Signup page------------------------
-  //----signup page 01------
-  TextEditingController name = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController address = TextEditingController();
-  TextEditingController vehicleNumber = TextEditingController();
-  //----signup page 02------
-  TextEditingController buildYear = TextEditingController();
-  //----signup page 04-------
-  File? pancard;
-  File? drivingLicense;
-  File? aadhaarCard;
-  //---signup page 05------
-  TextEditingController payeeName = TextEditingController();
-  TextEditingController accountNumber = TextEditingController();
-  TextEditingController ifscCode = TextEditingController();
-  TextEditingController bankName = TextEditingController();
-  TextEditingController branchName = TextEditingController();
-  File? check;
-
   //-------- accepet tearm and condition
   bool _acceptTermAndCondition = false;
 
@@ -175,6 +156,43 @@ class AuthController extends GetxController implements GetxService {
 
   void updateAcceptTermAndCondition(bool value) {
     _acceptTermAndCondition = value;
+    update();
+  }
+
+  //---log out
+  Future<ResponseModel> logOut() async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    try {
+      Response response = await authRepo.getLogOut();
+
+      if (response.statusCode == 200) {
+        log(response.bodyString!, name: "logOut");
+
+        update();
+        responseModel = ResponseModel(true, 'success');
+      } else {
+        ApiChecker.checkApi(response);
+        responseModel = ResponseModel(false, "${response.statusText}");
+      }
+    } catch (e) {
+      log('---- ${e.toString()} ----', name: "ERROR AT logOut()");
+      responseModel = ResponseModel(false, "$e");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  void cleanAllField() {
+    numberController.clear();
+    _acceptTermAndCondition = false;
+    update();
+  }
+
+  void setNumber() {
+    numberController.text = userModel?.phone ?? '';
     update();
   }
 }

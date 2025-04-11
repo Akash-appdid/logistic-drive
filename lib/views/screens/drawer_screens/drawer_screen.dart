@@ -1,108 +1,185 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:logistic_driver/controllers/auth_controller.dart';
 import 'package:logistic_driver/services/constants.dart';
 import 'package:logistic_driver/views/base/custom_image.dart';
+import 'package:logistic_driver/views/screens/drawer_screens/components/icon_and_title_widget.dart';
 import 'package:logistic_driver/views/screens/drawer_screens/profile_screens/profile_screen.dart';
-import 'package:logistic_driver/views/screens/splash_screen/splash_screen.dart';
 
+import '../../../controllers/basic_controller.dart';
 import '../../../services/route_helper.dart';
+import '../../base/custom_html_screen.dart';
 import '../../base/dialogs/delete_account_dialog.dart';
-import 'review_and_ratiing_screen/review_and_rating.dart';
+import '../../base/dialogs/logout_dialog.dart';
 
-class DrawerScreen extends StatefulWidget {
-  const DrawerScreen({super.key});
+class DrawerWidget extends StatefulWidget {
+  const DrawerWidget({super.key});
 
   @override
-  State<DrawerScreen> createState() => _DrawerScreenState();
+  State<DrawerWidget> createState() => _DrawerWidgetState();
 }
 
-class _DrawerScreenState extends State<DrawerScreen> {
+class _DrawerWidgetState extends State<DrawerWidget> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          centerTitle: true,
-          surfaceTintColor: Colors.white,
-          backgroundColor: Colors.white,
-          systemOverlayStyle: const SystemUiOverlayStyle(
-            statusBarColor: Colors.transparent,
-          ),
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: const Icon(
-              Icons.arrow_back,
-              size: 24,
-              color: Colors.black,
-            ),
-          ),
-          title: Text(
-            "Menu",
-            style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                  fontSize: 18,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w700,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const CircleAvatar(
+                            radius: 30,
+                            backgroundColor: Colors.transparent,
+                            child: CustomImage(
+                              path: Assets.imagesProfile,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          const SizedBox(width: 15),
+                          GetBuilder<AuthController>(builder: (controller) {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  controller.userModel?.name ?? 'NA',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displayMedium!
+                                      .copyWith(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                ),
+                                Text(
+                                  controller.userModel?.phone ?? 'NA',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displayMedium!
+                                      .copyWith(
+                                        color: const Color(0xff626161),
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                ),
+                              ],
+                            );
+                          })
+                        ],
+                      ),
+                      const Divider(color: Color(0xffDAD9D9)),
+                      IconAndTitleWidget(
+                          title: "Home",
+                          icon: Icons.home_outlined,
+                          onTap: () {
+                            Navigator.pop(context);
+                          }),
+                      IconAndTitleWidget(
+                          title: "Profile",
+                          icon: Icons.account_circle_outlined,
+                          onTap: () {
+                            Navigator.push(context,
+                                getCustomRoute(child: const ProfileScreen()));
+                          }),
+                      const Divider(color: Color(0xffDAD9D9)),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 8.0, bottom: 8.0, top: 8.0),
+                        child: Text(
+                          "Others",
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayMedium!
+                              .copyWith(
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w300,
+                              ),
+                        ),
+                      ),
+                      const Divider(color: Color(0xffDAD9D9)),
+                      IconAndTitleWidget(
+                        title: "Terms and Conditions",
+                        icon: Icons.description,
+                        onTap: () {
+                          Navigator.of(context).push(
+                            getCustomRoute(
+                              child: const CustomHtmlScreen(
+                                title: 'Terms and Conditions',
+                                bussinessSettingName:
+                                    BussinessSettingName.termsAndCondition,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      IconAndTitleWidget(
+                        title: "Privacy policy",
+                        icon: Icons.security,
+                        onTap: () {
+                          Navigator.of(context).push(
+                            getCustomRoute(
+                              child: const CustomHtmlScreen(
+                                title: 'Privacy Policy',
+                                bussinessSettingName:
+                                    BussinessSettingName.privacyPolicy,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      IconAndTitleWidget(
+                        title: "About Us",
+                        icon: Icons.info_outline,
+                        onTap: () {
+                          Navigator.of(context).push(
+                            getCustomRoute(
+                              child: const CustomHtmlScreen(
+                                title: 'About Us',
+                                bussinessSettingName:
+                                    BussinessSettingName.aboutUs,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      IconAndTitleWidget(
+                        title: "Support",
+                        icon: Icons.support_agent_outlined,
+                        onTap: () {
+                          Navigator.of(context).push(
+                            getCustomRoute(
+                              child: const CustomHtmlScreen(
+                                title: 'Support',
+                                bussinessSettingName:
+                                    BussinessSettingName.contactUs,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-          ),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              const Divider(height: 0.5, color: Color(0xFF787878)),
-              const SizedBox(height: 14),
-              CustomDrawerTileWidget(
-                title: "My Profile",
-                icon: Assets.svgsMyProfile,
-                onTap: () {
-                  Navigator.push(
-                      context, getCustomRoute(child: const ProfileScreen()));
-                },
-              ),
-              CustomDrawerTileWidget(
-                title: "Bookings",
-                icon: Assets.svgsBookings,
-                onTap: () {},
-              ),
-              CustomDrawerTileWidget(
-                title: "Review & Ratings",
-                icon: Assets.svgsReviewRating,
-                onTap: () {
-                  Navigator.push(
-                      context, getCustomRoute(child: ReviewScreen()));
-                },
-              ),
-              CustomDrawerTileWidget(
-                title: "Terms and Conditions",
-                icon: Assets.svgsTermsAndCondition,
-                onTap: () {},
-              ),
-              CustomDrawerTileWidget(
-                title: "Privacy policy",
-                icon: Assets.svgsPrivacyPolicy,
-                onTap: () {},
-              ),
-              CustomDrawerTileWidget(
-                title: "About Us",
-                icon: Assets.svgsAboutUs,
-                onTap: () {},
-              ),
-              CustomDrawerTileWidget(
-                title: "Support",
-                icon: Assets.svgsSupport,
-                onTap: () {},
-              ),
-              CustomDrawerTileWidget(
-                title: "Help & Support",
-                icon: Assets.svgsHelpSupport,
-                onTap: () {},
-              ),
-              const SizedBox(height: 20),
-            ],
+              ],
+            ),
           ),
         ),
         bottomNavigationBar: Column(
@@ -111,9 +188,13 @@ class _DrawerScreenState extends State<DrawerScreen> {
           children: [
             GestureDetector(
               onTap: () async {
-                Navigator.of(context).pushAndRemoveUntil(
-                    getCustomRoute(child: const SplashScreen()),
-                    (route) => false);
+                showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (context) {
+                    return const LogoutDialog();
+                  },
+                );
               },
               child: Container(
                 margin: const EdgeInsets.symmetric(vertical: 4),
@@ -150,8 +231,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
               },
               child: Container(
                 margin: const EdgeInsets.symmetric(vertical: 4),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                 color: Colors.transparent,
                 child: Row(
                   children: [
@@ -178,53 +258,6 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 ),
               ),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class CustomDrawerTileWidget extends StatelessWidget {
-  const CustomDrawerTileWidget({
-    super.key,
-    this.onTap,
-    required this.title,
-    required this.icon,
-  });
-  final Function()? onTap;
-  final String title;
-  final String icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        color: Colors.transparent,
-        padding: const EdgeInsets.all(10),
-        child: Row(
-          children: [
-            SvgPicture.asset(
-              icon,
-              width: 20,
-              height: 20,
-              fit: BoxFit.cover,
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Text(
-                title,
-                style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
-                    ),
-              ),
-            ),
-            const Icon(
-              Icons.arrow_forward_ios_rounded,
-            )
           ],
         ),
       ),
