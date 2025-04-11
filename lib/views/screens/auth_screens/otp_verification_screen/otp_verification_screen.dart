@@ -165,6 +165,8 @@ class OtpVerificationScreen extends StatelessWidget {
               (route) => false,
             );
           }
+        } else {
+          Fluttertoast.showToast(msg: value.message);
         }
       });
     } else {

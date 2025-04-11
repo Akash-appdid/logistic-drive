@@ -95,7 +95,7 @@ class _SignupPageOneState extends State<SignupPageOne> {
             controller: Get.find<RegisterController>().address,
             decoration: CustomDecoration.inputDecoration(
               floating: true,
-              label: 'Address',
+              label: 'Address(Optional)',
               icon: const Icon(
                 Icons.location_on_outlined,
                 size: 25,

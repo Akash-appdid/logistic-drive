@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:logistic_driver/data/models/body/vehicle_model.dart';
 import 'package:logistic_driver/data/models/response/vehicle_master_model.dart';
 import 'package:logistic_driver/data/repositories/register_repo.dart';
+import 'package:logistic_driver/services/extensions.dart';
 
 import '../data/models/response/response_model.dart';
 
@@ -225,5 +226,49 @@ class RegisterController extends GetxController implements GetxService {
     vehicleMasterModel = null;
 
     update();
+  }
+
+  //-------pick date----------\\
+  Future<void> selectYear(BuildContext context) async {
+    final DateTime now = DateTime.now();
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime(now.year),
+      firstDate: DateTime(now.year),
+      lastDate: DateTime(now.year + 50),
+      initialDatePickerMode: DatePickerMode.year,
+    );
+
+    if (picked != null) {
+      log("Selected year: ${picked.year}");
+      buildYear.text = picked.year.toString();
+    }
+    update();
+  }
+  //-----------clean signup page three --------\\
+
+  void cleanSignupPageThree() {
+    vehicleMasterModel = null;
+    vehicleNumber.clear();
+    buildYear.clear();
+    update();
+  }
+
+  //---------validate image-------\\
+  bool isPanValid = false;
+  bool isAadharCardFrontValid = false;
+  bool isAadharCardBackValid = false;
+  bool isRegistrationCertificateValid = false;
+  bool isDrivingLicenseValid = false;
+
+  void validateDocuments({isPan = false}) {
+    if (isPan) {}
+    update();
+  }
+  //get multipart file function------
+
+  MultipartFile? getMultipartFile(File? file) {
+    if (file == null) return null;
+    return MultipartFile(file, filename: file.path.fileName);
   }
 }

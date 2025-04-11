@@ -5,7 +5,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:logistic_driver/controllers/auth_controller.dart';
 import 'package:logistic_driver/controllers/register_controller.dart';
-import 'package:logistic_driver/services/extensions.dart';
 import 'package:logistic_driver/services/theme.dart';
 import 'package:logistic_driver/views/screens/auth_screens/signup_screen/components/signup_page_five.dart';
 import 'package:logistic_driver/views/screens/auth_screens/signup_screen/components/signup_page_four.dart';
@@ -174,59 +173,22 @@ class _SignupScreenState extends State<SignupScreen> {
                                   'vehicle_number':
                                       controller.vehicleNumber.text,
                                   'build_year': controller.buildYear.text,
-                                  'registration_certificate': controller
-                                              .selectedRegistrationFile !=
-                                          null
-                                      ? MultipartFile(
-                                          controller.selectedRegistrationFile,
-                                          filename: controller
-                                              .selectedRegistrationFile!
-                                              .path
-                                              .fileName)
-                                      : null,
+                                  'registration_certificate':
+                                      controller.getMultipartFile(
+                                          controller.selectedRegistrationFile),
                                   'driving_licence':
-                                      controller.selectedDrivingLicense != null
-                                          ? MultipartFile(
-                                              controller.selectedDrivingLicense,
-                                              filename: controller
-                                                  .selectedDrivingLicense!
-                                                  .path
-                                                  .fileName)
-                                          : null,
+                                      controller.getMultipartFile(
+                                          controller.selectedDrivingLicense),
                                   'aadhar_card_front':
-                                      controller.selectedAadhaarCard != null
-                                          ? MultipartFile(
-                                              controller.selectedAadhaarCard,
-                                              filename: controller
-                                                  .selectedAadhaarCard!
-                                                  .path
-                                                  .fileName)
-                                          : null,
-                                  'cancel_check':
-                                      controller.selecedCancelCheck != null
-                                          ? MultipartFile(
-                                              controller.selecedCancelCheck,
-                                              filename: controller
-                                                  .selecedCancelCheck!
-                                                  .path
-                                                  .fileName)
-                                          : null,
-                                  'aadhar_card_back': controller
-                                              .selectedRegistrationFile !=
-                                          null
-                                      ? MultipartFile(
-                                          controller.selectedRegistrationFile,
-                                          filename: controller
-                                              .selectedRegistrationFile!
-                                              .path
-                                              .fileName)
-                                      : null,
-                                  'pan_card': controller.selectedPancard != null
-                                      ? MultipartFile(
-                                          controller.selectedPancard,
-                                          filename: controller
-                                              .selectedPancard!.path.fileName)
-                                      : null,
+                                      controller.getMultipartFile(
+                                          controller.selectedAadhaarCard),
+                                  'cancel_check': controller.getMultipartFile(
+                                      controller.selecedCancelCheck),
+                                  'aadhar_card_back':
+                                      controller.getMultipartFile(
+                                          controller.selectedAadhaarBackCard),
+                                  'pan_card': controller.getMultipartFile(
+                                      controller.selectedPancard),
                                   'payee_name': controller.payeeName.text,
                                   'account_number':
                                       controller.accountNumber.text,

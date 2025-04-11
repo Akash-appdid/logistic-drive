@@ -137,9 +137,7 @@ class AuthController extends GetxController implements GetxService {
 
   bool checkUserData() {
     try {
-      if (_userModel!.name.isValid &&
-          _userModel!.phone.isValid &&
-          _userModel!.email.isValid) {
+      if (_userModel!.name.isValid && _userModel!.phone.isValid) {
         return true;
       } else {
         return false;

@@ -42,13 +42,6 @@ class PanCardImageWidget extends StatelessWidget {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    // boxShadow: [
-                    //   BoxShadow(
-                    //     offset: const Offset(0, 2),
-                    //     blurRadius: 1,
-                    //     color: Colors.black.withOpacity(0.2),
-                    //   )
-                    // ],
                     borderRadius: BorderRadius.circular(10),
                     border:
                         Border.all(color: const Color(0xFFF2F2F2), width: 1),
