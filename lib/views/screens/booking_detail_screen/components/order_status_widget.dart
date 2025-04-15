@@ -21,7 +21,7 @@ class OrderStatusWidget extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  '- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -',
+                  '- - - - - - - - - - - - - - - - - - - - - - - - -',
                   style: Theme.of(context).textTheme.labelMedium!.copyWith(
                         color: Colors.white,
                       ),
@@ -29,7 +29,8 @@ class OrderStatusWidget extends StatelessWidget {
                 const SizedBox(width: 4),
                 SvgPicture.asset(
                   Assets.svgsTruck,
-                  colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                  colorFilter:
+                      const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                 ),
               ],
             ),
