@@ -5,11 +5,13 @@ import 'package:flutter/services.dart';
 import 'package:get/instance_manager.dart';
 import 'package:logistic_driver/controllers/auth_controller.dart';
 import 'package:logistic_driver/controllers/basic_controller.dart';
+import 'package:logistic_driver/controllers/booking_controller.dart';
 import 'package:logistic_driver/controllers/otp_autofill_controller.dart';
 import 'package:logistic_driver/controllers/register_controller.dart';
 import 'package:logistic_driver/data/api/api_client.dart';
 import 'package:logistic_driver/data/repositories/auth_repo.dart';
 import 'package:logistic_driver/data/repositories/basic_repo.dart';
+import 'package:logistic_driver/data/repositories/booking_repo.dart';
 import 'package:logistic_driver/data/repositories/register_repo.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -41,9 +43,9 @@ class Init {
           appBaseUrl: AppConstants.baseUrl, sharedPreferences: Get.find()));
       Get.lazyPut(
           () => AuthRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
-      Get.lazyPut(() =>
-          BasicRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+      Get.lazyPut(() => BasicRepo(apiClient: Get.find()));
       Get.lazyPut(() => RegisterRepo(apiClient: Get.find()));
+      Get.lazyPut(() => BookingRepo(apiClient: Get.find()));
 
       //--------Controller
       Get.lazyPut(() => PermissionController());
@@ -51,6 +53,7 @@ class Init {
       Get.lazyPut(() => AuthController(authRepo: Get.find()));
       Get.lazyPut(() => RegisterController(registerRepo: Get.find()));
       Get.lazyPut(() => BasicController(basicRepo: Get.find()));
+      Get.lazyPut(() => BookingController(bookingRepo: Get.find()));
       Get.lazyPut(() => OTPAutofillController());
     } catch (e) {
       log('---- ${e.toString()} ----', name: "ERROR AT initialize()");

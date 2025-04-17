@@ -42,11 +42,11 @@ String getStringFromList(List<dynamic>? data) {
 
 class AppConstants {
   static bool isProduction =
-      true; //if want to use live url in debug mode set to production mode true
+      false; //if want to use live url in debug mode set to production mode true
   String get getBaseUrl => baseUrl;
   set setBaseUrl(String url) => baseUrl = url;
   static const String liveUrl = 'https://transport.appdid.com/';
-  static const String localUrl = 'http://192.168.1.23:8000/';
+  static const String localUrl = 'http://192.168.1.15:8000/';
   static String baseUrl = (kReleaseMode || isProduction) ? liveUrl : localUrl;
 
   //--------auth-----------\\
@@ -61,6 +61,12 @@ class AppConstants {
   //-------resister-----------
   static const String registerUri = 'api/driver/v1/auth/register';
   static const String vehiclesMaterUri = 'api/driver/v1/basic/vehicles';
+
+  //----------bookings----------------
+  static const String bookingsUri = 'api/driver/v1/goods/bookings';
+  static const String bookingTripStartUri =
+      'api/driver/v1/goods/bookings/start';
+  static const String bookingTripEndUri = 'api/driver/v1/goods/bookings/end';
 
   //-------app details-------
   static String appName = 'Transpotation';
