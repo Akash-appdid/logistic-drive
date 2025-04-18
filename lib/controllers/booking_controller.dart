@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
+import 'package:logistic_driver/data/models/response/booking_model.dart';
 import 'package:logistic_driver/data/repositories/booking_repo.dart';
 
 import '../data/api/api_checker.dart';
@@ -22,6 +23,7 @@ class BookingController extends GetxController implements GetxService {
   bool get isLoading => _isLoading;
 
   //----get all booking----------
+  List<BookingsModel> bookingsData = [];
   Future<ResponseModel> getAllBooking({String? status}) async {
     ResponseModel responseModel;
     _isLoading = true;
@@ -30,8 +32,10 @@ class BookingController extends GetxController implements GetxService {
       Response response = await bookingRepo.getBookings(status: status);
       if (response.statusCode == 200 && response.body['success']) {
         log("${response.bodyString}", name: 'getAllBooking');
-        // _userModel =
-        //     UserModel.fromJson(response.body['data'] as Map<String, dynamic>);
+        bookingsData = (response.body['data']['data'] as List<dynamic>)
+            .map((res) => BookingsModel.fromJson(res))
+            .toList();
+
         responseModel = ResponseModel(true, 'success');
       } else {
         ApiChecker.checkApi(response);

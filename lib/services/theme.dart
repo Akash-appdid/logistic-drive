@@ -63,12 +63,12 @@ class CustomTheme {
       iconTheme: const IconThemeData(
         color: Colors.black,
       ),
-      systemOverlayStyle: SystemUiOverlayStyle(
+      systemOverlayStyle: const SystemUiOverlayStyle(
         // Status bar color
-        statusBarColor: primaryColor,
+        statusBarColor: Colors.transparent,
         // Status bar brightness (optional)
-        statusBarIconBrightness: Brightness.light,
-        statusBarBrightness: Brightness.light,
+        // statusBarIconBrightness: Brightness.light,
+        // statusBarBrightness: Brightness.light,
       ),
     ),
     typography: Typography.material2021(),

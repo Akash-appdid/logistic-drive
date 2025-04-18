@@ -1,4 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:logistic_driver/controllers/booking_controller.dart';
 import 'package:logistic_driver/services/route_helper.dart';
 import 'package:logistic_driver/views/screens/booking_detail_screen/booking_detail_screen.dart';
 
@@ -11,18 +15,25 @@ class OngoingOrderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: 10,
-      itemBuilder: (context, index) {
-        return GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(getCustomRoute(child: const BookingDetailScreen()));
-          },
-          child: const BookingItemWidget(),
-        );
-      },
-    );
+    return GetBuilder<BookingController>(builder: (controller) {
+      log("${controller.bookingsData.length}");
+      return ListView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: controller.bookingsData.length,
+        itemBuilder: (context, index) {
+          final booking = controller.bookingsData[index];
+          return GestureDetector(
+            onTap: () {
+              Navigator.of(context)
+                  .push(getCustomRoute(child: const BookingDetailScreen()));
+            },
+            child: BookingItemWidget(
+              bookings: booking,
+            ),
+          );
+        },
+      );
+    });
   }
 }

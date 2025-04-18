@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:logistic_driver/data/models/response/booking_model.dart';
+import 'package:logistic_driver/services/extensions.dart';
 
 import '../../../../services/theme.dart';
 import '../../dashboard/components/location_contaner_widget.dart';
@@ -7,8 +9,10 @@ class BookingItemWidget extends StatelessWidget {
   const BookingItemWidget({
     super.key,
     this.isComplete = false,
+    required this.bookings,
   });
   final bool isComplete;
+  final BookingsModel bookings;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +38,7 @@ class BookingItemWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'ID #12351302111',
+                  'ID #${bookings.bookingId ?? ''}',
                   style: Theme.of(context).textTheme.labelMedium!.copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -43,7 +47,7 @@ class BookingItemWidget extends StatelessWidget {
                 ),
               ),
               Text(
-                '20 March 2025  11:25 AM',
+                ((bookings.createdAt ?? '') as DateTime).dMy,
                 style: Theme.of(context).textTheme.labelMedium!.copyWith(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -53,22 +57,30 @@ class BookingItemWidget extends StatelessWidget {
             ],
           ),
           Divider(color: Colors.grey.shade200),
-          const LocationContanerWidget(
-            iconColor: Color(0xff00C060),
-            icon: Icons.location_on,
-            label: "From",
-            name: "Kunal Pawar",
-            phone: "+91 89455 53123",
-            address: "Gopi Tank Marg, Mahim West, Shivaji Park...",
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: bookings.locations?.length,
+            itemBuilder: (context, index) {
+              return const LocationContanerWidget(
+                iconColor: Color(0xff00C060),
+                icon: Icons.location_on,
+                label: "From",
+                name: "Kunal Pawar",
+                phone: "+91 89455 53123",
+                address: "Gopi Tank Marg, Mahim West, Shivaji Park...",
+              );
+            },
           ),
-          const LocationContanerWidget(
-            iconColor: Color(0xffEB0404),
-            icon: Icons.location_on,
-            label: "To",
-            name: "Manoj Dalavi",
-            phone: "+91 89455 53123",
-            address: "Worli Shivaji Nagar, Worli Mumbai, Maharashtra 400030",
-          ),
+
+          // const LocationContanerWidget(
+          //   iconColor: Color(0xffEB0404),
+          //   icon: Icons.location_on,
+          //   label: "To",
+          //   name: "Manoj Dalavi",
+          //   phone: "+91 89455 53123",
+          //   address: "Worli Shivaji Nagar, Worli Mumbai, Maharashtra 400030",
+          // ),
           Divider(color: Colors.grey.shade200),
           Row(
             children: [

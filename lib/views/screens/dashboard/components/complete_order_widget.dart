@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logistic_driver/data/models/response/booking_model.dart';
 
 import '../../booking_detail_screen/components/booking_item_widget.dart';
 
@@ -14,8 +15,9 @@ class CompleteOrderWidget extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: 1,
       itemBuilder: (context, index) {
-        return const BookingItemWidget(
+        return BookingItemWidget(
           isComplete: true,
+          bookings: BookingsModel(),
         );
       },
     );
