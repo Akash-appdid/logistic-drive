@@ -130,6 +130,7 @@ class BookingController extends GetxController implements GetxService {
         log('${response.bodyString}', name: 'getBookingDetail');
         bookingsDetailData = BookingsModel.fromJson(response.body['data']);
         responseModel = ResponseModel(true, 'success');
+        selectLocation();
       } else {
         ApiChecker.checkApi(response);
         responseModel = ResponseModel(false, "${response.statusText}");
@@ -241,37 +242,41 @@ class BookingController extends GetxController implements GetxService {
   //-----------------location
 
   Location? selectedLocation;
+  int dropCount = 0;
+  int pickupCount = 0;
 
-  void selectLocation() {
-    if (bookingsDetailData == null) return;
-    if (bookingsDetailData!.locations == null) return;
-    for (var element in bookingsDetailData!.locations!) {
-      if (element.type == 'pickup') {
-        element.pickupDoneCount++;
-        if (element.status == 'pending') {
-          selectedLocation = element;
-        }
-      }
-      if (element.type == 'drop') {
-        element.dropDoneCount++;
-        if (element.status == 'pending') {
-          selectedLocation = element;
-        }
-      }
-    }
+  void cleanCount() {
+    dropCount = 0;
+    pickupCount = 0;
     update();
   }
 
-  bool isDelivred() {
-    bool done = false;
-    if (bookingsDetailData == null) return done;
-    if (bookingsDetailData!.locations == null) return done;
-
-    for (var element in bookingsDetailData!.locations!) {
-      if (element.status != 'pending') {
-        done = true;
+  void selectLocation() {
+    if (bookingsDetailData?.locations == null) return;
+    for (var location in bookingsDetailData!.locations!) {
+      if (location.type == 'pickup' && location.status == 'pending') {
+        pickupCount++;
+        selectedLocation = location;
+        update();
+        return;
+      } else {
+        if (location.type == 'drop' && location.status == 'pending') {
+          dropCount++;
+          selectedLocation = location;
+          update();
+          return;
+        }
       }
     }
-    return done;
+  }
+
+  bool isDelivered() {
+    if (bookingsDetailData?.locations == null) return false;
+    for (var element in bookingsDetailData!.locations!) {
+      if (element.status == 'pending') {
+        return false;
+      }
+    }
+    return true;
   }
 }

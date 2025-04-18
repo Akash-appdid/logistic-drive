@@ -46,7 +46,7 @@ class BookingButtonWidget extends StatelessWidget {
           ],
         );
       }
-      if (controller.isDelivred() &&
+      if (controller.isDelivered() &&
           controller.bookingsDetailData?.delivered == null) {
         return Column(
           mainAxisSize: MainAxisSize.min,
@@ -67,16 +67,6 @@ class BookingButtonWidget extends StatelessWidget {
                       Fluttertoast.showToast(msg: value.message);
                     }
                   });
-                  // showModalBottomSheet(
-                  //   enableDrag: false,
-                  //   isScrollControlled: true,
-                  //   context: context,
-                  //   builder: (context) {
-                  //     return VerifyPickUpSheet(
-                  //       orderId: controller.bookingsDetailData?.id,
-                  //     );
-                  //   },
-                  // );
                 },
                 title: 'Mark as Delivered',
               ),
@@ -105,7 +95,7 @@ class BookingButtonWidget extends StatelessWidget {
                         '0'));
               },
               title:
-                  'Navigate to ${controller.selectedLocation?.type.capitalizeFirstOfEach} ${controller.selectedLocation?.dropDoneCount}',
+                  'Navigate to ${controller.selectedLocation?.type.capitalizeFirstOfEach} ${controller.selectedLocation?.type == 'pickup' ? controller.pickupCount : controller.dropCount}',
             ),
           ),
           Padding(
@@ -113,12 +103,20 @@ class BookingButtonWidget extends StatelessWidget {
             child: CustomButton(
               color: const Color(0xFF0F8000),
               onTap: () {
-                controller.loactionMarkAsDone(
-                    id: controller.selectedLocation?.id ?? 0);
-                controller.selectLocation();
+                controller
+                    .loactionMarkAsDone(
+                        id: controller.selectedLocation?.id ?? 0)
+                    .then((value) {
+                  if (value.isSuccess) {
+                    controller.getBookingDetail(
+                        id: controller.bookingsDetailData?.id ?? 0);
+                  } else {
+                    Fluttertoast.showToast(msg: value.message);
+                  }
+                });
               },
               title:
-                  '${controller.selectedLocation?.type.capitalizeFirstOfEach} ${controller.selectedLocation?.dropDoneCount} is done',
+                  '${controller.selectedLocation?.type.capitalizeFirstOfEach} ${controller.selectedLocation?.type == 'pickup' ? controller.pickupCount : controller.dropCount} is done',
             ),
           ),
           const SizedBox(height: 10),

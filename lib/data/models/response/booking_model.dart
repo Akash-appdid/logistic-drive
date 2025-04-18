@@ -40,6 +40,7 @@ class BookingsModel {
   List<PayoutBookingGood>? payoutBookingGoodDrivers;
   List<PayoutBookingGood>? payoutBookingGoodUsers;
   Vehicle? vehicle;
+  Driver? driver;
 
   BookingsModel({
     this.id,
@@ -74,6 +75,7 @@ class BookingsModel {
     this.payoutBookingGoodDrivers,
     this.payoutBookingGoodUsers,
     this.vehicle,
+    this.driver,
   });
 
   factory BookingsModel.fromJson(Map<String, dynamic> json) => BookingsModel(
@@ -133,6 +135,7 @@ class BookingsModel {
                 .map((x) => PayoutBookingGood.fromJson(x))),
         vehicle:
             json['vehicle'] != null ? Vehicle.fromJson(json['vehicle']) : null,
+        driver: json['driver'] != null ? Driver.fromJson(json['driver']) : null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -201,6 +204,7 @@ class Location {
   String? longitude;
   String? status;
   DateTime? createdAt;
+  DateTime? doneAt;
   DateTime? updatedAt;
   int? sequence;
   int pickupDoneCount;
@@ -226,8 +230,9 @@ class Location {
     this.createdAt,
     this.updatedAt,
     this.sequence,
-    this.pickupDoneCount = 0,
-    this.dropDoneCount = 0,
+    this.pickupDoneCount = 1,
+    this.dropDoneCount = 1,
+    this.doneAt,
   });
 
   factory Location.fromJson(Map<String, dynamic> json) => Location(
@@ -250,6 +255,8 @@ class Location {
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
+        doneAt:
+            json["done_at"] == null ? null : DateTime.parse(json["done_at"]),
         updatedAt: json["updated_at"] == null
             ? null
             : DateTime.parse(json["updated_at"]),
@@ -387,5 +394,25 @@ class Vehicle {
         "status": status,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
+      };
+}
+
+class Driver {
+  int? id;
+  String? vehicleNumber;
+
+  Driver({
+    this.id,
+    this.vehicleNumber,
+  });
+
+  factory Driver.fromJson(Map<String, dynamic> json) => Driver(
+        id: json["id"],
+        vehicleNumber: json["vehicle_number"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "vehicle_number": vehicleNumber,
       };
 }

@@ -36,7 +36,7 @@ class OrderHeadingWidget extends StatelessWidget {
                       ),
                 ),
                 Text(
-                  controller.bookingsDetailData?.vehicleNumber ?? 'NA',
+                  controller.bookingsDetailData?.driver?.vehicleNumber ?? 'NA',
                   style: Theme.of(context).textTheme.labelMedium!.copyWith(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,

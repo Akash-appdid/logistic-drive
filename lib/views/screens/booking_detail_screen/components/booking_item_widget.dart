@@ -69,7 +69,7 @@ class BookingItemWidget extends StatelessWidget {
                     ? const Color(0xff00C060)
                     : const Color(0xffEB0404),
                 icon: Icons.location_on,
-                label: "From",
+                label: (data?.getLocationType ?? false) ? "From" : 'To',
                 name: (data?.getLocationType ?? false)
                     ? (bookings.pickupUserName ?? 'NA')
                     : (bookings.dropUserName ?? 'NA'),

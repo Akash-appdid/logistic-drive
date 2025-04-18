@@ -71,8 +71,7 @@ class _CustomTImelineWidgetState extends State<CustomTImelineWidget> {
                               : const Color(0xFFEB0404),
                         ),
                         child: Icon(
-                          ((status?.getLocationType ?? false) &&
-                                  status?.status == 'done')
+                          status?.status == 'done'
                               ? Icons.check
                               : Icons.location_on,
                           color: Colors.white,

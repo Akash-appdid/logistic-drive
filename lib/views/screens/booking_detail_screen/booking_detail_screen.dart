@@ -27,6 +27,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
   void initState() {
     super.initState();
     Timer.run(() async {
+      Get.find<BookingController>().cleanCount();
       await Get.find<BookingController>()
           .getBookingDetail(id: widget.bookingId);
 
@@ -39,8 +40,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
     super.dispose();
     Timer.run(() async {
       final controller = Get.find<BookingController>();
-      controller.getAllBooking(isClear: true);
-      controller.bookingInitMethodForPagination();
+      controller.setIsComplete(true);
       await controller.getAllBooking(isClear: true);
     });
   }
