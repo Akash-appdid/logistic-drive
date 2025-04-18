@@ -36,6 +36,10 @@ class BookingsModel {
   int? tripStartOtp;
   String? tripStartOtpVerified;
   List<Location>? locations;
+  String? deliveryStatus;
+  List<PayoutBookingGood>? payoutBookingGoodDrivers;
+  List<PayoutBookingGood>? payoutBookingGoodUsers;
+  Vehicle? vehicle;
 
   BookingsModel({
     this.id,
@@ -66,6 +70,10 @@ class BookingsModel {
     this.tripStartOtp,
     this.tripStartOtpVerified,
     this.locations,
+    this.deliveryStatus,
+    this.payoutBookingGoodDrivers,
+    this.payoutBookingGoodUsers,
+    this.vehicle,
   });
 
   factory BookingsModel.fromJson(Map<String, dynamic> json) => BookingsModel(
@@ -110,10 +118,21 @@ class BookingsModel {
         cancelReason: json["cancel_reason"],
         tripStartOtp: json["trip_start_otp"],
         tripStartOtpVerified: json["trip_start_otp_verified"],
+        deliveryStatus: json["delivery_status"],
         locations: json["locations"] == null
             ? []
             : List<Location>.from(
                 json["locations"]!.map((x) => Location.fromJson(x))),
+        payoutBookingGoodDrivers: json["payout_booking_good_drivers"] == null
+            ? []
+            : List<PayoutBookingGood>.from(json["payout_booking_good_drivers"]!
+                .map((x) => PayoutBookingGood.fromJson(x))),
+        payoutBookingGoodUsers: json["payout_booking_good_users"] == null
+            ? []
+            : List<PayoutBookingGood>.from(json["payout_booking_good_users"]!
+                .map((x) => PayoutBookingGood.fromJson(x))),
+        vehicle:
+            json['vehicle'] != null ? Vehicle.fromJson(json['vehicle']) : null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -148,6 +167,20 @@ class BookingsModel {
             ? []
             : List<dynamic>.from(locations!.map((x) => x.toJson())),
       };
+
+  double get remaingAmount {
+    double amt = 0;
+    if (payoutBookingGoodDrivers == null) amt = 0;
+    if (payoutBookingGoodDrivers!.isEmpty) amt = 0;
+    for (var element in payoutBookingGoodDrivers!) {
+      amt += (element.amount ?? 0).toDouble();
+    }
+
+    return amt;
+  }
+
+  double get calcualteRemaingAmtAfterSubAmt =>
+      (amountForDriver?.toDouble() ?? 0) - remaingAmount;
 }
 
 class Location {
@@ -170,6 +203,8 @@ class Location {
   DateTime? createdAt;
   DateTime? updatedAt;
   int? sequence;
+  int pickupDoneCount;
+  int dropDoneCount;
 
   Location({
     this.id,
@@ -191,6 +226,8 @@ class Location {
     this.createdAt,
     this.updatedAt,
     this.sequence,
+    this.pickupDoneCount = 0,
+    this.dropDoneCount = 0,
   });
 
   factory Location.fromJson(Map<String, dynamic> json) => Location(
@@ -239,5 +276,116 @@ class Location {
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
         "sequence": sequence,
+      };
+
+  bool get getLocationType => type == 'pickup';
+
+  String get getAddress {
+    String address = '';
+    if (addressLineTwo != null) {
+      address = "$addressLineOne $addressLineTwo $city";
+    } else {
+      address = "$addressLineOne $city";
+    }
+    return address;
+  }
+
+  bool get orderStatus => status == 'done';
+}
+
+class PayoutBookingGood {
+  int? id;
+  int? bookingGoodId;
+  int? driverId;
+  int? amount;
+  dynamic remark;
+  dynamic file;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  int? userId;
+
+  PayoutBookingGood({
+    this.id,
+    this.bookingGoodId,
+    this.driverId,
+    this.amount,
+    this.remark,
+    this.file,
+    this.createdAt,
+    this.updatedAt,
+    this.userId,
+  });
+
+  factory PayoutBookingGood.fromJson(Map<String, dynamic> json) =>
+      PayoutBookingGood(
+        id: json["id"],
+        bookingGoodId: json["booking_good_id"],
+        driverId: json["driver_id"],
+        amount: json["amount"],
+        remark: json["remark"],
+        file: json["file"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+        userId: json["user_id"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "booking_good_id": bookingGoodId,
+        "driver_id": driverId,
+        "amount": amount,
+        "remark": remark,
+        "file": file,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "user_id": userId,
+      };
+}
+
+class Vehicle {
+  int? id;
+  String? name;
+  String? type;
+  String? weight;
+  String? status;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+
+  Vehicle({
+    this.id,
+    this.name,
+    this.type,
+    this.weight,
+    this.status,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory Vehicle.fromJson(Map<String, dynamic> json) => Vehicle(
+        id: json["id"],
+        name: json["name"],
+        type: json["type"],
+        weight: json["weight"],
+        status: json["status"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "type": type,
+        "weight": weight,
+        "status": status,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
       };
 }

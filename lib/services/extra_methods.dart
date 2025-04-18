@@ -66,9 +66,35 @@ class ExtraMethods {
       log('Could not launch $url');
     }
   }
+
+  static drawGoogleRoute({required double lat, required double long}) {
+    try {
+      launchUrl(
+        Uri.parse(
+          'https://www.google.com/maps/dir/?api=1&destination=$lat,$long&travelmode=driving&dir_action=navigate',
+        ),
+        mode: LaunchMode.externalApplication,
+      );
+    } catch (ex) {
+      Fluttertoast.showToast(msg: 'Incorrect Address');
+    }
+  }
 }
 
 String getInitialLetter(String? name) {
   if (name == null || name.isEmpty) return '';
   return name[0].toUpperCase();
+}
+
+String formatSentence(String text) {
+  return text.split(' ').map((word) {
+    if (word.contains('_')) {
+      return word
+          .split('_')
+          .map((part) => part[0].toUpperCase() + part.substring(1))
+          .join(' ');
+    } else {
+      return word;
+    }
+  }).join(' ');
 }

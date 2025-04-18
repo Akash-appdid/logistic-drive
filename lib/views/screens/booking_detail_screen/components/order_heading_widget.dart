@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:logistic_driver/controllers/booking_controller.dart';
 
 import '../../../base/custom_image.dart';
 
@@ -21,27 +23,29 @@ class OrderHeadingWidget extends StatelessWidget {
           ),
           //
           const Spacer(),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Tata Ace',
-                style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xff787878),
-                    ),
-              ),
-              Text(
-                'MH 07 HG 2145',
-                style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xff252525),
-                    ),
-              )
-            ],
-          )
+          GetBuilder<BookingController>(builder: (controller) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  controller.bookingsDetailData?.vehicle?.name ?? 'NA',
+                  style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xff787878),
+                      ),
+                ),
+                Text(
+                  controller.bookingsDetailData?.vehicleNumber ?? 'NA',
+                  style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xff252525),
+                      ),
+                )
+              ],
+            );
+          })
         ],
       ),
     );

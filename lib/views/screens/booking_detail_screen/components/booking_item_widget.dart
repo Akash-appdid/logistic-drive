@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logistic_driver/data/models/response/booking_model.dart';
 import 'package:logistic_driver/services/extensions.dart';
+import 'package:logistic_driver/services/extra_methods.dart';
 
 import '../../../../services/theme.dart';
 import '../../dashboard/components/location_contaner_widget.dart';
@@ -38,7 +39,7 @@ class BookingItemWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'ID #${bookings.bookingId ?? ''}',
+                  'ID #${(bookings.bookingId ?? '').toUpperCase()}',
                   style: Theme.of(context).textTheme.labelMedium!.copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -47,7 +48,7 @@ class BookingItemWidget extends StatelessWidget {
                 ),
               ),
               Text(
-                ((bookings.createdAt ?? '') as DateTime).dMy,
+                (bookings.createdAt as DateTime).dMy,
                 style: Theme.of(context).textTheme.labelMedium!.copyWith(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -62,37 +63,35 @@ class BookingItemWidget extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: bookings.locations?.length,
             itemBuilder: (context, index) {
-              return const LocationContanerWidget(
-                iconColor: Color(0xff00C060),
+              final data = bookings.locations?[index];
+              return LocationContanerWidget(
+                iconColor: (data?.getLocationType ?? false)
+                    ? const Color(0xff00C060)
+                    : const Color(0xffEB0404),
                 icon: Icons.location_on,
                 label: "From",
-                name: "Kunal Pawar",
-                phone: "+91 89455 53123",
-                address: "Gopi Tank Marg, Mahim West, Shivaji Park...",
+                name: (data?.getLocationType ?? false)
+                    ? (bookings.pickupUserName ?? 'NA')
+                    : (bookings.dropUserName ?? 'NA'),
+                phone:
+                    "+91 ${(data?.getLocationType ?? false) ? bookings.pickupUserPhone : bookings.dropUserPhone}",
+                address: data?.getAddress ?? '',
               );
             },
           ),
-
-          // const LocationContanerWidget(
-          //   iconColor: Color(0xffEB0404),
-          //   icon: Icons.location_on,
-          //   label: "To",
-          //   name: "Manoj Dalavi",
-          //   phone: "+91 89455 53123",
-          //   address: "Worli Shivaji Nagar, Worli Mumbai, Maharashtra 400030",
-          // ),
           Divider(color: Colors.grey.shade200),
           Row(
             children: [
-              Expanded(
-                child: Text(
-                  'Delivery Date: 25 March 2025',
-                  style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                      ),
+              if (bookings.placed != null)
+                Expanded(
+                  child: Text(
+                    'Delivery Date: ${(bookings.placed as DateTime).dMy}',
+                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
+                  ),
                 ),
-              ),
               Row(
                 children: [
                   CircleAvatar(
@@ -101,7 +100,7 @@ class BookingItemWidget extends StatelessWidget {
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    isComplete ? 'Completed' : 'On Time',
+                    formatSentence(bookings.deliveryStatus ?? 'NA'),
                     style: Theme.of(context).textTheme.labelMedium!.copyWith(
                           fontSize: 15,
                           fontWeight: FontWeight.w500,

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:logistic_driver/controllers/booking_controller.dart';
+import 'package:logistic_driver/services/extensions.dart';
 
 import '../../../../services/theme.dart';
 
@@ -9,29 +12,33 @@ class DeliveryDateAndDistanceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 5),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: CustomTitleAndValueWidget(
-                  title: 'Est.Delivery Date',
-                  value: '25 Feb 2015',
-                ),
-              ),
-              SizedBox(width: 20),
-              Expanded(
-                child: CustomTitleAndValueWidget(
-                  title: 'Distance',
-                  value: '25 KM',
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: GetBuilder<BookingController>(builder: (controller) {
+        final data = controller.bookingsDetailData;
+        return Column(
+          children: [
+            Row(
+              children: [
+                if (data?.estimatedDeliveryDate != null)
+                  Expanded(
+                    child: CustomTitleAndValueWidget(
+                      title: 'Est.Delivery Date',
+                      value: (data?.estimatedDeliveryDate as DateTime).dMy,
+                    ),
+                  ),
+                // SizedBox(width: 20),
+                // Expanded(
+                //   child: CustomTitleAndValueWidget(
+                //     title: 'Distance',
+                //     value: '25 KM',
+                //   ),
+                // ),
+              ],
+            ),
+          ],
+        );
+      }),
     );
   }
 }

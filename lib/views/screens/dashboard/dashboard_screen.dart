@@ -29,7 +29,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void init() async {
     final controller = Get.find<BookingController>();
-    await controller.getAllBooking();
+    controller.bookingInitMethodForPagination();
+    await controller.getAllBooking(isClear: true);
   }
 
   @override
@@ -47,18 +48,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
               onRefresh: () async {
                 init();
               },
-              child: const SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 14),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    EarningCardWidget(),
-                    //--------------Bookings--------------------
-                    SizedBox(height: 15),
-                    BookingsListSectionWidget()
-                  ],
-                ),
-              ),
+              child: GetBuilder<BookingController>(builder: (controller) {
+                return SingleChildScrollView(
+                  controller: controller.scrollController,
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  child: const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      EarningCardWidget(),
+                      //--------------Bookings--------------------
+                      SizedBox(height: 15),
+                      BookingsListSectionWidget()
+                    ],
+                  ),
+                );
+              }),
             ),
           ),
         ],

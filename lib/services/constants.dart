@@ -67,6 +67,8 @@ class AppConstants {
   static const String bookingTripStartUri =
       'api/driver/v1/goods/bookings/start';
   static const String bookingTripEndUri = 'api/driver/v1/goods/bookings/end';
+  static const String locationMarkAsDone =
+      'api/driver/v1/goods/bookings/location-mark-as-done';
 
   //-------app details-------
   static String appName = 'Transpotation';

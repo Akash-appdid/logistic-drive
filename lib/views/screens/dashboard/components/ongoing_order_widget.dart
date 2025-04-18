@@ -25,8 +25,11 @@ class OngoingOrderWidget extends StatelessWidget {
           final booking = controller.bookingsData[index];
           return GestureDetector(
             onTap: () {
-              Navigator.of(context)
-                  .push(getCustomRoute(child: const BookingDetailScreen()));
+              if (booking.id == null) return;
+              Navigator.of(context).push(getCustomRoute(
+                  child: BookingDetailScreen(
+                bookingId: booking.id!,
+              )));
             },
             child: BookingItemWidget(
               bookings: booking,

@@ -5,9 +5,11 @@ class TitleWidget extends StatelessWidget {
     super.key,
     required this.title,
     required this.val,
+    this.font = 16,
   });
   final String title;
   final String val;
+  final double font;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -16,7 +18,7 @@ class TitleWidget extends StatelessWidget {
           child: Text(
             title,
             style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                  fontSize: 16,
+                  fontSize: font,
                   fontWeight: FontWeight.w600,
                 ),
           ),
@@ -24,7 +26,7 @@ class TitleWidget extends StatelessWidget {
         Text(
           val,
           style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                fontSize: 16,
+                fontSize: font,
                 fontWeight: FontWeight.w600,
               ),
         ),

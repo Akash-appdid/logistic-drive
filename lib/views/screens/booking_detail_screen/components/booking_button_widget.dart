@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:logistic_driver/controllers/booking_controller.dart';
+import 'package:logistic_driver/services/extensions.dart';
 
-import '../../../../services/route_helper.dart';
+import '../../../../services/extra_methods.dart';
 import '../../../base/common_button.dart';
-import '../../pickup_location_screen/pikup_location_screen.dart';
+
+import 'verify_pickup_sheet.dart';
 
 class BookingButtonWidget extends StatelessWidget {
   const BookingButtonWidget({
@@ -11,20 +16,114 @@ class BookingButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(10),
-          child: CustomButton(
-            color: const Color(0xFF0F8000),
-            onTap: () {
-              Navigator.of(context).push(getCustomRoute(child: const PikupLocationScreen()));
-            },
-            title: 'Go to the pickup location',
+    return GetBuilder<BookingController>(builder: (controller) {
+      if (controller.isLoading) {
+        return const SizedBox.shrink();
+      }
+      if (controller.bookingsDetailData?.intransit == null) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: CustomButton(
+                color: const Color(0xFF0F8000),
+                onTap: () {
+                  showModalBottomSheet(
+                    enableDrag: false,
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (context) {
+                      return VerifyPickUpSheet(
+                        orderId: controller.bookingsDetailData?.id,
+                      );
+                    },
+                  );
+                },
+                title: 'Start Trip',
+              ),
+            )
+          ],
+        );
+      }
+      if (controller.isDelivred() &&
+          controller.bookingsDetailData?.delivered == null) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: CustomButton(
+                color: const Color(0xFF0F8000),
+                onTap: () {
+                  controller
+                      .endBookingTrip(
+                          id: controller.bookingsDetailData?.id ?? 0)
+                      .then((value) {
+                    if (value.isSuccess) {
+                      controller.getBookingDetail(
+                          id: controller.bookingsDetailData?.id ?? 0);
+                    } else {
+                      Fluttertoast.showToast(msg: value.message);
+                    }
+                  });
+                  // showModalBottomSheet(
+                  //   enableDrag: false,
+                  //   isScrollControlled: true,
+                  //   context: context,
+                  //   builder: (context) {
+                  //     return VerifyPickUpSheet(
+                  //       orderId: controller.bookingsDetailData?.id,
+                  //     );
+                  //   },
+                  // );
+                },
+                title: 'Mark as Delivered',
+              ),
+            )
+          ],
+        );
+      }
+      if (controller.bookingsDetailData?.delivered != null) {
+        return const SizedBox.shrink();
+      }
+
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: CustomButton(
+              color: const Color(0xFF0F8000),
+              onTap: () {
+                ExtraMethods.drawGoogleRoute(
+                    lat: double.parse(controller
+                            .bookingsDetailData?.locations?.first.latitude ??
+                        '0'),
+                    long: double.parse(controller
+                            .bookingsDetailData?.locations?.first.longitude ??
+                        '0'));
+              },
+              title:
+                  'Navigate to ${controller.selectedLocation?.type.capitalizeFirstOfEach} ${controller.selectedLocation?.dropDoneCount}',
+            ),
           ),
-        )
-      ],
-    );
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: CustomButton(
+              color: const Color(0xFF0F8000),
+              onTap: () {
+                controller.loactionMarkAsDone(
+                    id: controller.selectedLocation?.id ?? 0);
+                controller.selectLocation();
+              },
+              title:
+                  '${controller.selectedLocation?.type.capitalizeFirstOfEach} ${controller.selectedLocation?.dropDoneCount} is done',
+            ),
+          ),
+          const SizedBox(height: 10),
+        ],
+      );
+    });
   }
 }

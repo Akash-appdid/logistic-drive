@@ -63,9 +63,9 @@ class CustomTheme {
       iconTheme: const IconThemeData(
         color: Colors.black,
       ),
-      systemOverlayStyle: const SystemUiOverlayStyle(
+      systemOverlayStyle: SystemUiOverlayStyle(
         // Status bar color
-        statusBarColor: Colors.transparent,
+        statusBarColor: primaryColor,
         // Status bar brightness (optional)
         // statusBarIconBrightness: Brightness.light,
         // statusBarBrightness: Brightness.light,

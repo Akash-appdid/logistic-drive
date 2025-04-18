@@ -8,17 +8,23 @@ class BookingRepo {
   BookingRepo({required this.apiClient});
 
   //
-  Future<Response> getBookings({String? status}) async => await apiClient
-      .getData("${AppConstants.bookingsUri}?status=${status ?? 'ongoing'}");
+  Future<Response> getBookings({String? status, String? url}) async =>
+      await apiClient.getData(
+          url ?? "${AppConstants.bookingsUri}?status=${status ?? 'ongoing'}");
 
   Future<Response> getBookingDetail({required int id}) async =>
       await apiClient.getData("${AppConstants.bookingsUri}/$id");
 
-  Future<Response> startBookingTrip({required String tripOtp}) async =>
+  Future<Response> startBookingTrip(
+          {required String tripOtp, required int bookingId}) async =>
       await apiClient.postData(AppConstants.bookingTripStartUri, {
+        'booking_id': bookingId,
         'trip_start_otp': tripOtp,
       });
 
   Future<Response> endBookingTrip({required int id}) async =>
       await apiClient.getData("${AppConstants.bookingTripEndUri}/$id");
+
+  Future<Response> locationMarkAsDone({required int id}) async =>
+      await apiClient.getData("${AppConstants.locationMarkAsDone}/$id");
 }

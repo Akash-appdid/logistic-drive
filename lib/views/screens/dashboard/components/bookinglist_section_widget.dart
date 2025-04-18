@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logistic_driver/controllers/booking_controller.dart';
+import 'package:logistic_driver/views/base/dialogs/custom_nodata_found.dart';
 import 'package:logistic_driver/views/screens/dashboard/components/booking_shimmer.dart';
-import '../../../../controllers/basic_controller.dart';
+
 import '../../../../services/theme.dart';
 import '../../../base/common_button.dart';
 import 'complete_order_widget.dart';
@@ -15,7 +16,7 @@ class BookingsListSectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<BasicController>(builder: (controller) {
+    return GetBuilder<BookingController>(builder: (controller) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -40,6 +41,9 @@ class BookingsListSectionWidget extends StatelessWidget {
                       : ButtonType.secondary,
                   onTap: () {
                     controller.setIsComplete(true);
+                    if (controller.isOnGoingOrder) {
+                      controller.getAllBooking(isClear: true);
+                    }
                   },
                   title: 'On Going',
                 ),
@@ -56,6 +60,10 @@ class BookingsListSectionWidget extends StatelessWidget {
                       : ButtonType.secondary,
                   onTap: () {
                     controller.setIsComplete(false);
+                    if (!controller.isOnGoingOrder) {
+                      controller.getAllBooking(
+                          status: 'delivered', isClear: true);
+                    }
                   },
                   title: 'Completed',
                 ),
@@ -67,10 +75,15 @@ class BookingsListSectionWidget extends StatelessWidget {
             if (bookingController.isLoading) {
               return const BookingShimmer();
             }
+            if (bookingController.bookingsData.isEmpty) {
+              return const CustomNoDataFoundWidget();
+            }
+
             if (controller.isOnGoingOrder) {
               return const OngoingOrderWidget();
+            } else {
+              return const CompleteOrderWidget();
             }
-            return const CompleteOrderWidget();
           })
         ],
       );
