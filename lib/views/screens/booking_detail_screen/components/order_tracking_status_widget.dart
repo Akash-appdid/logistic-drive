@@ -75,7 +75,7 @@ class OrderTrackingStatusWidget extends StatelessWidget {
                           const Spacer(),
                           if (data?.doneAt != null)
                             Text(
-                              (data?.doneAt as DateTime).dateTime,
+                              (data?.doneAt)?.dateTime ?? 'NA',
                               style: Theme.of(context)
                                   .textTheme
                                   .labelMedium!

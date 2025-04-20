@@ -12,6 +12,7 @@ import 'components/custom_timeline_widget.dart';
 import 'components/delivery_date_and_distance_widget.dart';
 import 'components/order_heading_widget.dart';
 import 'components/order_status_widget.dart';
+
 import 'components/payment_inforamtion_widget.dart';
 
 class BookingDetailScreen extends StatefulWidget {
@@ -27,11 +28,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
   void initState() {
     super.initState();
     Timer.run(() async {
-      Get.find<BookingController>().cleanCount();
       await Get.find<BookingController>()
           .getBookingDetail(id: widget.bookingId);
-
-      Get.find<BookingController>().selectLocation();
     });
   }
 

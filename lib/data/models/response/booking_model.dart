@@ -209,6 +209,8 @@ class Location {
   int? sequence;
   int pickupDoneCount;
   int dropDoneCount;
+  int pickupIndex;
+  int dropIndex;
 
   Location({
     this.id,
@@ -233,6 +235,8 @@ class Location {
     this.pickupDoneCount = 1,
     this.dropDoneCount = 1,
     this.doneAt,
+    this.pickupIndex = 0,
+    this.dropIndex = 0,
   });
 
   factory Location.fromJson(Map<String, dynamic> json) => Location(
@@ -298,6 +302,8 @@ class Location {
   }
 
   bool get orderStatus => status == 'done';
+
+  int get getIndex => type == 'pickup' ? pickupDoneCount : dropDoneCount;
 }
 
 class PayoutBookingGood {

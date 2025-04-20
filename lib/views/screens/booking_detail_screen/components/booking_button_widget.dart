@@ -95,29 +95,29 @@ class BookingButtonWidget extends StatelessWidget {
                         '0'));
               },
               title:
-                  'Navigate to ${controller.selectedLocation?.type.capitalizeFirstOfEach} ${controller.selectedLocation?.type == 'pickup' ? controller.pickupCount : controller.dropCount}',
+                  'Navigate to ${controller.selectedLocation?.type.capitalizeFirstOfEach} ${controller.selectedLocation?.getIndex}',
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: CustomButton(
-              color: const Color(0xFF0F8000),
-              onTap: () {
-                controller
-                    .loactionMarkAsDone(
-                        id: controller.selectedLocation?.id ?? 0)
-                    .then((value) {
-                  if (value.isSuccess) {
-                    controller.getBookingDetail(
-                        id: controller.bookingsDetailData?.id ?? 0);
-                  } else {
-                    Fluttertoast.showToast(msg: value.message);
-                  }
-                });
-              },
-              title:
-                  '${controller.selectedLocation?.type.capitalizeFirstOfEach} ${controller.selectedLocation?.type == 'pickup' ? controller.pickupCount : controller.dropCount} is done',
-            ),
+                color: const Color(0xFF0F8000),
+                onTap: () {
+                  controller
+                      .loactionMarkAsDone(
+                          id: controller.selectedLocation?.id ?? 0)
+                      .then((value) {
+                    if (value.isSuccess) {
+                      controller.getBookingDetail(
+                          id: controller.bookingsDetailData?.id ?? 0);
+                    } else {
+                      Fluttertoast.showToast(msg: value.message);
+                    }
+                  });
+                },
+                title:
+                    '${controller.selectedLocation?.type.capitalizeFirstOfEach} ${controller.selectedLocation?.getIndex} is done' //${controller.selectedLocation?.type == 'pickup' ? controller.selectedLocation?.pickupDoneCount : controller.selectedLocation?.dropDoneCount} is done',
+                ),
           ),
           const SizedBox(height: 10),
         ],

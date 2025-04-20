@@ -130,6 +130,7 @@ class BookingController extends GetxController implements GetxService {
         log('${response.bodyString}', name: 'getBookingDetail');
         bookingsDetailData = BookingsModel.fromJson(response.body['data']);
         responseModel = ResponseModel(true, 'success');
+        updateIndexOfBookingOrder();
         selectLocation();
       } else {
         ApiChecker.checkApi(response);
@@ -242,12 +243,18 @@ class BookingController extends GetxController implements GetxService {
   //-----------------location
 
   Location? selectedLocation;
-  int dropCount = 0;
-  int pickupCount = 0;
 
-  void cleanCount() {
-    dropCount = 0;
-    pickupCount = 0;
+  void updateIndexOfBookingOrder() {
+    if (bookingsDetailData?.locations == null) return;
+    int pickupIndex = 1;
+    int dropIndex = 1;
+    for (var location in bookingsDetailData!.locations!) {
+      if (location.type == 'pickup') {
+        location.pickupIndex = pickupIndex++;
+      } else if (location.type == 'drop') {
+        location.dropIndex = dropIndex++;
+      }
+    }
     update();
   }
 
@@ -255,17 +262,18 @@ class BookingController extends GetxController implements GetxService {
     if (bookingsDetailData?.locations == null) return;
     for (var location in bookingsDetailData!.locations!) {
       if (location.type == 'pickup' && location.status == 'pending') {
-        pickupCount++;
         selectedLocation = location;
+        selectedLocation?.pickupDoneCount = location.pickupIndex;
         update();
         return;
-      } else {
-        if (location.type == 'drop' && location.status == 'pending') {
-          dropCount++;
-          selectedLocation = location;
-          update();
-          return;
-        }
+      }
+    }
+    for (var location in bookingsDetailData!.locations!) {
+      if (location.type == 'drop' && location.status == 'pending') {
+        selectedLocation = location;
+        selectedLocation?.dropDoneCount = location.dropIndex;
+        update();
+        return;
       }
     }
   }

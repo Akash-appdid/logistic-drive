@@ -143,7 +143,6 @@ class _VerifyPickUpSheetState extends State<VerifyPickUpSheet> {
                       if (value.isSuccess) {
                         controller.getBookingDetail(
                             id: controller.bookingsDetailData?.id ?? 0);
-                        controller.selectLocation();
                         Navigator.pop(context);
                       } else {
                         Fluttertoast.showToast(msg: value.message);
