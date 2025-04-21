@@ -1,10 +1,15 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
 import 'package:logistic_driver/controllers/booking_controller.dart';
 import 'package:logistic_driver/services/constants.dart';
 import 'package:logistic_driver/services/extensions.dart';
+
+import '../../../../generated/assets.dart';
+import '../../../../services/extra_methods.dart';
 
 class CustomTImelineWidget extends StatefulWidget {
   const CustomTImelineWidget({
@@ -19,8 +24,6 @@ class _CustomTImelineWidgetState extends State<CustomTImelineWidget> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BookingController>(builder: (controller) {
-      int pickupCount = 0;
-      int dropCount = 0;
       final location = controller.bookingsDetailData?.locations;
       if (location?.isEmpty ?? false) {
         return const SizedBox.shrink();
@@ -46,11 +49,7 @@ class _CustomTImelineWidgetState extends State<CustomTImelineWidget> {
                 (controller.bookingsDetailData?.locations?.length ?? 0) - 1;
             double circleSize = 30; //isFirst || isLast ? 40 : 30;
             final status = controller.bookingsDetailData?.locations?[index];
-            if (status?.type == 'pickup') {
-              pickupCount++;
-            } else if (status?.type == 'drop') {
-              dropCount++;
-            }
+
             return Container(
               height: appSizeHeight * .09,
               key: ValueKey(status?.id),
@@ -102,7 +101,7 @@ class _CustomTImelineWidgetState extends State<CustomTImelineWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "${(status?.type ?? 'NA').capitalizeFirstOfEach} ${status?.type == 'pickup' ? pickupCount : dropCount}",
+                          "${(status?.type ?? 'NA').capitalizeFirstOfEach} ${status?.getItemIndex}",
                           style:
                               Theme.of(context).textTheme.labelMedium!.copyWith(
                                     fontSize: 14,
@@ -123,6 +122,16 @@ class _CustomTImelineWidgetState extends State<CustomTImelineWidget> {
                       ],
                     ),
                   ),
+                  IconButton(
+                    onPressed: () {
+                      ExtraMethods.drawGoogleRoute(
+                          lat: double.parse(status?.latitude ?? '0'),
+                          long: double.parse(status?.longitude ?? '0'));
+                    },
+                    icon: SvgPicture.asset(
+                      Assets.svgsRoute,
+                    ),
+                  )
                 ],
               ),
             );

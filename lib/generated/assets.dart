@@ -150,6 +150,10 @@ class Assets {
   /// assets/svgs/review-rating.svg
   static const String svgsReviewRating = "assets/svgs/review-rating.svg";
 
+  /// Assets for svgsRoute
+  /// assets/svgs/route.svg
+  static const String svgsRoute = "assets/svgs/route.svg";
+
   /// Assets for svgsSupport
   /// assets/svgs/support.svg
   static const String svgsSupport = "assets/svgs/support.svg";

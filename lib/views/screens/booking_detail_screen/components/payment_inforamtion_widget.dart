@@ -141,7 +141,7 @@ class Paymenthistory extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    (payout?.createdAt as DateTime).dateTime,
+                    (payout?.createdAt?.toLocal() as DateTime).dateTime,
                     style: Theme.of(context).textTheme.displaySmall?.copyWith(
                           fontSize: 14,
                           color: const Color(0xff868686),

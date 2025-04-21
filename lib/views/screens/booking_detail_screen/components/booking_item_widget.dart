@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:logistic_driver/controllers/booking_controller.dart';
 import 'package:logistic_driver/data/models/response/booking_model.dart';
 import 'package:logistic_driver/services/extensions.dart';
 import 'package:logistic_driver/services/extra_methods.dart';
@@ -47,14 +49,55 @@ class BookingItemWidget extends StatelessWidget {
                       ),
                 ),
               ),
-              Text(
-                (bookings.createdAt as DateTime).dMy,
-                style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: primaryColor,
+              GetBuilder<BookingController>(builder: (controller) {
+                return Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                  decoration: BoxDecoration(
+                    color:
+                        controller.setStatusOfBooking(bookings) == 'intransit'
+                            ? Colors.orange
+                            : Colors.green,
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
                     ),
-              ),
+                  ),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          controller.setStatusOfBooking(bookings) == 'intransit'
+                              ? Icons.local_shipping
+                              : Icons.check,
+                          color: Colors.white,
+                          size: 16,
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          controller
+                              .setStatusOfBooking(bookings)
+                              .capitalizeFirstOfEach,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }),
+              // Text(
+              //   (bookings.createdAt?.toLocal() as DateTime).dateTime,
+              //   style: Theme.of(context).textTheme.labelMedium!.copyWith(
+              //         fontSize: 14,
+              //         fontWeight: FontWeight.w600,
+              //         color: primaryColor,
+              //       ),
+              // ),
             ],
           ),
           Divider(color: Colors.grey.shade200),
@@ -64,6 +107,7 @@ class BookingItemWidget extends StatelessWidget {
             itemCount: bookings.locations?.length,
             itemBuilder: (context, index) {
               final data = bookings.locations?[index];
+
               return LocationContanerWidget(
                 iconColor: (data?.getLocationType ?? false)
                     ? const Color(0xff00C060)
@@ -85,10 +129,11 @@ class BookingItemWidget extends StatelessWidget {
               if (bookings.placed != null)
                 Expanded(
                   child: Text(
-                    'Delivery Date: ${(bookings.placed as DateTime).dMy}',
+                    'Delivery Date: ${(bookings.estimatedDeliveryDate?.toLocal() as DateTime).dMy}',
                     style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                          fontSize: 15,
+                          fontSize: 12,
                           fontWeight: FontWeight.w500,
+                          color: primaryColor,
                         ),
                   ),
                 ),

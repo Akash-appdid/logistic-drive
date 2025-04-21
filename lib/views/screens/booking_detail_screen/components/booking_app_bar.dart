@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logistic_driver/controllers/booking_controller.dart';
+import 'package:logistic_driver/services/extensions.dart';
 
 AppBar bookingAppBar(BuildContext context) {
   return AppBar(
@@ -17,34 +18,50 @@ AppBar bookingAppBar(BuildContext context) {
       );
     }),
     actions: [
-      // GetBuilder(
-      //   builder: (context) {
-      //     return Container(
-      //       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      //       decoration: BoxDecoration(
-      //         color: primaryColor,
-      //         borderRadius: BorderRadius.circular(50),
-      //       ),
-      //       child: Row(
-      //         children: [
-      //           Text(
-      //             'Support',
-      //             style: Theme.of(context).textTheme.labelMedium!.copyWith(
-      //                   fontSize: 14,
-      //                   fontWeight: FontWeight.w600,
-      //                   color: Colors.white,
-      //                 ),
-      //           ),
-      //           const SizedBox(width: 8),
-      //           const Icon(
-      //             Icons.headphones,
-      //             size: 17,
-      //           ),
-      //         ],
-      //       ),
-      //     );
-      //   }
-      // ),
+      GetBuilder<BookingController>(builder: (controller) {
+        if (controller.isLoading) {
+          const SizedBox.shrink();
+        }
+        return Container(
+          height: 30,
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          decoration: BoxDecoration(
+            color:
+                controller.setStatusOfBooking(controller.bookingsDetailData) ==
+                        'intransit'
+                    ? Colors.orange
+                    : Colors.green,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  controller.setStatusOfBooking(
+                              controller.bookingsDetailData) ==
+                          'intransit'
+                      ? Icons.local_shipping
+                      : Icons.check,
+                  color: Colors.white,
+                  size: 16,
+                ),
+                const SizedBox(width: 6),
+                Text(
+                  controller
+                      .setStatusOfBooking(controller.bookingsDetailData)
+                      .capitalizeFirstOfEach,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      }),
       const SizedBox(width: 10),
     ],
   );

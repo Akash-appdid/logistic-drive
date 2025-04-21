@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 
 import 'package:logistic_driver/data/models/response/booking_model.dart';
 import 'package:logistic_driver/data/repositories/booking_repo.dart';
+import 'package:logistic_driver/services/extensions.dart';
 
 import '../data/api/api_checker.dart';
 import '../data/models/response/response_model.dart';
@@ -97,13 +98,13 @@ class BookingController extends GetxController implements GetxService {
         var bookings = (response.body['data']['data'] as List<dynamic>)
             .map((res) => BookingsModel.fromJson(res))
             .toList();
-
         if (bookings.isEmpty) {
           isFinished = true;
         }
         bookingsData.addAll(bookings);
         _isLoading = false;
         update();
+        updateIndexOfAllBookingOrder();
         responseModel = ResponseModel(true, 'success');
       } else {
         ApiChecker.checkApi(response);
@@ -258,6 +259,21 @@ class BookingController extends GetxController implements GetxService {
     update();
   }
 
+  void updateIndexOfAllBookingOrder() {
+    for (var location in bookingsData) {
+      int pickupIndex = 1;
+      int dropIndex = 1;
+      for (Location element in location.locations ?? []) {
+        if (element.type == 'pickup') {
+          element.pickupIndex = pickupIndex++;
+        } else if (element.type == 'drop') {
+          element.dropIndex = dropIndex++;
+        }
+      }
+    }
+    update();
+  }
+
   void selectLocation() {
     if (bookingsDetailData?.locations == null) return;
     for (var location in bookingsDetailData!.locations!) {
@@ -286,5 +302,23 @@ class BookingController extends GetxController implements GetxService {
       }
     }
     return true;
+  }
+
+  //------
+
+  String setStatusOfBooking(BookingsModel? booking) {
+    if (booking == null) return 'NA';
+    if (booking.delivered == null) {
+      final locations = booking.locations ?? [];
+      for (int i = locations.length - 1; i >= 0; i--) {
+        final loc = locations[i];
+        final type = loc.type?.toLowerCase();
+        if (loc.doneAt != null && (type == 'pickup' || type == 'drop')) {
+          final index = loc.getItemIndex;
+          return '${type.capitalizeFirstOfEach} $index';
+        }
+      }
+    }
+    return booking.status ?? 'NA';
   }
 }

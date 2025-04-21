@@ -35,7 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
       body: GetBuilder<AuthController>(builder: (controller) {
-        return RefreshIndicator( 
+        return RefreshIndicator(
           color: Colors.white,
           onRefresh: () async {
             controller.getUserProfileData();
@@ -123,26 +123,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    RichText(
-                                      text: TextSpan(
-                                          text: "Mobile No: ",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelLarge!
-                                              .copyWith(color: Colors.black),
-                                          children: [
-                                            TextSpan(
-                                              text: "+91 21323 23032",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .labelLarge!
-                                                  .copyWith(
-                                                      color: const Color(
-                                                          0xFF8A8A8A),
-                                                      fontSize: 14),
-                                            )
-                                          ]),
-                                    ),
+                                    if (controller.userModel?.phone != null)
+                                      RichText(
+                                        text: TextSpan(
+                                            text: "Mobile No: ",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge!
+                                                .copyWith(color: Colors.black),
+                                            children: [
+                                              TextSpan(
+                                                text:
+                                                    "+91 ${controller.userModel?.phone}",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .labelLarge!
+                                                    .copyWith(
+                                                        color: const Color(
+                                                            0xFF8A8A8A),
+                                                        fontSize: 14),
+                                              )
+                                            ]),
+                                      ),
                                     const Icon(
                                       Icons.arrow_forward_ios,
                                       size: 18,
@@ -160,26 +162,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    RichText(
-                                      text: TextSpan(
-                                          text: "Email ID: ",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelLarge!
-                                              .copyWith(color: Colors.black),
-                                          children: [
-                                            TextSpan(
-                                              text: "abc12@gmail.com",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .labelLarge!
-                                                  .copyWith(
-                                                      color: const Color(
-                                                          0xFF8A8A8A),
-                                                      fontSize: 14),
-                                            )
-                                          ]),
-                                    ),
+                                    if (controller.userModel?.email != null)
+                                      RichText(
+                                        text: TextSpan(
+                                            text: "Email ID: ",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge!
+                                                .copyWith(color: Colors.black),
+                                            children: [
+                                              TextSpan(
+                                                text: controller
+                                                        .userModel?.email ??
+                                                    'NA',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .labelLarge!
+                                                    .copyWith(
+                                                        color: const Color(
+                                                            0xFF8A8A8A),
+                                                        fontSize: 14),
+                                              )
+                                            ]),
+                                      ),
                                     const Icon(
                                       Icons.arrow_forward_ios,
                                       size: 18,
@@ -194,111 +199,109 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBox(
                         height: 20,
                       ),
-                      Text(
-                        "Professional info",
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelLarge!
-                            .copyWith(color: Colors.black),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.05),
-                                blurRadius: 8,
-                                spreadRadius: 0,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 16, right: 16, top: 20, bottom: 4),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    RichText(
-                                      text: TextSpan(
-                                          text: "Pan Card: ",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelLarge!
-                                              .copyWith(color: Colors.black),
-                                          children: [
-                                            TextSpan(
-                                              text: "222132323032",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .labelLarge!
-                                                  .copyWith(
-                                                      color: const Color(
-                                                          0xFF8A8A8A),
-                                                      fontSize: 14),
-                                            )
-                                          ]),
-                                    ),
-                                    const Icon(
-                                      Icons.arrow_forward_ios,
-                                      size: 18,
-                                    )
-                                  ],
-                                ),
-                              ),
-                              const Divider(
-                                color: Color(0xFFF5F5F5),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 16, right: 16, bottom: 20, top: 4),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    RichText(
-                                      text: TextSpan(
-                                          text: "Driving Licence: ",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelLarge!
-                                              .copyWith(color: Colors.black),
-                                          children: [
-                                            TextSpan(
-                                              text: "EXYJ345",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .labelLarge!
-                                                  .copyWith(
-                                                      color: const Color(
-                                                          0xFF8A8A8A),
-                                                      fontSize: 14),
-                                            )
-                                          ]),
-                                    ),
-                                    const Icon(
-                                      Icons.arrow_forward_ios,
-                                      size: 18,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      // Text(
+                      //   "Professional info",
+                      //   style: Theme.of(context)
+                      //       .textTheme
+                      //       .labelLarge!
+                      //       .copyWith(color: Colors.black),
+                      // ),
+                      // const SizedBox(
+                      //   height: 8,
+                      // ),
+                      // GestureDetector(
+                      //   onTap: () {},
+                      //   child: Container(
+                      //     decoration: BoxDecoration(
+                      //       color: Colors.white,
+                      //       borderRadius: BorderRadius.circular(12),
+                      //       boxShadow: [
+                      //         BoxShadow(
+                      //           color: Colors.black.withOpacity(0.05),
+                      //           blurRadius: 8,
+                      //           spreadRadius: 0,
+                      //           offset: const Offset(0, 4),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //     child: Column(
+                      //       children: [
+                      //         Padding(
+                      //           padding: const EdgeInsets.only(
+                      //               left: 16, right: 16, top: 20, bottom: 4),
+                      //           child: Row(
+                      //             mainAxisAlignment:
+                      //                 MainAxisAlignment.spaceBetween,
+                      //             children: [
+                      //               RichText(
+                      //                 text: TextSpan(
+                      //                     text: "Pan Card: ",
+                      //                     style: Theme.of(context)
+                      //                         .textTheme
+                      //                         .labelLarge!
+                      //                         .copyWith(color: Colors.black),
+                      //                     children: [
+                      //                       TextSpan(
+                      //                         text: "222132323032",
+                      //                         style: Theme.of(context)
+                      //                             .textTheme
+                      //                             .labelLarge!
+                      //                             .copyWith(
+                      //                                 color: const Color(
+                      //                                     0xFF8A8A8A),
+                      //                                 fontSize: 14),
+                      //                       )
+                      //                     ]),
+                      //               ),
+                      //               const Icon(
+                      //                 Icons.arrow_forward_ios,
+                      //                 size: 18,
+                      //               )
+                      //             ],
+                      //           ),
+                      //         ),
+                      //         const Divider(
+                      //           color: Color(0xFFF5F5F5),
+                      //         ),
+                      //         Padding(
+                      //           padding: const EdgeInsets.only(
+                      //               left: 16, right: 16, bottom: 20, top: 4),
+                      //           child: Row(
+                      //             mainAxisAlignment:
+                      //                 MainAxisAlignment.spaceBetween,
+                      //             children: [
+                      //               RichText(
+                      //                 text: TextSpan(
+                      //                     text: "Driving Licence: ",
+                      //                     style: Theme.of(context)
+                      //                         .textTheme
+                      //                         .labelLarge!
+                      //                         .copyWith(color: Colors.black),
+                      //                     children: [
+                      //                       TextSpan(
+                      //                         text: "EXYJ345",
+                      //                         style: Theme.of(context)
+                      //                             .textTheme
+                      //                             .labelLarge!
+                      //                             .copyWith(
+                      //                                 color: const Color(
+                      //                                     0xFF8A8A8A),
+                      //                                 fontSize: 14),
+                      //                       )
+                      //                     ]),
+                      //               ),
+                      //               const Icon(
+                      //                 Icons.arrow_forward_ios,
+                      //                 size: 18,
+                      //               )
+                      //             ],
+                      //           ),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
+                      const SizedBox(height: 20),
                       Text(
                         "Vehicle Info",
                         style: Theme.of(context)
@@ -335,14 +338,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   children: [
                                     RichText(
                                       text: TextSpan(
-                                          text: "Motor Bike: ",
+                                          text: "Vehicle No: ",
                                           style: Theme.of(context)
                                               .textTheme
                                               .labelLarge!
                                               .copyWith(color: Colors.black),
                                           children: [
                                             TextSpan(
-                                              text: "MH-19-AG-5465",
+                                              text: controller.userModel
+                                                      ?.vehicleNumber ??
+                                                  'NA',
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .labelLarge!
@@ -353,10 +358,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             )
                                           ]),
                                     ),
-                                    const Icon(
-                                      Icons.arrow_forward_ios,
-                                      size: 18,
-                                    )
                                   ],
                                 ),
                               ),
@@ -372,14 +373,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   children: [
                                     RichText(
                                       text: TextSpan(
-                                          text: "Mini Truck: ",
+                                          text: "Vehicle: ",
                                           style: Theme.of(context)
                                               .textTheme
                                               .labelLarge!
                                               .copyWith(color: Colors.black),
                                           children: [
                                             TextSpan(
-                                              text: "MH-19-AG-5465",
+                                              text: formatSentence(controller
+                                                      .userModel?.vehicleType ??
+                                                  'NA'),
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .labelLarge!
@@ -390,10 +393,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             )
                                           ]),
                                     ),
-                                    const Icon(
-                                      Icons.arrow_forward_ios,
-                                      size: 18,
-                                    )
                                   ],
                                 ),
                               ),

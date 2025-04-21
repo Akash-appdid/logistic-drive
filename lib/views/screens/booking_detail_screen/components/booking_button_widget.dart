@@ -7,7 +7,7 @@ import 'package:logistic_driver/controllers/booking_controller.dart';
 import 'package:logistic_driver/services/extensions.dart';
 
 import '../../../../generated/assets.dart';
-import '../../../../services/extra_methods.dart';
+
 import '../../../base/common_button.dart';
 
 import '../../../base/dialogs/logout_dialog.dart';
@@ -102,23 +102,23 @@ class BookingButtonWidget extends StatelessWidget {
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: CustomButton(
-              color: const Color(0xFF0F8000),
-              onTap: () {
-                ExtraMethods.drawGoogleRoute(
-                    lat: double.parse(controller
-                            .bookingsDetailData?.locations?.first.latitude ??
-                        '0'),
-                    long: double.parse(controller
-                            .bookingsDetailData?.locations?.first.longitude ??
-                        '0'));
-              },
-              title:
-                  'Navigate to ${controller.selectedLocation?.type.capitalizeFirstOfEach} ${controller.selectedLocation?.getIndex}',
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(10),
+          //   child: CustomButton(
+          //     color: const Color(0xFF0F8000),
+          //     onTap: () {
+          //       ExtraMethods.drawGoogleRoute(
+          //           lat: double.parse(controller
+          //                   .bookingsDetailData?.locations?.first.latitude ??
+          //               '0'),
+          //           long: double.parse(controller
+          //                   .bookingsDetailData?.locations?.first.longitude ??
+          //               '0'));
+          //     },
+          //     title:
+          //         'Navigate to ${controller.selectedLocation?.type.capitalizeFirstOfEach} ${controller.selectedLocation?.getIndex}',
+          //   ),
+          // ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: CustomButton(
