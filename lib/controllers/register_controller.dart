@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:logistic_driver/data/models/body/vehicle_model.dart';
 import 'package:logistic_driver/data/models/response/vehicle_master_model.dart';
@@ -71,7 +72,19 @@ class RegisterController extends GetxController implements GetxService {
   VehicleOption? selectedVehicle;
 
   void selectVehicle(VehicleOption? vehicle) {
-    selectedVehicle = vehicle;
+    if (vehicle?.key == 'motorbike') {
+      Fluttertoast.showToast(
+        msg:
+            'Motorbike service is currently unavailable. Please select a different option.',
+      );
+    } else if (vehicle?.key == 'mini_tempo') {
+      Fluttertoast.showToast(
+        msg:
+            'Mini Tempo service is not available at the moment. Try another vehicle.',
+      );
+    } else {
+      selectedVehicle = vehicle;
+    }
     update();
   }
 

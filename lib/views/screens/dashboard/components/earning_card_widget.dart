@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logistic_driver/controllers/basic_controller.dart';
 import 'package:logistic_driver/services/extra_methods.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../services/theme.dart';
 
@@ -14,20 +15,13 @@ class EarningCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<BasicController>(builder: (controller) {
       if (controller.isLoading) {
-        return Container(
-          width: double.infinity,
-          height: 150,
-          decoration: BoxDecoration(
+        return Shimmer.fromColors(
+          baseColor: Colors.grey.shade300,
+          highlightColor: Colors.grey.shade100,
+          child: Container(
+            width: double.infinity,
+            height: 200,
             color: Colors.white,
-            borderRadius: BorderRadius.circular(15),
-            border: Border.all(color: primaryColor.withOpacity(0.1)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 8,
-                offset: const Offset(0, 0),
-              ),
-            ],
           ),
         );
       }

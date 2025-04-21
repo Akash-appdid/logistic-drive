@@ -50,6 +50,87 @@ class BookingItemWidget extends StatelessWidget {
                 ),
               ),
               GetBuilder<BookingController>(builder: (controller) {
+                if (bookings.delivered == null) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 5, horizontal: 12),
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(6),
+                              topRight: Radius.circular(6)),
+                          color: bookings.status?.toLowerCase() == 'intransit'
+                              ? Colors.orange
+                              : Colors.green,
+                        ),
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                bookings.status?.toLowerCase() == 'intransit'
+                                    ? Icons.local_shipping
+                                    : Icons.check,
+                                color: Colors.white,
+                                size: 16,
+                              ),
+                              const SizedBox(width: 6),
+                              Text(
+                                bookings.status?.capitalizeFirstOfEach ?? 'NA',
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 3, horizontal: 5),
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(6),
+                          ),
+                          color: controller.setStatusOfBooking(bookings) ==
+                                  'intransit'
+                              ? Colors.orange
+                              : Colors.green,
+                        ),
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                controller.setStatusOfBooking(bookings) ==
+                                        'intransit'
+                                    ? Icons.local_shipping
+                                    : Icons.check,
+                                color: Colors.white,
+                                size: 16,
+                              ),
+                              const SizedBox(width: 6),
+                              Text(
+                                controller
+                                    .setStatusOfBooking(bookings)
+                                    .capitalizeFirstOfEach,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }
                 return Container(
                   padding:
                       const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
@@ -90,14 +171,6 @@ class BookingItemWidget extends StatelessWidget {
                   ),
                 );
               }),
-              // Text(
-              //   (bookings.createdAt?.toLocal() as DateTime).dateTime,
-              //   style: Theme.of(context).textTheme.labelMedium!.copyWith(
-              //         fontSize: 14,
-              //         fontWeight: FontWeight.w600,
-              //         color: primaryColor,
-              //       ),
-              // ),
             ],
           ),
           Divider(color: Colors.grey.shade200),
