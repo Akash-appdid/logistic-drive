@@ -73,7 +73,7 @@ class AppConstants {
       'api/driver/v1/goods/bookings/location-mark-as-done';
 
   //-------app details-------
-  static String appName = 'Transpotation';
+  static String appName = 'Transportation';
   static String packageName = '';
   static String version = '';
   static String buildNumber = '';

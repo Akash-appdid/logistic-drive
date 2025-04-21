@@ -238,9 +238,12 @@ class _SignupScreenState extends State<SignupScreen> {
                               }
                             }
                           },
-                          child: const Text(
-                            "Continue",
-                            style: TextStyle(color: Colors.white, fontSize: 14),
+                          child: Text(
+                            selectedIndex >= 3
+                                ? "Skip & Continue"
+                                : " Continue",
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 14),
                           ),
                         );
                       }),

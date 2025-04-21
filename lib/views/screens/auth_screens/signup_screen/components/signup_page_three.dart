@@ -178,7 +178,7 @@ class _SignupPageThreeState extends State<SignupPageThree> {
                               height: 20,
                             ),
                             TextFormField(
-                              keyboardType: TextInputType.number,
+                              keyboardType: TextInputType.text,
                               controller: controller.vehicleNumber,
                               style: const TextStyle(color: Colors.black),
                               decoration: CustomDecoration.inputDecoration(

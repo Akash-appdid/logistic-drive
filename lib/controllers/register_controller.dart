@@ -234,8 +234,8 @@ class RegisterController extends GetxController implements GetxService {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime(now.year),
-      firstDate: DateTime(now.year),
-      lastDate: DateTime(now.year + 50),
+      firstDate: DateTime(now.year - 100),
+      lastDate: DateTime(now.year),
       initialDatePickerMode: DatePickerMode.year,
     );
 

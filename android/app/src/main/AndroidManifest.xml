@@ -16,7 +16,7 @@
         </intent>
     </queries>
     <application
-        android:label="logistic_driver"
+        android:label="Transportation"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 

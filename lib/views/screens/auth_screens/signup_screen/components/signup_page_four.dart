@@ -45,7 +45,7 @@ class _SignupPageFourState extends State<SignupPageFour> {
                         child: SvgPicture.asset(Assets.svgsKyc))),
                 const SizedBox(height: 25),
                 Text(
-                  "Complete Your KYC Details",
+                  "Complete Your KYC Details(Optional)",
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme
