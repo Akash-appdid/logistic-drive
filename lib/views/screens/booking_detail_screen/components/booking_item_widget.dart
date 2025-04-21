@@ -131,6 +131,7 @@ class BookingItemWidget extends StatelessWidget {
                     ],
                   );
                 }
+
                 return Container(
                   padding:
                       const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
