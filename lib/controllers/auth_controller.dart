@@ -1,8 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:logistic_driver/controllers/basic_controller.dart';
 
 import '../data/api/api_checker.dart';
 import '../data/models/contact_number.dart';
@@ -98,6 +100,7 @@ class AuthController extends GetxController implements GetxService {
         log(response.bodyString.toString(), name: "UserModel");
         _userModel =
             UserModel.fromJson(response.body['data'] as Map<String, dynamic>);
+        Get.find<BasicController>().setIsDutyOn(userModel?.isDuty ?? false);
         responseModel = ResponseModel(true, 'success');
       } else {
         ApiChecker.checkApi(response);

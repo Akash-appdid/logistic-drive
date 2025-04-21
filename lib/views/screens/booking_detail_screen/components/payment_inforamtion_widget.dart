@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logistic_driver/controllers/booking_controller.dart';
-import 'package:logistic_driver/services/theme.dart';
-import 'package:logistic_driver/views/screens/booking_detail_screen/components/title_widget.dart';
+import 'package:logistic_driver/services/extensions.dart';
+
+import '../../../../services/extra_methods.dart';
 
 class PaymentInformationWidget extends StatelessWidget {
   const PaymentInformationWidget({
@@ -11,102 +12,153 @@ class PaymentInformationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<BookingController>(builder: (controller) {
-      return Container(
-        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: primaryColor.withOpacity(0.1),
+    return GetBuilder<BookingController>(
+      builder: (controller) {
+        if (controller.isLoading) {
+          return const SizedBox.shrink();
+        }
+
+        return Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey.shade300),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(2),
           ),
-          boxShadow: [
-            BoxShadow(
-              color: backgroundDark.withOpacity(0.1),
-              blurRadius: 8,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 8),
-            Text(
-              'Your Earnings',
-              style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-            ),
-            Divider(color: Colors.grey.shade200),
-            const SizedBox(height: 8),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TitleWidget(
-                  title: 'Total Receivable Amount',
-                  val:
-                      '₹ ${controller.bookingsDetailData?.amountForDriver ?? ''}',
-                ),
-              ],
-            ),
-            if (controller
-                    .bookingsDetailData?.payoutBookingGoodDrivers?.isNotEmpty ??
-                false)
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Payment Info",
+                style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+              ),
+              const SizedBox(height: 10),
+              Divider(color: Colors.grey[200]),
+              const SizedBox(height: 10),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 8),
-                  Divider(color: Colors.grey.shade200),
-                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Total Amount",
+                        style:
+                            Theme.of(context).textTheme.displayMedium?.copyWith(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                      ),
+                      Text(
+                        "₹ ${formatPrice(controller.bookingsDetailData?.amountForDriver?.toDouble() ?? 0)}",
+                        style:
+                            Theme.of(context).textTheme.displayMedium?.copyWith(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  const Paymenthistory(),
+                  Divider(color: Colors.grey[200]),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Remaining Receivable Amount",
+                        style:
+                            Theme.of(context).textTheme.displayMedium?.copyWith(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                      ),
+                      Text(
+                        "₹ ${formatPrice(controller.bookingsDetailData?.calcualteRemaingAmtAfterSubAmt ?? 0)}",
+                        style:
+                            Theme.of(context).textTheme.displayMedium?.copyWith(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class Paymenthistory extends StatelessWidget {
+  const Paymenthistory({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<BookingController>(builder: (controller) {
+      if (controller.bookingsDetailData?.payoutBookingGoodDrivers?.isEmpty ??
+          true) {
+        return const SizedBox.shrink();
+      }
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Divider(
+            color: Colors.grey[200],
+            thickness: 1,
+          ),
+          const SizedBox(height: 10),
+          Text(
+            "Payment History",
+            style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                  color: Colors.black,
+                  fontSize: 14,
+                ),
+          ),
+          const SizedBox(height: 15),
+          ListView.separated(
+            separatorBuilder: (context, index) => const SizedBox(height: 5),
+            shrinkWrap: true,
+            itemCount: controller
+                    .bookingsDetailData?.payoutBookingGoodDrivers?.length ??
+                0,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final payout = controller
+                  .bookingsDetailData?.payoutBookingGoodDrivers?[index];
+
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
                   Text(
-                    'Payment History',
-                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                    (payout?.createdAt as DateTime).dateTime,
+                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                          fontSize: 14,
+                          color: const Color(0xff868686),
                         ),
                   ),
-                  const SizedBox(height: 8),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: controller
-                        .bookingsDetailData?.payoutBookingGoodDrivers?.length,
-                    itemBuilder: (context, index) {
-                      final payment = controller
-                          .bookingsDetailData?.payoutBookingGoodDrivers?[index];
-                      return TitleWidget(
-                        font: 14,
-                        title: 'Payment Received',
-                        val: '₹ ${payment?.amount ?? ''}',
-                      );
-                    },
+                  Text(
+                    "₹ ${formatPrice(payout?.amount?.toDouble() ?? 0)}",
+                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                          fontSize: 14,
+                          color: const Color(0xff868686),
+                        ),
                   )
                 ],
-              ),
-            if (controller.bookingsDetailData?.calcualteRemaingAmtAfterSubAmt !=
-                0)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 8),
-                  Divider(color: Colors.grey.shade200),
-                  const SizedBox(height: 8),
-                  TitleWidget(
-                    title: 'Remaining Receivable Amount',
-                    val:
-                        '₹ ${controller.bookingsDetailData?.calcualteRemaingAmtAfterSubAmt}',
-                  ),
-                ],
-              ),
-            const SizedBox(height: 8),
-          ],
-        ),
+              );
+            },
+          ),
+        ],
       );
     });
   }

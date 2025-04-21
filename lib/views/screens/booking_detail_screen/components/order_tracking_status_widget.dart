@@ -13,8 +13,9 @@ class OrderTrackingStatusWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BookingController>(builder: (controller) {
-      int pickupCount = 0;
-      int dropCount = 0;
+      if (controller.bookingsDetailData?.isOrderTracking ?? true) {
+        return const SizedBox.shrink();
+      }
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
@@ -34,11 +35,7 @@ class OrderTrackingStatusWidget extends StatelessWidget {
               itemCount: controller.bookingsDetailData?.locations?.length,
               itemBuilder: (context, index) {
                 final data = controller.bookingsDetailData?.locations?[index];
-                if (data?.type == 'pickup') {
-                  pickupCount++;
-                } else if (data?.type == 'drop') {
-                  dropCount++;
-                }
+
                 if (data?.status != 'done') {
                   return const SizedBox.shrink();
                 }
@@ -61,7 +58,7 @@ class OrderTrackingStatusWidget extends StatelessWidget {
                               ),
                               const SizedBox(width: 10),
                               Text(
-                                '${data?.type.capitalizeFirstOfEach} ${data?.type == 'pickup' ? pickupCount : dropCount}',
+                                '${data?.type.capitalizeFirstOfEach} ${data?.getItemIndex}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium!

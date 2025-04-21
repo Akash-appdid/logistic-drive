@@ -110,4 +110,6 @@ class UserModel {
         "updated_at": updatedAt?.toIso8601String(),
         "vehicle_id": vehicleId,
       };
+
+  bool get isDuty => onDuty == 'yes';
 }

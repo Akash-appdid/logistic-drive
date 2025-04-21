@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logistic_driver/controllers/auth_controller.dart';
+import 'package:logistic_driver/controllers/basic_controller.dart';
 import 'package:logistic_driver/controllers/booking_controller.dart';
 import 'package:logistic_driver/services/theme.dart';
 
@@ -29,8 +31,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void init() async {
     final controller = Get.find<BookingController>();
+    await Get.find<BasicController>().getAnalyticsData();
     controller.bookingInitMethodForPagination();
-    await controller.getAllBooking(isClear: true);
+    if (controller.isOnGoingOrder) {
+      await controller.getAllBooking(isClear: true);
+    } else {
+      await controller.getAllBooking(status: 'delivered', isClear: true);
+    }
   }
 
   @override
@@ -50,12 +57,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
               },
               child: GetBuilder<BookingController>(builder: (controller) {
                 return SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
                   controller: controller.scrollController,
                   padding: const EdgeInsets.symmetric(horizontal: 14),
                   child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       EarningCardWidget(),
+                      SizedBox(height: 15),
+                      //-----on off duty------
+                      DutyOnOffButtonWidget(),
                       //--------------Bookings--------------------
                       SizedBox(height: 15),
                       BookingsListSectionWidget()
@@ -67,6 +78,40 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class DutyOnOffButtonWidget extends StatelessWidget {
+  const DutyOnOffButtonWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<AuthController>(
+      builder: (controller) {
+        if ((controller.userModel?.isDuty ?? false)) {
+          return const SizedBox.shrink();
+        }
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 5),
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+            color: Colors.red.shade500,
+          ),
+          child: Text(
+            'Shop Closed',
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
+            textAlign: TextAlign.center,
+          ),
+        );
+      },
     );
   }
 }

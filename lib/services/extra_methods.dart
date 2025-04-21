@@ -98,3 +98,13 @@ String formatSentence(String text) {
     }
   }).join(' ');
 }
+
+String formatPrice(double price) {
+  String formatted = price.toStringAsFixed(2); // Ensure 2 decimal places
+  if (formatted.endsWith('.00')) {
+    return formatted.substring(0, formatted.length - 3); // Remove .00
+  } else if (formatted.endsWith('0')) {
+    return formatted.substring(0, formatted.length - 1); // Remove trailing 0
+  }
+  return formatted;
+}

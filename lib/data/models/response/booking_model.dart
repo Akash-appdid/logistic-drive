@@ -184,6 +184,17 @@ class BookingsModel {
 
   double get calcualteRemaingAmtAfterSubAmt =>
       (amountForDriver?.toDouble() ?? 0) - remaingAmount;
+
+  bool get isOrderTracking {
+    for (var element in locations ?? []) {
+      if (element.status != "done") {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return false;
+  }
 }
 
 class Location {
@@ -304,6 +315,7 @@ class Location {
   bool get orderStatus => status == 'done';
 
   int get getIndex => type == 'pickup' ? pickupDoneCount : dropDoneCount;
+  int get getItemIndex => type == 'pickup' ? pickupIndex : dropIndex;
 }
 
 class PayoutBookingGood {

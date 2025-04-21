@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
+import 'package:logistic_driver/data/models/response/analytics_model.dart';
 import 'package:logistic_driver/data/models/response/response_model.dart';
 import 'package:logistic_driver/data/repositories/basic_repo.dart';
 
@@ -87,6 +88,64 @@ class BasicController extends GetxController implements GetxService {
       }
     }
     return 'NA';
+  }
+
+  //-----------------duty on off-------------------
+  bool isDutyOn = false;
+  void setIsDutyOn(bool duty) {
+    isDutyOn = duty;
+    update();
+  }
+
+  Future<ResponseModel> toggleDutyOnOff() async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    try {
+      Response response = await basicRepo.toggleDutyOnOff(isDuty: isDutyOn);
+      if (response.statusCode == 200 && response.body['success']) {
+        log(response.bodyString.toString(), name: "toggleDutyOnOff");
+        // bussinessSettings = (response.body['data'] as List<dynamic>)
+        //     .map((response) => BussinessSetting.fromJson(response))
+        //     .toList();
+        responseModel = ResponseModel(true, 'success');
+      } else {
+        ApiChecker.checkApi(response);
+        responseModel = ResponseModel(false, "${response.statusText}");
+      }
+    } catch (e) {
+      log('---- ${e.toString()} ----', name: "ERROR AT toggleDutyOnOff()");
+      responseModel = ResponseModel(false, "$e");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  //------------------get analytics data-----------------------
+  Analytics? analytics;
+  Future<ResponseModel> getAnalyticsData() async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    try {
+      Response response = await basicRepo.getAnalyticsData();
+      if (response.statusCode == 200 && response.body['success']) {
+        log(response.bodyString.toString(), name: "getAnalyticsData");
+        analytics = Analytics.fromJson(response.body);
+
+        responseModel = ResponseModel(true, 'success');
+      } else {
+        ApiChecker.checkApi(response);
+        responseModel = ResponseModel(false, "${response.statusText}");
+      }
+    } catch (e) {
+      log('---- ${e.toString()} ----', name: "ERROR AT getAnalyticsData()");
+      responseModel = ResponseModel(false, "$e");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
   }
 }
 

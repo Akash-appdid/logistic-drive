@@ -8,6 +8,7 @@ import 'package:logistic_driver/controllers/register_controller.dart';
 import 'package:logistic_driver/services/theme.dart';
 import 'package:logistic_driver/views/screens/auth_screens/signup_screen/components/signup_page_five.dart';
 import 'package:logistic_driver/views/screens/auth_screens/signup_screen/components/signup_page_four.dart';
+import 'package:logistic_driver/views/screens/auth_screens/under_review_screen.dart';
 import '../../../../services/route_helper.dart';
 import '../../../base/common_button.dart';
 import '../../dashboard/dashboard_screen.dart';
@@ -201,15 +202,37 @@ class _SignupScreenState extends State<SignupScreen> {
                                     .registerUser(data: data)
                                     .then((value) {
                                   if (value.isSuccess) {
+                                    final auth = Get.find<AuthController>();
                                     Fluttertoast.showToast(msg: value.message);
-
-                                    Navigator.of(context).pushAndRemoveUntil(
-                                      getCustomRoute(
-                                          child: const DashboardScreen()),
-                                      (route) => false,
-                                    );
-                                    Get.find<AuthController>()
-                                        .getUserProfileData();
+                                    auth.getUserProfileData().then((value) {
+                                      if (value.isSuccess) {
+                                        if (auth.userModel?.status ==
+                                            'active') {
+                                          Navigator.of(context)
+                                              .pushAndRemoveUntil(
+                                            getCustomRoute(
+                                                child: const DashboardScreen()),
+                                            (route) => false,
+                                          );
+                                        } else {
+                                          Navigator.of(context)
+                                              .pushAndRemoveUntil(
+                                            getCustomRoute(
+                                                child:
+                                                    const ProfileUnderReviewScreen()),
+                                            (route) => false,
+                                          );
+                                        }
+                                      } else {
+                                        Navigator.of(context)
+                                            .pushAndRemoveUntil(
+                                          getCustomRoute(
+                                              child:
+                                                  const ProfileUnderReviewScreen()),
+                                          (route) => false,
+                                        );
+                                      }
+                                    });
                                   }
                                 });
                               }

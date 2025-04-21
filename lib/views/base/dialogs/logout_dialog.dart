@@ -96,3 +96,89 @@ class LogoutDialog extends StatelessWidget {
     );
   }
 }
+
+//--------confirmation dialog------------
+class ConfirmationDialog extends StatelessWidget {
+  const ConfirmationDialog({
+    super.key,
+    required this.title,
+    this.onTap,
+    this.isLoading = false,
+    this.iconColor = Colors.red,
+    this.icon,
+    required this.imageIcon,
+  });
+  final String title;
+  final Function()? onTap;
+  final bool isLoading;
+  final Color iconColor;
+  final Icon? icon;
+  final String imageIcon;
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return AlertDialog(
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            height: 60,
+            width: 60,
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: Theme.of(context).primaryColor)),
+            child: Center(
+              child: icon ??
+                  CustomImage(
+                    path: imageIcon,
+                    height: 50,
+                  ),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.roboto(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          const SizedBox(height: 25),
+          SizedBox(
+            width: size.width,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: CustomButton(
+                    elevation: 0,
+                    type: ButtonType.secondary,
+                    title: 'Cancel',
+                    height: 40,
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: CustomButton(
+                    isLoading: isLoading,
+                    elevation: 0,
+                    type: ButtonType.primary,
+                    title: 'Confirm',
+                    height: 40,
+                    onTap: onTap,
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}

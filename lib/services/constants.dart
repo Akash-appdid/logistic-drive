@@ -42,7 +42,7 @@ String getStringFromList(List<dynamic>? data) {
 
 class AppConstants {
   static bool isProduction =
-      true; //if want to use live url in debug mode set to production mode true
+      false; //if want to use live url in debug mode set to production mode true
   String get getBaseUrl => baseUrl;
   set setBaseUrl(String url) => baseUrl = url;
   static const String liveUrl = 'https://transport.appdid.com/';
@@ -57,6 +57,8 @@ class AppConstants {
 
   //--------basic---------
   static const String businessSettingUri = 'api/v1/settings';
+  static const String dutyOnOffUri = 'api/driver/v1/basic/duty-status';
+  static const String analyticsUri = 'api/driver/v1/goods/dashboard/analytics';
 
   //-------resister-----------
   static const String registerUri = 'api/driver/v1/auth/register';

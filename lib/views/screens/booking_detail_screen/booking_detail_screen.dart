@@ -6,6 +6,7 @@ import 'package:logistic_driver/controllers/booking_controller.dart';
 import 'package:logistic_driver/services/theme.dart';
 
 import 'package:logistic_driver/views/screens/booking_detail_screen/components/booking_app_bar.dart';
+import 'package:logistic_driver/views/screens/booking_detail_screen/components/order_tracking_status_widget.dart';
 
 import 'components/booking_button_widget.dart';
 import 'components/custom_timeline_widget.dart';
@@ -60,13 +61,14 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                 .getBookingDetail(id: widget.bookingId);
           },
           child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
             child: Column(
               children: [
                 const OrderStatusWidget(),
                 const OrderHeadingWidget(),
                 const CustomTImelineWidget(),
                 Divider(color: Colors.grey.shade200, thickness: 10),
-                // const OrderTrackingStatusWidget(),
+                const OrderTrackingStatusWidget(),
                 const DeliveryDateAndDistanceWidget(),
                 const PaymentInformationWidget(),
               ],

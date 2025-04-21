@@ -10,4 +10,12 @@ class BasicRepo {
   //----get bussiness setting----
   Future<Response> getBussinessSettingData() async =>
       await apiClient.getData(AppConstants.businessSettingUri);
+
+  //---------duty on off------------
+  Future<Response> toggleDutyOnOff({required bool isDuty}) async =>
+      await apiClient.postData(
+          AppConstants.dutyOnOffUri, {'on_duty': isDuty ? 'yes' : 'no'});
+  //--------get analytics-------------
+  Future<Response> getAnalyticsData() async =>
+      await apiClient.getData(AppConstants.analyticsUri);
 }
