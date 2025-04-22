@@ -3,13 +3,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logistic_driver/controllers/basic_controller.dart';
+import 'package:logistic_driver/services/constants.dart';
 import 'package:logistic_driver/services/route_helper.dart';
-import 'package:logistic_driver/services/theme.dart';
+
 import 'package:logistic_driver/views/screens/auth_screens/signup_screen/signup_screen.dart';
 import 'package:logistic_driver/views/screens/dashboard/dashboard_screen.dart';
 import 'package:logistic_driver/views/screens/welcome_screen/welcome_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../../../controllers/auth_controller.dart';
+import '../../base/custom_image.dart';
 import '../../base/dialogs/maintenance_dialog.dart';
 import '../../base/dialogs/update_dialog.dart';
 
@@ -121,17 +123,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: primaryColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "App Logo",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge
-                  ?.copyWith(fontSize: 20.0, color: Colors.white),
+            CustomImage(
+              path: Assets.imagesLogo,
+              height: appSizeHeight * .2,
+              width: appSizeHeight * .2,
             ),
           ],
         ),

@@ -7,6 +7,7 @@ import 'package:logistic_driver/views/base/custom_image.dart';
 
 import '../../../controllers/basic_controller.dart';
 import '../../base/custom_html_screen.dart';
+import '../../base/dialogs/logout_dialog.dart';
 import '../dashboard/dashboard_screen.dart';
 
 class ProfileUnderReviewScreen extends StatelessWidget {
@@ -15,6 +16,25 @@ class ProfileUnderReviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            color: Colors.red,
+            onPressed: () {
+              showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (context) {
+                  return const LogoutDialog();
+                },
+              );
+            },
+            icon: Icon(
+              Icons.logout_outlined,
+            ),
+          )
+        ],
+      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(10.0),

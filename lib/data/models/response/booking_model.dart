@@ -195,6 +195,10 @@ class BookingsModel {
     }
     return false;
   }
+
+  bool get orderStatus {
+    return false;
+  }
 }
 
 class Location {

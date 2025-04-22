@@ -11,6 +11,8 @@ import 'package:logistic_driver/views/base/dialogs/custom_nodata_found.dart';
 
 import '../../../../../services/input_decoration.dart';
 
+import '../../../../../services/route_helper.dart';
+import '../../../../base/dropdown_killer.dart';
 import 'components/certificate_image.dart';
 
 class SignupPageThree extends StatefulWidget {
@@ -26,6 +28,7 @@ class _SignupPageThreeState extends State<SignupPageThree> {
     super.initState();
     Timer.run(() async {
       final controller = Get.find<RegisterController>();
+      controller.genrateBuildYear();
       controller.cleanSignupPageThree();
       if (controller.selectedVehicle != null) {
         await controller
@@ -201,7 +204,18 @@ class _SignupPageThreeState extends State<SignupPageThree> {
                             const SizedBox(height: 16),
                             GestureDetector(
                               onTap: () {
-                                controller.selectYear(context);
+                                Navigator.push(
+                                  context,
+                                  getCustomRoute(
+                                    child: DropDownKiller(
+                                      data: controller.buildYearList,
+                                      title: "Select",
+                                      onSelected: (result) {
+                                        controller.selectYear(result);
+                                      },
+                                    ),
+                                  ),
+                                );
                               },
                               child: TextFormField(
                                 controller: controller.buildYear,

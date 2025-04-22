@@ -30,6 +30,18 @@ class RegisterController extends GetxController implements GetxService {
   TextEditingController vehicleNumber = TextEditingController();
   File? selectedRegistrationFile;
   TextEditingController buildYear = TextEditingController();
+
+  int currentYear = DateTime.now().year;
+  int startingYear = DateTime.now().year - 100;
+  List<int> buildYearList = [];
+  void genrateBuildYear() {
+    buildYearList = List.generate(
+            (currentYear - startingYear) + 1, (index) => startingYear + index)
+        .reversed
+        .toList();
+    update();
+  }
+
   //----signup page 04-------
   File? selectedPancard;
   File? selectedDrivingLicense;
@@ -242,20 +254,11 @@ class RegisterController extends GetxController implements GetxService {
   }
 
   //-------pick date----------\\
-  Future<void> selectYear(BuildContext context) async {
-    final DateTime now = DateTime.now();
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime(now.year),
-      firstDate: DateTime(now.year - 100),
-      lastDate: DateTime(now.year),
-      initialDatePickerMode: DatePickerMode.year,
-    );
+  void selectYear(int? year) {
+    if (year == null) return;
+    log("Selected year: ${year}");
+    buildYear.text = year.toString();
 
-    if (picked != null) {
-      log("Selected year: ${picked.year}");
-      buildYear.text = picked.year.toString();
-    }
     update();
   }
   //-----------clean signup page three --------\\

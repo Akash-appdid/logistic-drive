@@ -5,10 +5,13 @@ import 'custom_appbar.dart';
 
 ///TODO: Define toString() method for the model or Pass a data as List of String.
 class DropDownKiller<T> extends StatefulWidget {
-  const DropDownKiller({Key? key, required this.data, required this.onSelected}) : super(key: key);
+  const DropDownKiller(
+      {Key? key, required this.data, required this.onSelected, this.title})
+      : super(key: key);
 
   final List<T> data;
   final Function(T result) onSelected;
+  final String? title;
 
   @override
   State<DropDownKiller<T>> createState() => _DropDownKillerState<T>();
@@ -33,8 +36,8 @@ class _DropDownKillerState<T> extends State<DropDownKiller<T>> {
   Widget build(BuildContext context) {
     bool searched = textEditingController.text.isNotEmpty;
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: 'Search',
+      appBar: CustomAppBar(
+        title: widget.title ?? 'Search',
         centerTitle: true,
       ),
       body: Padding(
@@ -61,10 +64,14 @@ class _DropDownKillerState<T> extends State<DropDownKiller<T>> {
                       size: 12,
                     ),
                     title: Text(
-                      searched ? searchedList[index].toString() : widget.data[index].toString(),
+                      searched
+                          ? searchedList[index].toString()
+                          : widget.data[index].toString(),
                     ),
                     onTap: () {
-                      searched ? widget.onSelected(searchedList[index]) : widget.onSelected(widget.data[index]);
+                      searched
+                          ? widget.onSelected(searchedList[index])
+                          : widget.onSelected(widget.data[index]);
                       Navigator.pop(context);
                     },
                   );

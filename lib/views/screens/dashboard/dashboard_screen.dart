@@ -102,7 +102,7 @@ class DutyOnOffButtonWidget extends StatelessWidget {
             color: Colors.red.shade500,
           ),
           child: Text(
-            'Shop Closed',
+            'You are off duty',
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.w600,
                   fontSize: 20,
