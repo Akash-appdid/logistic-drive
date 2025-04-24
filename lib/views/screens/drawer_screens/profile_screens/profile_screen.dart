@@ -6,6 +6,8 @@ import 'package:logistic_driver/controllers/auth_controller.dart';
 import 'package:logistic_driver/services/extensions.dart';
 import 'package:logistic_driver/services/extra_methods.dart';
 
+import '../../../../data/models/response/user_model.dart';
+
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -89,116 +91,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Contact Info",
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelLarge!
-                            .copyWith(color: Colors.black),
+                      HeadingWidget(
+                        title: "Contact Info",
                       ),
-                      const SizedBox(
-                        height: 8,
+                      const SizedBox(height: 8),
+                      TitleAndValueWidget(
+                        userModel: controller.userModel,
                       ),
-                      GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.05),
-                                blurRadius: 8,
-                                spreadRadius: 0,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 16, right: 16, top: 20, bottom: 4),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    if (controller.userModel?.phone != null)
-                                      RichText(
-                                        text: TextSpan(
-                                            text: "Mobile No: ",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelLarge!
-                                                .copyWith(color: Colors.black),
-                                            children: [
-                                              TextSpan(
-                                                text:
-                                                    "+91 ${controller.userModel?.phone}",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .labelLarge!
-                                                    .copyWith(
-                                                        color: const Color(
-                                                            0xFF8A8A8A),
-                                                        fontSize: 14),
-                                              )
-                                            ]),
-                                      ),
-                                    const Icon(
-                                      Icons.arrow_forward_ios,
-                                      size: 18,
-                                    )
-                                  ],
-                                ),
-                              ),
-                              const Divider(
-                                color: Color(0xFFF5F5F5),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 16, right: 16, bottom: 20, top: 4),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    if (controller.userModel?.email != null)
-                                      RichText(
-                                        text: TextSpan(
-                                            text: "Email ID: ",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelLarge!
-                                                .copyWith(color: Colors.black),
-                                            children: [
-                                              TextSpan(
-                                                text: controller
-                                                        .userModel?.email ??
-                                                    'NA',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .labelLarge!
-                                                    .copyWith(
-                                                        color: const Color(
-                                                            0xFF8A8A8A),
-                                                        fontSize: 14),
-                                              )
-                                            ]),
-                                      ),
-                                    const Icon(
-                                      Icons.arrow_forward_ios,
-                                      size: 18,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+
+                      const SizedBox(height: 20),
                       // Text(
                       //   "Professional info",
                       //   style: Theme.of(context)
@@ -309,9 +210,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             .labelLarge!
                             .copyWith(color: Colors.black),
                       ),
-                      const SizedBox(
-                        height: 8,
-                      ),
+                      const SizedBox(height: 8),
                       GestureDetector(
                         onTap: () {},
                         child: Container(
@@ -408,6 +307,108 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         );
       }),
+    );
+  }
+}
+
+class TitleAndValueWidget extends StatelessWidget {
+  const TitleAndValueWidget({
+    super.key,
+    this.userModel,
+  });
+  final UserModel? userModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 8,
+            spreadRadius: 0,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          TitleAndValue(
+            title: 'Mobile No: ',
+            val: "+91 ${userModel?.phone}",
+          ),
+          const Divider(color: Color(0xFFF5F5F5)),
+          if (userModel?.email != null)
+            if (userModel?.email != null)
+              Column(
+                children: [
+                  TitleAndValue(
+                    title: "Email ID: ",
+                    val: userModel?.email ?? 'NA',
+                  ),
+                ],
+              ),
+        ],
+      ),
+    );
+  }
+}
+
+class TitleAndValue extends StatelessWidget {
+  const TitleAndValue({
+    super.key,
+    required this.title,
+    required this.val,
+  });
+
+  final String title;
+  final String val;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 20, bottom: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          RichText(
+            text: TextSpan(
+                text: title,
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge!
+                    .copyWith(color: Colors.black),
+                children: [
+                  TextSpan(
+                    text: val,
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelLarge!
+                        .copyWith(color: const Color(0xFF8A8A8A), fontSize: 14),
+                  )
+                ]),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class HeadingWidget extends StatelessWidget {
+  const HeadingWidget({
+    super.key,
+    required this.title,
+  });
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      title,
+      style:
+          Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.black),
     );
   }
 }

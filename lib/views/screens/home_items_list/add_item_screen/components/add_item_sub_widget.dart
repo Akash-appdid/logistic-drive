@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:logistic_driver/services/extensions.dart';
 
-import '../../../../../../data/models/response/booking_model.dart';
-import 'home_edit_sub_sub_item_widget.dart';
+import '../../../../../data/models/response/home_item_model.dart';
+import 'add_sub_item_widget.dart';
 
-class HomeEditSubItemWidget extends StatefulWidget {
-  const HomeEditSubItemWidget({
+class AddItemSubWidget extends StatefulWidget {
+  const AddItemSubWidget({
     super.key,
-    this.item,
+    required this.homeItem,
   });
-  final BookingGoodHomeItem? item;
+  final List<HomeItem> homeItem;
 
   @override
-  State<HomeEditSubItemWidget> createState() => _HomeEditSubItemWidgetState();
+  State<AddItemSubWidget> createState() => _AddItemSubWidgetState();
 }
 
-class _HomeEditSubItemWidgetState extends State<HomeEditSubItemWidget> {
-  bool isExpand = false;
-
+class _AddItemSubWidgetState extends State<AddItemSubWidget> {
+  bool isExpand = true;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -41,8 +39,7 @@ class _HomeEditSubItemWidgetState extends State<HomeEditSubItemWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      widget.item?.homeItemData?.title.capitalizeFirstOfEach ??
-                          'NA',
+                      widget.homeItem.first.homeItemCategory?.title ?? 'NA',
                       style: Theme.of(context).textTheme.labelMedium!.copyWith(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -61,13 +58,14 @@ class _HomeEditSubItemWidgetState extends State<HomeEditSubItemWidget> {
         ),
         if (isExpand)
           Container(
-            color: const Color(0xFFF2F2F2),
+            color: const Color(0xFFF2F2F2).withOpacity(0.6),
             child: ListView.builder(
-              itemCount: 2,
+              itemCount: widget.homeItem.length,
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                return const HomeEditSubSubItemWidget();
+                final item = widget.homeItem[index];
+                return AddSubitemWidget(item: item);
               },
             ),
           )

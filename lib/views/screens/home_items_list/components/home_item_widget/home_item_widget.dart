@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:logistic_driver/controllers/booking_controller.dart';
+
+import 'package:logistic_driver/services/extensions.dart';
 import 'package:logistic_driver/services/route_helper.dart';
 
 import 'package:page_transition/page_transition.dart';
 
+import '../../../../../data/models/response/booking_model.dart';
 import '../../../../base/common_button.dart';
 import '../home_edit_item_widget/home_edit_item_widget.dart';
 
 class HomeItemWidget extends StatelessWidget {
   const HomeItemWidget({
     super.key,
+    this.homeItem,
+    required this.bookingId,
   });
+  final List<BookingGoodHomeItem>? homeItem;
+  final int bookingId;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +27,8 @@ class HomeItemWidget extends StatelessWidget {
         Row(
           children: [
             Text(
-              'Living Room',
+              (homeItem?.first.getHomeDatCategoryTitle ?? 'NA')
+                  .capitalizeFirstOfEach,
               style: Theme.of(context).textTheme.labelMedium!.copyWith(
                     fontSize: 16,
                     fontWeight: FontWeight.w800,
@@ -32,7 +42,10 @@ class HomeItemWidget extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(
                   getCustomRoute(
-                    child: const HomeEditItemWidget(),
+                    child: HomeEditItemWidget(
+                      homeItem: homeItem,
+                      bookingId: bookingId,
+                    ),
                     type: PageTransitionType.rightToLeft,
                   ),
                 );
@@ -49,36 +62,40 @@ class HomeItemWidget extends StatelessWidget {
           ],
         ),
         Divider(color: Colors.grey.shade100),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: 4,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 6),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Chair',
+        GetBuilder<BookingController>(builder: (controller) {
+          return ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: homeItem?.length,
+            itemBuilder: (context, index) {
+              final item = homeItem?[index];
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 6),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        item?.homeItemData?.title ?? 'NA',
+                        style:
+                            Theme.of(context).textTheme.labelMedium!.copyWith(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                      ),
+                    ),
+                    Text(
+                      '~${item?.quantity} items',
                       style: Theme.of(context).textTheme.labelMedium!.copyWith(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                           ),
                     ),
-                  ),
-                  Text(
-                    '~10 items',
-                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
+                  ],
+                ),
+              );
+            },
+          );
+        }),
       ],
     );
   }

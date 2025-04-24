@@ -1,13 +1,26 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:logistic_driver/controllers/booking_controller.dart';
+import 'package:logistic_driver/services/extensions.dart';
+
+import '../../../../../data/models/response/booking_model.dart';
 
 import '../../../../../services/theme.dart';
 import '../../../../base/common_button.dart';
-import 'components/home_edit_sub_item_widget.dart';
+
+import 'components/home_edit_sub_sub_item_widget.dart';
 
 class HomeEditItemWidget extends StatelessWidget {
   const HomeEditItemWidget({
     super.key,
+    this.homeItem,
+    required this.bookingId,
   });
+  final List<BookingGoodHomeItem>? homeItem;
+  final int bookingId;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +29,7 @@ class HomeEditItemWidget extends StatelessWidget {
         backgroundColor: primaryColor,
         iconTheme: const IconThemeData(color: Colors.white),
         title: Text(
-          'Living Room',
+          homeItem?.first.getHomeDatCategoryTitle.capitalizeFirstOfEach ?? 'NA',
           style: Theme.of(context).textTheme.labelMedium!.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.w500,
@@ -29,11 +42,14 @@ class HomeEditItemWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ListView.builder(
-              itemCount: 10,
+              itemCount: homeItem?.length,
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                return const HomeEditSubItemWidget();
+                final item = homeItem?[index];
+                return HomeEditSubSubItemWidget(
+                  item: item,
+                );
               },
             ),
           ],
@@ -42,28 +58,46 @@ class HomeEditItemWidget extends StatelessWidget {
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              children: [
-                Expanded(
-                  child: CustomButton(
-                    color: Colors.red,
-                    onTap: () {},
-                    title: 'Cancel',
+          GetBuilder<BookingController>(builder: (controller) {
+            return Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: CustomButton(
+                      isLoading: controller.isLoading,
+                      color: primaryColor,
+                      onTap: () {
+                        Map<String, dynamic> data = {
+                          "booking_good_id": homeItem?.first.bookingGoodId,
+                          "home_items": []
+                        };
+
+                        for (BookingGoodHomeItem item in homeItem ?? []) {
+                          data['home_items'].add({
+                            "booking_good_home_items_id": item.id,
+                            "quantity": item.itemQuantity,
+                          });
+                        }
+
+                        log("$data");
+
+                        controller.updateHomeItems(data: data).then((value) {
+                          if (value.isSuccess) {
+                            Fluttertoast.showToast(
+                                msg: 'Home items updated successfully.');
+                            controller.getBookingDetail(id: bookingId);
+                            Navigator.of(context).pop();
+                          }
+                        });
+                      },
+                      title: 'Update  changes',
+                    ),
                   ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: CustomButton(
-                    color: primaryColor,
-                    onTap: () {},
-                    title: 'Save Changes',
-                  ),
-                ),
-              ],
-            ),
-          )
+                ],
+              ),
+            );
+          })
         ],
       ),
     );

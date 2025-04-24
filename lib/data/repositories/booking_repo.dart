@@ -27,4 +27,12 @@ class BookingRepo {
 
   Future<Response> locationMarkAsDone({required int id}) async =>
       await apiClient.getData("${AppConstants.locationMarkAsDone}/$id");
+
+//-------------------home items------------------
+  Future<Response> gethomeItemList() async =>
+      await apiClient.getData(AppConstants.homeItemUri);
+  Future<Response> updateHomeItem(dynamic data) async =>
+      await apiClient.putData(AppConstants.updateHomeItem, data);
+  Future<Response> addHomeItem(dynamic data) async =>
+      await apiClient.postData(AppConstants.addHomeItem, data);
 }

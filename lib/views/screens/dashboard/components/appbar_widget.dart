@@ -53,9 +53,7 @@ AppBar appBar(BuildContext context) {
                 activeColor: buttonGreen,
                 value: controller.isDutyOn,
                 onChanged: (val) {
-                  controller.setIsDutyOn(val);
-
-                  if (!controller.isDutyOn) {
+                  if (controller.isDutyOn) {
                     showDialog(
                       barrierDismissible: false,
                       context: context,
@@ -63,6 +61,7 @@ AppBar appBar(BuildContext context) {
                         return ActiveInactiveVendorDialog(
                           isLoading: controller.isLoading,
                           onTap: () {
+                            controller.setIsDutyOn(val);
                             controller.toggleDutyOnOff().then((value) => {
                                   if (value.isSuccess)
                                     {
@@ -70,12 +69,17 @@ AppBar appBar(BuildContext context) {
                                           .getUserProfileData(),
                                       Navigator.pop(context),
                                     }
+                                  else
+                                    {
+                                      controller.setIsDutyOn(val),
+                                    }
                                 });
                           },
                         );
                       },
                     );
                   } else {
+                    controller.setIsDutyOn(val);
                     controller.toggleDutyOnOff().then((value) => {
                           if (value.isSuccess)
                             {

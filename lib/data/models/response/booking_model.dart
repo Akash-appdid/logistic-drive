@@ -10,6 +10,7 @@ String bookingsModelToJson(List<BookingsModel> data) =>
 class BookingsModel {
   int? id;
   String? bookingId;
+  String? bookingType;
   int? userId;
   int? driverId;
   int? amountForDriver;
@@ -41,10 +42,12 @@ class BookingsModel {
   List<PayoutBookingGood>? payoutBookingGoodUsers;
   Vehicle? vehicle;
   Driver? driver;
+  List<BookingGoodHomeItem>? bookingGoodHomeItems;
 
   BookingsModel({
     this.id,
     this.bookingId,
+    this.bookingType,
     this.userId,
     this.driverId,
     this.amountForDriver,
@@ -76,6 +79,7 @@ class BookingsModel {
     this.payoutBookingGoodUsers,
     this.vehicle,
     this.driver,
+    this.bookingGoodHomeItems,
   });
 
   factory BookingsModel.fromJson(Map<String, dynamic> json) => BookingsModel(
@@ -136,6 +140,11 @@ class BookingsModel {
         vehicle:
             json['vehicle'] != null ? Vehicle.fromJson(json['vehicle']) : null,
         driver: json['driver'] != null ? Driver.fromJson(json['driver']) : null,
+        bookingType: json['booking_type'],
+        bookingGoodHomeItems: json["booking_good_home_items"] == null
+            ? []
+            : List<BookingGoodHomeItem>.from(json["booking_good_home_items"]!
+                .map((x) => BookingGoodHomeItem.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -198,6 +207,18 @@ class BookingsModel {
 
   bool get orderStatus {
     return false;
+  }
+
+  List<List<BookingGoodHomeItem>> get getHomeItemList {
+    Map<int, List<BookingGoodHomeItem>> groupBookingData = {};
+    for (BookingGoodHomeItem item in bookingGoodHomeItems ?? []) {
+      int categoryId = item.homeItemData?.homeItemCategoryId ?? 0;
+      if (!groupBookingData.containsKey(categoryId)) {
+        groupBookingData[categoryId] = [];
+      }
+      groupBookingData[categoryId]!.add(item);
+    }
+    return groupBookingData.values.toList();
   }
 }
 
@@ -436,5 +457,127 @@ class Driver {
   Map<String, dynamic> toJson() => {
         "id": id,
         "vehicle_number": vehicleNumber,
+      };
+}
+
+class BookingGoodHomeItem {
+  int? id;
+  int? bookingGoodId;
+  int? homeItemId;
+  HomeItemData? homeItemData;
+  int? quantity;
+  int? itemQuantity;
+
+  BookingGoodHomeItem({
+    this.id,
+    this.bookingGoodId,
+    this.homeItemId,
+    this.homeItemData,
+    this.quantity,
+  }) : itemQuantity = quantity;
+
+  factory BookingGoodHomeItem.fromJson(Map<String, dynamic> json) =>
+      BookingGoodHomeItem(
+        id: json["id"],
+        bookingGoodId: json["booking_good_id"],
+        homeItemId: json["home_item_id"],
+        homeItemData: json["home_item_data"] == null
+            ? null
+            : HomeItemData.fromJson(json["home_item_data"]),
+        quantity: json["quantity"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "booking_good_id": bookingGoodId,
+        "home_item_id": homeItemId,
+        "home_item_data": homeItemData?.toJson(),
+        "quantity": quantity,
+      };
+
+  String get getHomeDatCategoryTitle =>
+      homeItemData?.homeItemCategory?.title ?? 'NA';
+}
+
+class HomeItemData {
+  int? id;
+  String? title;
+  String? status;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  HomeItemCategory? homeItemCategory;
+  int? homeItemCategoryId;
+
+  HomeItemData({
+    this.id,
+    this.title,
+    this.status,
+    this.createdAt,
+    this.updatedAt,
+    this.homeItemCategory,
+    this.homeItemCategoryId,
+  });
+
+  factory HomeItemData.fromJson(Map<String, dynamic> json) => HomeItemData(
+        id: json["id"],
+        title: json["title"],
+        status: json["status"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+        homeItemCategory: json["home_item_category"] == null
+            ? null
+            : HomeItemCategory.fromJson(json["home_item_category"]),
+        homeItemCategoryId: json["home_item_category_id"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "title": title,
+        "status": status,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "home_item_category": homeItemCategory?.toJson(),
+        "home_item_category_id": homeItemCategoryId,
+      };
+}
+
+class HomeItemCategory {
+  int? id;
+  String? title;
+  String? status;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+
+  HomeItemCategory({
+    this.id,
+    this.title,
+    this.status,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory HomeItemCategory.fromJson(Map<String, dynamic> json) =>
+      HomeItemCategory(
+        id: json["id"],
+        title: json["title"],
+        status: json["status"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "title": title,
+        "status": status,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
       };
 }

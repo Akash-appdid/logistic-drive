@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../services/route_helper.dart';
 import '../../../base/custom_image.dart';
 import '../../dashboard/components/location_contaner_widget.dart';
-import '../../home_items_list/home_item_list_screen.dart';
 
 class PakersAndMoversTimeLineWidget extends StatelessWidget {
   const PakersAndMoversTimeLineWidget({
@@ -39,7 +37,8 @@ class PakersAndMoversTimeLineWidget extends StatelessWidget {
                       label: "To",
                       name: "Manoj Dalavi",
                       phone: "+91 89455 53123",
-                      address: "Worli Shivaji Nagar, Worli Mumbai, Maharashtra 400030",
+                      address:
+                          "Worli Shivaji Nagar, Worli Mumbai, Maharashtra 400030",
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -51,7 +50,7 @@ class PakersAndMoversTimeLineWidget extends StatelessWidget {
           //---
           GestureDetector(
             onTap: () {
-              Navigator.of(context).push(getCustomRoute(child: const HomeItemListScreen()));
+              // Navigator.of(context).push(getCustomRoute(child: const HomeItemListScreen()));
             },
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),

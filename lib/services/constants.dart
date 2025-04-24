@@ -42,7 +42,7 @@ String getStringFromList(List<dynamic>? data) {
 
 class AppConstants {
   static bool isProduction =
-      true; //if want to use live url in debug mode set to production mode true
+      false; //if want to use live url in debug mode set to production mode true
   String get getBaseUrl => baseUrl;
   set setBaseUrl(String url) => baseUrl = url;
   static const String liveUrl = 'https://transport.appdid.com/';
@@ -71,6 +71,16 @@ class AppConstants {
   static const String bookingTripEndUri = 'api/driver/v1/goods/bookings/end';
   static const String locationMarkAsDone =
       'api/driver/v1/goods/bookings/location-mark-as-done';
+
+  //----------home items-----------------
+  static const String homeItemUri = 'api/v1/home-items';
+  static const String addHomeItem =
+      'api/driver/v1/packers-and-movers/bookings/home-items';
+  static const String updateHomeItem =
+      'api/driver/v1/packers-and-movers/bookings/home-items';
+  static const String deleteHomeItem =
+      'api/driver/v1/packers-and-movers/bookings/home-items';
+  //
 
   //-------app details-------
   static String appName = 'Transportation';

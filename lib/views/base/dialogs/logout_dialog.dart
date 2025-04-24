@@ -101,19 +101,21 @@ class LogoutDialog extends StatelessWidget {
 class ConfirmationDialog extends StatelessWidget {
   const ConfirmationDialog({
     super.key,
-    required this.title,
     this.onTap,
     this.isLoading = false,
     this.iconColor = Colors.red,
     this.icon,
-    required this.imageIcon,
+    this.imageIcon,
+    required this.title,
+    this.borderColor,
   });
   final String title;
   final Function()? onTap;
   final bool isLoading;
   final Color iconColor;
+  final Color? borderColor;
   final Icon? icon;
-  final String imageIcon;
+  final String? imageIcon;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -126,11 +128,12 @@ class ConfirmationDialog extends StatelessWidget {
             width: 60,
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: Theme.of(context).primaryColor)),
+                border: Border.all(
+                    color: borderColor ?? Theme.of(context).primaryColor)),
             child: Center(
               child: icon ??
                   CustomImage(
-                    path: imageIcon,
+                    path: imageIcon ?? '',
                     height: 50,
                   ),
             ),
