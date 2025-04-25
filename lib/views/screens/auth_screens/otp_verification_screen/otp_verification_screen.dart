@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,9 +7,7 @@ import 'package:get/get.dart';
 import 'package:logistic_driver/controllers/auth_controller.dart';
 import 'package:logistic_driver/controllers/otp_autofill_controller.dart';
 import 'package:logistic_driver/views/screens/dashboard/dashboard_screen.dart';
-
 import 'package:sms_autofill/sms_autofill.dart';
-
 import '../../../../generated/assets.dart';
 import '../../../../services/route_helper.dart';
 import '../../../base/common_button.dart';

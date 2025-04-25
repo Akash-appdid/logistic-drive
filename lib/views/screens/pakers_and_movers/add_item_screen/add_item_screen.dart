@@ -76,7 +76,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: CustomButton(
                 isLoading: controller.isLoading,
                 onTap: () {
