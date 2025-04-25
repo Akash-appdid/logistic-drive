@@ -2,23 +2,26 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logistic_driver/controllers/booking_controller.dart';
+
+import 'package:logistic_driver/controllers/packer_mover_controller.dart';
 import 'package:logistic_driver/services/extensions.dart';
 
-import '../../../../../../data/models/response/booking_model.dart';
+import '../../../../../data/models/response/booking_model.dart';
 
-class HomeEditSubSubItemWidget extends StatelessWidget {
-  const HomeEditSubSubItemWidget({
+class HomeEditSubItemWidget extends StatelessWidget {
+  const HomeEditSubItemWidget({
     super.key,
     this.item,
+    this.bookingHomeItem,
   });
   final BookingGoodHomeItem? item;
+  final List<BookingGoodHomeItem>? bookingHomeItem;
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<BookingController>(initState: (_) {
+    return GetBuilder<PackerAndMoverController>(initState: (_) {
       Timer.run(() {
-        Get.find<BookingController>()
+        Get.find<PackerAndMoverController>()
             .updateItemQuantity(homeItem: item, initialize: true);
       });
     }, builder: (controller) {
@@ -38,7 +41,10 @@ class HomeEditSubSubItemWidget extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       controller.updateItemQuantity(
-                          homeItem: item, decrement: true);
+                        homeItem: item,
+                        decrement: true,
+                        selectedHomeItemList: bookingHomeItem,
+                      );
                     },
                     child: Container(
                       decoration: BoxDecoration(

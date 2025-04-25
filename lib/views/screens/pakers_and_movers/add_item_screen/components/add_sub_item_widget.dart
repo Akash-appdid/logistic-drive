@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logistic_driver/controllers/booking_controller.dart';
+
+import 'package:logistic_driver/controllers/packer_mover_controller.dart';
 import 'package:logistic_driver/services/extensions.dart';
 
 import '../../../../../data/models/response/home_item_model.dart';
@@ -19,7 +20,7 @@ class AddSubitemWidget extends StatelessWidget {
               (item?.title ?? 'NA').capitalizeFirstOfEach,
             ),
           ),
-          GetBuilder<BookingController>(builder: (controller) {
+          GetBuilder<PackerAndMoverController>(builder: (controller) {
             if (item?.itemQuantity == 0) {
               return GestureDetector(
                 onTap: () {
@@ -36,7 +37,7 @@ class AddSubitemWidget extends StatelessWidget {
                   child: Row(
                     children: [
                       const Icon(Icons.add, color: Colors.white),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: 4),
                       Text(
                         'Add',
                         style: Theme.of(context)

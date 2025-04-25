@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:logistic_driver/controllers/booking_controller.dart';
+import 'package:logistic_driver/controllers/packer_mover_controller.dart';
 import 'package:logistic_driver/views/base/common_button.dart';
+import 'package:logistic_driver/views/base/dialogs/custom_nodata_found.dart';
 
 import 'components/add_item_sub_widget.dart';
 
@@ -21,7 +23,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
   void initState() {
     super.initState();
     Timer.run(() async {
-      await Get.find<BookingController>().getHomeItemList();
+      await Get.find<PackerAndMoverController>().getHomeItemList();
     });
   }
 
@@ -33,12 +35,15 @@ class _AddItemScreenState extends State<AddItemScreen> {
           'Add Item',
         ),
       ),
-      body: GetBuilder<BookingController>(
+      body: GetBuilder<PackerAndMoverController>(
         builder: (controller) {
           if (controller.isLoading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
+          }
+          if (controller.groupHomeItemList.isEmpty) {
+            return const CustomNoDataFoundWidget();
           }
           return SingleChildScrollView(
             child: Column(
@@ -59,8 +64,14 @@ class _AddItemScreenState extends State<AddItemScreen> {
           );
         },
       ),
-      bottomNavigationBar:
-          SafeArea(child: GetBuilder<BookingController>(builder: (controller) {
+      bottomNavigationBar: SafeArea(
+          child: GetBuilder<PackerAndMoverController>(builder: (controller) {
+        if (controller.groupHomeItemList.isEmpty) {
+          return const SizedBox.shrink();
+        }
+        if (!controller.isAddItem()) {
+          return const SizedBox.shrink();
+        }
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -69,8 +80,9 @@ class _AddItemScreenState extends State<AddItemScreen> {
               child: CustomButton(
                 isLoading: controller.isLoading,
                 onTap: () {
+                  final bookingController = Get.find<BookingController>();
                   Map<String, dynamic> data = {
-                    "booking_good_id": controller.bookingsDetailData?.id,
+                    "booking_good_id": bookingController.bookingsDetailData?.id,
                     "home_items": [],
                   };
 
@@ -89,8 +101,8 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   controller.addHomeItem(data: data).then((value) {
                     if (value.isSuccess) {
                       Fluttertoast.showToast(msg: value.message);
-                      controller.getBookingDetail(
-                          id: controller.bookingsDetailData?.id ?? 0);
+                      bookingController.getBookingDetail(
+                          id: bookingController.bookingsDetailData?.id ?? 0);
                       Navigator.of(context).pop();
                     }
                   });
