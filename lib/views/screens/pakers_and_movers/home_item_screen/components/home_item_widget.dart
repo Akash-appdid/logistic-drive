@@ -3,9 +3,6 @@ import 'package:get/get.dart';
 import 'package:logistic_driver/controllers/booking_controller.dart';
 
 import 'package:logistic_driver/services/extensions.dart';
-import 'package:logistic_driver/services/route_helper.dart';
-
-import 'package:page_transition/page_transition.dart';
 
 import '../../../../../data/models/response/booking_model.dart';
 import '../../../../base/common_button.dart';
@@ -57,15 +54,24 @@ class HomeItemWidget extends StatelessWidget {
                 return CustomButton(
                   height: 32,
                   onTap: () {
-                    Navigator.of(context).push(
-                      getCustomRoute(
-                        child: HomeEditItemScreen(
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return HomeEditItemScreen(
                           homeItem: homeItem,
                           bookingId: bookingId,
-                        ),
-                        type: PageTransitionType.rightToLeft,
-                      ),
+                        );
+                      },
                     );
+                    // Navigator.of(context).push(
+                    //   getCustomRoute(
+                    // child: HomeEditItemScreen(
+                    //   homeItem: homeItem,
+                    //   bookingId: bookingId,
+                    // ),
+                    //     type: PageTransitionType.rightToLeft,
+                    //   ),
+                    // );
                   },
                   child: Row(
                     children: [
