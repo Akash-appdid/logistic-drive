@@ -154,6 +154,7 @@ class PackerAndMoverController extends GetxController implements GetxService {
     bool increment = false,
     bool decrement = false,
   }) {
+    final controller = Get.find<BookingController>();
     if (homeItem == null) return;
 
     if (initialize) {
@@ -165,11 +166,17 @@ class PackerAndMoverController extends GetxController implements GetxService {
     if (homeItem.itemQuantity == null) return;
 
     if (decrement) {
-      if (homeItem.itemQuantity! > 1) {
-        homeItem.itemQuantity = homeItem.itemQuantity! - 1;
+      if (controller.bookingsDetailData?.isItemQuantityOne ?? false) {
+        Fluttertoast.showToast(
+            msg:
+                "Cannot delete item at least one item is required for the order.");
       } else {
-        deleteHomeItemFromList(
-            homeItem: homeItem, selectedHomeItemList: selectedHomeItemList);
+        if (homeItem.itemQuantity! > 1) {
+          homeItem.itemQuantity = homeItem.itemQuantity! - 1;
+        } else {
+          deleteHomeItemFromList(
+              homeItem: homeItem, selectedHomeItemList: selectedHomeItemList);
+        }
       }
     } else if (increment) {
       homeItem.itemQuantity = homeItem.itemQuantity! + 1;

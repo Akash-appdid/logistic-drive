@@ -220,6 +220,20 @@ class BookingsModel {
     }
     return groupBookingData.values.toList();
   }
+
+  bool get isItemQuantityOne {
+    int totalItemQuantity = 0;
+    for (var homeList in getHomeItemList) {
+      for (var homeItem in homeList) {
+        totalItemQuantity += homeItem.itemQuantity ?? 0;
+      }
+    }
+    if (totalItemQuantity <= 1) {
+      return true;
+    }
+
+    return false;
+  }
 }
 
 class Location {
