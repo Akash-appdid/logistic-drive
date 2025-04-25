@@ -234,6 +234,8 @@ class BookingsModel {
 
     return false;
   }
+
+  bool get isBookinTypePakerandMover => bookingType == 'packers_and_movers';
 }
 
 class Location {

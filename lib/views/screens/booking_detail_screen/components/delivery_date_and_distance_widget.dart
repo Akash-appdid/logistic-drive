@@ -16,6 +16,14 @@ class DeliveryDateAndDistanceWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: GetBuilder<BookingController>(builder: (controller) {
         final data = controller.bookingsDetailData;
+
+        if (data?.delivered != null) {
+          return CustomTitleAndValueWidget(
+            title: 'Delivered Date',
+            value: (data?.delivered as DateTime).dMy,
+          );
+        }
+
         return Column(
           children: [
             Row(
@@ -56,6 +64,8 @@ class CustomTitleAndValueWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
           border: Border.all(
             color: primaryColor.withOpacity(0.1),

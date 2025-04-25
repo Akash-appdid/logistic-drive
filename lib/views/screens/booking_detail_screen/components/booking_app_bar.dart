@@ -6,7 +6,7 @@ AppBar bookingAppBar(BuildContext context) {
   return AppBar(
     title: GetBuilder<BookingController>(builder: (controller) {
       if (controller.isLoading) {
-        const SizedBox.shrink();
+        return const SizedBox.shrink();
       }
       return Text(
         'ID #${(controller.bookingsDetailData?.bookingId ?? '').toUpperCase()}',

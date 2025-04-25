@@ -16,6 +16,10 @@ class HomeListButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BookingController>(builder: (controller) {
+      if (!(controller.bookingsDetailData?.isBookinTypePakerandMover ??
+          false)) {
+        return const SizedBox.shrink();
+      }
       return GestureDetector(
         onTap: () {
           Navigator.of(context).push(getCustomRoute(

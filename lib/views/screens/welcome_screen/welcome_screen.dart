@@ -135,36 +135,38 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ],
         ),
       ),
-      bottomSheet: Container(
-        padding: const EdgeInsets.all(10),
-        color: Colors.white,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CustomButton(
-              onTap: () {
-                if (currentIndex == sliderList.length - 1) {
-                  Navigator.pushReplacement(
-                    context,
-                    getCustomRoute(
-                      child: const LoginScreen(),
-                    ),
-                  );
-                } else {
-                  carouselSliderController.animateToPage(currentIndex + 1);
-                }
-              },
-              elevation: 0,
-              radius: 8,
-              child: Text(
-                "Next",
-                style: Theme.of(context)
-                    .textTheme
-                    .labelLarge!
-                    .copyWith(color: Colors.white),
-              ),
-            )
-          ],
+      bottomNavigationBar: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          color: Colors.white,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CustomButton(
+                onTap: () {
+                  if (currentIndex == sliderList.length - 1) {
+                    Navigator.pushReplacement(
+                      context,
+                      getCustomRoute(
+                        child: const LoginScreen(),
+                      ),
+                    );
+                  } else {
+                    carouselSliderController.animateToPage(currentIndex + 1);
+                  }
+                },
+                elevation: 0,
+                radius: 8,
+                child: Text(
+                  "Next",
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelLarge!
+                      .copyWith(color: Colors.white),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

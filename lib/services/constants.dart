@@ -42,7 +42,7 @@ String getStringFromList(List<dynamic>? data) {
 
 class AppConstants {
   static bool isProduction =
-      false; //if want to use live url in debug mode set to production mode true
+      true; //if want to use live url in debug mode set to production mode true
   String get getBaseUrl => baseUrl;
   set setBaseUrl(String url) => baseUrl = url;
   static const String liveUrl = 'https://transport.appdid.com/';
