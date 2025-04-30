@@ -17,6 +17,14 @@ AppBar bookingAppBar(BuildContext context) {
       );
     }),
     actions: const [
+      // GetBuilder<BookingController>(builder: (controller) {
+      //   return SizedBox(
+      //     height: 55,
+      //     child: StatusWidget(
+      //       bookings: controller.bookingsDetailData ?? BookingsModel(),
+      //     ),
+      //   );
+      // }),
       SizedBox(width: 10),
     ],
   );

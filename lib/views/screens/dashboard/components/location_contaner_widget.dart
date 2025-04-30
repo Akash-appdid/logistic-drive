@@ -46,7 +46,11 @@ class LocationContanerWidget extends StatelessWidget {
               children: [
                 RichText(
                   text: TextSpan(
-                    style: const TextStyle(color: Colors.black),
+                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                        ),
                     children: [
                       TextSpan(
                         text: '$label ',
@@ -64,7 +68,10 @@ class LocationContanerWidget extends StatelessWidget {
                 Text(
                   address,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 14),
+                  style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                      ),
                 ),
               ],
             ),

@@ -346,9 +346,9 @@ class Location {
   String get getAddress {
     String address = '';
     if (addressLineTwo != null) {
-      address = "$addressLineOne $addressLineTwo $city";
+      address = "$addressLineOne $addressLineTwo $city $pincode";
     } else {
-      address = "$addressLineOne $city";
+      address = "$addressLineOne $city $pincode";
     }
     return address;
   }

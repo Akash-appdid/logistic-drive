@@ -11,7 +11,6 @@ import 'components/delivery_date_and_distance_widget.dart';
 import 'components/home_list_button_widget.dart';
 import 'components/order_heading_widget.dart';
 import 'components/order_status_widget.dart';
-
 import 'components/payment_inforamtion_widget.dart';
 
 class BookingDetailScreen extends StatefulWidget {
@@ -64,11 +63,12 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
               children: [
                 const OrderStatusWidget(),
                 const OrderHeadingWidget(),
-                const CustomTImelineWidget(),
+                const CustomTimelineWidget(),
                 HomeListButtonWidget(bookingId: widget.bookingId),
                 const OrderTrackingStatusWidget(),
                 const DeliveryDateAndDistanceWidget(),
                 const PaymentInformationWidget(),
+                const SizedBox(height: 20),
               ],
             ),
           ),

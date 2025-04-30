@@ -5,22 +5,21 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
 import 'package:logistic_driver/controllers/booking_controller.dart';
-import 'package:logistic_driver/services/constants.dart';
 import 'package:logistic_driver/services/extensions.dart';
 
 import '../../../../generated/assets.dart';
 import '../../../../services/extra_methods.dart';
 
-class CustomTImelineWidget extends StatefulWidget {
-  const CustomTImelineWidget({
+class CustomTimelineWidget extends StatefulWidget {
+  const CustomTimelineWidget({
     super.key,
   });
 
   @override
-  State<CustomTImelineWidget> createState() => _CustomTImelineWidgetState();
+  State<CustomTimelineWidget> createState() => _CustomTimelineWidgetState();
 }
 
-class _CustomTImelineWidgetState extends State<CustomTImelineWidget> {
+class _CustomTimelineWidgetState extends State<CustomTimelineWidget> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BookingController>(builder: (controller) {
@@ -29,29 +28,30 @@ class _CustomTImelineWidgetState extends State<CustomTImelineWidget> {
         return const SizedBox.shrink();
       }
       return Container(
-        height: ((location?.length ?? 0) * (appSizeHeight * .09)) + 40,
+        // height: ((location?.length ?? 0) * (appSizeHeight * .09)) + 20,
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.grey.shade200),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(6),
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 20),
-        child: ReorderableListView.builder(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+        // child: ReorderableListView.builder(
+        child: ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          onReorder: (oldIndex, newIndex) {
-            controller.reorderList(oldIndex: oldIndex, newIndex: newIndex);
-          },
+          // onReorder: (oldIndex, newIndex) {
+          //   controller.reorderList(oldIndex: oldIndex, newIndex: newIndex);
+          // },
           itemCount: location?.length ?? 0,
           itemBuilder: (context, index) {
-            // bool isFirst = index == 0;
             bool isLast = index ==
                 (controller.bookingsDetailData?.locations?.length ?? 0) - 1;
-            double circleSize = 30; //isFirst || isLast ? 40 : 30;
+            double circleSize = 22; //isFirst || isLast ? 40 : 30;
             final status = controller.bookingsDetailData?.locations?[index];
 
             return Container(
-              height: appSizeHeight * .09,
+              margin: const EdgeInsets.only(top: 14),
+              // height: appSizeHeight * .09,
               key: ValueKey(status?.id),
               alignment: Alignment.center,
               child: Row(
@@ -65,16 +65,19 @@ class _CustomTImelineWidgetState extends State<CustomTImelineWidget> {
                         height: circleSize,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: (status?.getLocationType ?? false)
+                          color: (status?.orderStatus ?? false)
+                              //  (status?.getLocationType ?? false)
                               ? const Color(0xFF00C060)
-                              : const Color(0xFFEB0404),
+                              : Colors.grey.shade500,
+                          // : const Color(0xFFEB0404),
                         ),
-                        child: Icon(
-                          status?.status == 'done'
-                              ? Icons.check
-                              : Icons.location_on,
+                        child: const Icon(
+                          // (status?.orderStatus ?? false)`
+                          // ?
+                          Icons.check,
+                          // : Icons.location_on,
                           color: Colors.white,
-                          size: 18,
+                          size: 14,
                         ),
                       ),
                       if (!isLast)
@@ -84,7 +87,9 @@ class _CustomTImelineWidgetState extends State<CustomTImelineWidget> {
                           child: DottedBorder(
                             strokeWidth: 2,
                             dashPattern: const [5, 5],
-                            color: Colors.black.withOpacity(0.7),
+                            color: (status?.orderStatus ?? false)
+                                ? Colors.black.withOpacity(0.7)
+                                : Colors.grey.shade600,
                             customPath: (size) {
                               return Path()
                                 ..moveTo(size.width / 2, 8)
@@ -106,7 +111,9 @@ class _CustomTImelineWidgetState extends State<CustomTImelineWidget> {
                               Theme.of(context).textTheme.labelMedium!.copyWith(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
-                                    color: const Color(0xFF787878),
+                                    color: (status?.orderStatus ?? false)
+                                        ? Colors.black
+                                        : const Color(0xFF787878),
                                   ),
                         ),
                         Text(
@@ -115,6 +122,9 @@ class _CustomTImelineWidgetState extends State<CustomTImelineWidget> {
                               Theme.of(context).textTheme.titleMedium!.copyWith(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
+                                    color: (status?.orderStatus ?? false)
+                                        ? Colors.black
+                                        : const Color(0xFF787878),
                                   ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,

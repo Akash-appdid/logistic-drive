@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:logistic_driver/controllers/booking_controller.dart';
 import 'package:logistic_driver/services/extensions.dart';
 
-import '../../../../services/theme.dart';
-
 class DeliveryDateAndDistanceWidget extends StatelessWidget {
   const DeliveryDateAndDistanceWidget({
     super.key,
@@ -13,7 +11,7 @@ class DeliveryDateAndDistanceWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: GetBuilder<BookingController>(builder: (controller) {
         final data = controller.bookingsDetailData;
 
@@ -67,19 +65,18 @@ class CustomTitleAndValueWidget extends StatelessWidget {
       width: double.infinity,
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
-          border: Border.all(
-            color: primaryColor.withOpacity(0.1),
-          ),
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: backgroundDark.withOpacity(.1),
-              blurRadius: 8,
-              offset: const Offset(0, 4),
-            )
-          ]),
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        border: Border.all(color: Colors.grey.shade200),
+        borderRadius: BorderRadius.circular(6),
+        color: Colors.white,
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: backgroundDark.withOpacity(.1),
+        //     blurRadius: 8,
+        //     offset: const Offset(0, 4),
+        //   )
+        // ],
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       child: Column(
         children: [
           Text(

@@ -63,15 +63,6 @@ class HomeItemWidget extends StatelessWidget {
                         );
                       },
                     );
-                    // Navigator.of(context).push(
-                    //   getCustomRoute(
-                    // child: HomeEditItemScreen(
-                    //   homeItem: homeItem,
-                    //   bookingId: bookingId,
-                    // ),
-                    //     type: PageTransitionType.rightToLeft,
-                    //   ),
-                    // );
                   },
                   child: Row(
                     children: [

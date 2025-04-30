@@ -147,6 +147,18 @@ class PackerAndMoverController extends GetxController implements GetxService {
   }
 
   //--------update home item -----------------
+  bool isHomeItemQtyZero(List<BookingGoodHomeItem>? selectedHomeItemList) {
+    int qty = 0;
+    for (BookingGoodHomeItem element in selectedHomeItemList ?? []) {
+      qty = element.itemQuantity ?? 0;
+    }
+    if (qty == 0) {
+      return true;
+    }
+    return false;
+  }
+
+  //
   void updateItemQuantity({
     required BookingGoodHomeItem? homeItem,
     List<BookingGoodHomeItem>? selectedHomeItemList,
@@ -164,7 +176,6 @@ class PackerAndMoverController extends GetxController implements GetxService {
     }
 
     if (homeItem.itemQuantity == null) return;
-
     if (decrement) {
       if (controller.bookingsDetailData?.isItemQuantityOne ?? false) {
         Fluttertoast.showToast(
@@ -217,6 +228,9 @@ class PackerAndMoverController extends GetxController implements GetxService {
                 }
                 Fluttertoast.showToast(msg: value.message);
                 Navigator.of(context).pop();
+                if (isHomeItemQtyZero(selectedHomeItemList)) {
+                  Navigator.of(context).pop();
+                }
               });
             },
             title:

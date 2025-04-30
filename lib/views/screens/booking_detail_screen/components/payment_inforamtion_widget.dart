@@ -19,11 +19,12 @@ class PaymentInformationWidget extends StatelessWidget {
         }
 
         return Container(
+          margin: const EdgeInsets.symmetric(horizontal: 10),
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey.shade300),
             color: Colors.white,
-            borderRadius: BorderRadius.circular(2),
+            borderRadius: BorderRadius.circular(6),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -50,6 +51,7 @@ class PaymentInformationWidget extends StatelessWidget {
                             Theme.of(context).textTheme.displayMedium?.copyWith(
                                   color: Colors.black,
                                   fontSize: 14,
+                                  fontWeight: FontWeight.w600,
                                 ),
                       ),
                       Text(
