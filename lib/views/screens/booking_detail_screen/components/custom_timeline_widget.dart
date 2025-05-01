@@ -112,7 +112,9 @@ class _CustomTimelineWidgetState extends State<CustomTimelineWidget> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
                                     color: (status?.orderStatus ?? false)
-                                        ? Colors.black
+                                        ? status?.type == 'pickup'
+                                            ? Colors.green
+                                            : Colors.red
                                         : const Color(0xFF787878),
                                   ),
                         ),
