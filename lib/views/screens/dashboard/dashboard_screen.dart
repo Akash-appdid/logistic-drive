@@ -10,6 +10,7 @@ import 'package:logistic_driver/services/theme.dart';
 
 import 'package:logistic_driver/views/screens/dashboard/components/appbar_widget.dart';
 
+import '../../../controllers/pusher_controller.dart';
 import 'components/bookinglist_section_widget.dart';
 import 'components/earning_card_widget.dart';
 import '../drawer_screens/drawer_screen.dart';
@@ -43,6 +44,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
       await controller.getAllBooking(isClear: true);
     } else {
       await controller.getAllBooking(status: 'delivered', isClear: true);
+    }
+    if (Get.find<AuthController>().userModel != null) {
+      Get.find<PusherController>().initializePusher(
+          vendorId: Get.find<AuthController>().userModel?.id ?? 0);
     }
   }
 

@@ -85,6 +85,10 @@ class AppConstants {
   //-------------location-------------------------
   static const String updateLocationUri = 'api/driver/v1/basic/update-location';
 
+  //----------order---------------
+  static const String acceptBooking =
+      'api/driver/v1/two-wheelers/bookings/accept';
+
   //-------app details-------
   static String appName = 'Transportation';
   static String packageName = '';

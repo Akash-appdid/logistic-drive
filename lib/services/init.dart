@@ -9,6 +9,7 @@ import 'package:logistic_driver/controllers/booking_controller.dart';
 import 'package:logistic_driver/controllers/location_controller.dart';
 import 'package:logistic_driver/controllers/otp_autofill_controller.dart';
 import 'package:logistic_driver/controllers/packer_mover_controller.dart';
+import 'package:logistic_driver/controllers/pusher_controller.dart';
 import 'package:logistic_driver/controllers/register_controller.dart';
 import 'package:logistic_driver/data/api/api_client.dart';
 import 'package:logistic_driver/data/repositories/auth_repo.dart';
@@ -59,6 +60,7 @@ class Init {
       Get.lazyPut(() => BasicController(basicRepo: Get.find()));
       Get.lazyPut(() => BookingController(bookingRepo: Get.find()));
       Get.lazyPut(() => LocationController());
+      Get.lazyPut(() => PusherController());
       Get.lazyPut(
           () => PackerAndMoverController(pakerAndMoverRepo: Get.find()));
       Get.lazyPut(() => OTPAutofillController());

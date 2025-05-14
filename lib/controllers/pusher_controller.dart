@@ -14,16 +14,15 @@ class PusherController extends GetxController implements GetxService {
   final PusherChannelsFlutter pusher = PusherChannelsFlutter.getInstance();
 
   // final String channel = 'my-channel';
-  final String channel = 'order_placed_vendor_6';
+  final String channel = 'order_placed_vendor_';
   final String myEvent = 'my-event';
   final AudioPlayer audioPlayer = AudioPlayer();
 
-  // List<PusherMessageModel> orders = [];
+  List<dynamic> orders = [];
   List<Timer> timers = [];
 
   Future initializePusher({required int vendorId}) async {
     try {
-      // await pusher.disconnect();
       await pusher.init(
         apiKey: '1cdf1e7644ae7f3d2a26',
         cluster: 'ap2',
@@ -36,7 +35,8 @@ class PusherController extends GetxController implements GetxService {
         },
       );
       await pusher.connect();
-      await pusher.subscribe(channelName: 'order_placed_vendor_$vendorId');
+      await pusher.subscribe(
+          channelName: 'booking_two_wheeler_request_$vendorId');
     } catch (ex) {
       log('---------- $ex ---------', name: 'pusherInitialization');
     }
@@ -54,6 +54,7 @@ class PusherController extends GetxController implements GetxService {
   // }
 
   void _onEvent(PusherEvent event) {
+    log(event.data, name: 'PusherOutput');
     if (event.data == null && event.data is! String) return;
     log(event.data, name: 'PusherOutput');
 
