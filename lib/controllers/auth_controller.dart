@@ -39,7 +39,6 @@ class AuthController extends GetxController implements GetxService {
         name: "login");
     try {
       Response response = await authRepo.login(data: data);
-
       if (response.statusCode == 200 && response.body['success']) {
         responseModel =
             ResponseModel(true, '${response.body['message']}', response.body);

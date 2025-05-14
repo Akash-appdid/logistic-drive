@@ -1,11 +1,16 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:logistic_driver/controllers/register_controller.dart';
+import 'package:logistic_driver/services/extra_methods.dart';
 import 'package:logistic_driver/views/base/custom_image.dart';
 import 'package:logistic_driver/views/screens/auth_screens/signup_screen/components/components/aadhar_card_image.dart';
 import 'package:logistic_driver/views/screens/auth_screens/signup_screen/components/components/driving_licence_image.dart';
 import 'package:logistic_driver/views/screens/auth_screens/signup_screen/components/components/pancard_image.dart';
 
+import '../../../../../services/input_decoration.dart';
 import 'components/aadhar_card_back_image.dart';
 
 class SignupPageFour extends StatefulWidget {
@@ -60,6 +65,64 @@ class _SignupPageFourState extends State<SignupPageFour> {
                       .textTheme
                       .displaySmall!
                       .copyWith(fontWeight: FontWeight.w500, fontSize: 14),
+                ),
+                const SizedBox(height: 15),
+                TextFormField(
+                  keyboardType: TextInputType.number,
+                  controller: Get.find<RegisterController>().aadharCardNumber,
+                  style: const TextStyle(color: Colors.black),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(12),
+                  ],
+                  decoration: CustomDecoration.inputDecoration(
+                    borderRadius: 4,
+                    label: 'Aadhaar Card Number',
+                    hint: 'Enter Aadhaar Card number',
+                  ),
+                  validator: (value) {
+                    if (value!.isNotEmpty &&
+                        !ExtraMethods.isValidAadhaar(value)) {
+                      return 'Invalid Aadhaar Number!';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 15),
+                TextFormField(
+                  keyboardType: TextInputType.text,
+                  controller: Get.find<RegisterController>().panCardNumber,
+                  style: const TextStyle(color: Colors.black),
+                  decoration: CustomDecoration.inputDecoration(
+                    borderRadius: 4,
+                    label: 'Pan Card Number',
+                    hint: 'Enter Pan Card number',
+                  ),
+                  validator: (value) {
+                    if (value!.isNotEmpty && !ExtraMethods.isValidPAN(value)) {
+                      return 'Invalid Pan Number!';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 15),
+                TextFormField(
+                  keyboardType: TextInputType.text,
+                  controller:
+                      Get.find<RegisterController>().drivingLiceseNumber,
+                  style: const TextStyle(color: Colors.black),
+                  decoration: CustomDecoration.inputDecoration(
+                    borderRadius: 4,
+                    label: 'Driving license Number',
+                    hint: 'Enter Driving licensenumber',
+                  ),
+                  validator: (value) {
+                    if (value!.isNotEmpty &&
+                        !ExtraMethods.isValidDrivingLicense(value)) {
+                      return 'Invalid Driving license Number!';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 15),
                 const PanCardImageWidget(),

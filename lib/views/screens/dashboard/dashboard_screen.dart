@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:logistic_driver/controllers/auth_controller.dart';
 import 'package:logistic_driver/controllers/basic_controller.dart';
 import 'package:logistic_driver/controllers/booking_controller.dart';
+import 'package:logistic_driver/controllers/location_controller.dart';
 import 'package:logistic_driver/services/theme.dart';
 
 import 'package:logistic_driver/views/screens/dashboard/components/appbar_widget.dart';
@@ -38,6 +39,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     } else {
       await controller.getAllBooking(status: 'delivered', isClear: true);
     }
+    Get.find<LocationController>().fetchCurrentLocationPlace();
   }
 
   @override

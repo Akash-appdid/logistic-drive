@@ -1,14 +1,14 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:logistic_driver/data/models/body/vehicle_model.dart';
+import 'package:logistic_driver/data/models/response/mini_truck_model.dart';
 import 'package:logistic_driver/data/models/response/vehicle_master_model.dart';
 import 'package:logistic_driver/data/repositories/register_repo.dart';
 import 'package:logistic_driver/services/extensions.dart';
 
+import '../data/api/api_checker.dart';
 import '../data/models/response/response_model.dart';
 
 import '../generated/assets.dart';
@@ -54,16 +54,48 @@ class RegisterController extends GetxController implements GetxService {
   TextEditingController bankName = TextEditingController();
   TextEditingController branchName = TextEditingController();
   File? selecedCancelCheck;
+  //
+  TextEditingController drivingLiceseNumber = TextEditingController();
+  TextEditingController aadharCardNumber = TextEditingController();
+  TextEditingController panCardNumber = TextEditingController();
 
-  Future<ResponseModel> registerUser(
-      {required Map<String, dynamic> data}) async {
+  //------------register data-----------
+  Map<String, dynamic> registerData() {
+    Map<String, dynamic> data = {};
+    data = {
+      'name': name.text,
+      'email': email.text,
+      'vehicle_type': selectedVehicle?.key,
+      'vehicle_id': vehicleMasterModel?.id,
+      'vehicle_number': vehicleNumber.text,
+      'build_year': buildYear.text,
+      'registration_certificate': getMultipartFile(selectedRegistrationFile),
+      'driving_licence': getMultipartFile(selectedDrivingLicense),
+      'aadhar_card_front': getMultipartFile(selectedAadhaarCard),
+      'cancel_check': getMultipartFile(selecedCancelCheck),
+      'aadhar_card_back': getMultipartFile(selectedAadhaarBackCard),
+      'pan_card': getMultipartFile(selectedPancard),
+      'payee_name': payeeName.text,
+      'account_number': accountNumber.text,
+      'ifsc_code': ifscCode.text,
+      'bank_name': bankName.text,
+      'bank_branch': branchName.text,
+      'driving_license_number': drivingLiceseNumber.text,
+      'aadhar_card_number': aadharCardNumber.text,
+      'pan_card_number': panCardNumber.text,
+      "two_wheeler_truck_id": selectedMiniTruck?.id,
+    };
+    return data;
+  }
+
+  Future<ResponseModel> registerUser() async {
     ResponseModel responseModel;
     _isLoading = true;
     update();
     log("response.body.toString()${AppConstants.baseUrl}${AppConstants.registerUri}",
         name: "login");
     try {
-      Response response = await registerRepo.register(data: data);
+      Response response = await registerRepo.register(data: registerData());
 
       if (response.statusCode == 200 && response.body['success']) {
         responseModel =
@@ -82,26 +114,12 @@ class RegisterController extends GetxController implements GetxService {
   }
 
   VehicleOption? selectedVehicle;
-
   void selectVehicle(VehicleOption? vehicle) {
-    if (vehicle?.key == 'motorbike') {
-      Fluttertoast.showToast(
-        msg:
-            'Motorbike service is currently unavailable. Please select a different option.',
-      );
-    } else if (vehicle?.key == 'mini_tempo') {
-      Fluttertoast.showToast(
-        msg:
-            'Mini Tempo service is not available at the moment. Try another vehicle.',
-      );
-    } else {
-      selectedVehicle = vehicle;
-    }
+    selectedVehicle = vehicle;
     update();
   }
 
   VehicleMasterModel? vehicleMasterModel;
-
   void selectedVehicleMaster(VehicleMasterModel? vehicle) {
     vehicleMasterModel = vehicle;
     update();
@@ -286,5 +304,39 @@ class RegisterController extends GetxController implements GetxService {
   MultipartFile? getMultipartFile(File? file) {
     if (file == null) return null;
     return MultipartFile(file, filename: file.path.fileName);
+  }
+
+  //---------------get mini truck data ------------------
+  MiniTruckModel? selectedMiniTruck;
+
+  void selectMiniTruck(MiniTruckModel minitruck) {
+    selectedMiniTruck = minitruck;
+    update();
+  }
+
+  List<MiniTruckModel> miniTruckData = [];
+  Future<ResponseModel> fetchMiniTruckData() async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    try {
+      Response response = await registerRepo.getMiniTruckData();
+      log(response.bodyString.toString(), name: "minitruckData");
+      if (response.statusCode == 200 && response.body['success']) {
+        miniTruckData = (response.body['data'] as List<dynamic>)
+            .map((res) => MiniTruckModel.fromJson(res))
+            .toList();
+        responseModel = ResponseModel(true, 'success');
+      } else {
+        ApiChecker.checkApi(response);
+        responseModel = ResponseModel(false, "${response.statusText}");
+      }
+    } catch (e) {
+      log('---- ${e.toString()} ----', name: "ERROR AT fetchMiniTruckData()");
+      responseModel = ResponseModel(false, "$e");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
   }
 }

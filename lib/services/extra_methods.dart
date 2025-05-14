@@ -79,6 +79,21 @@ class ExtraMethods {
       Fluttertoast.showToast(msg: 'Incorrect Address');
     }
   }
+
+  static bool isValidAadhaar(String input) {
+    final aadhaarRegExp = RegExp(r'^[2-9]{1}[0-9]{11}$');
+    return aadhaarRegExp.hasMatch(input);
+  }
+
+  static bool isValidPAN(String input) {
+    final panRegExp = RegExp(r'^[A-Z]{5}[0-9]{4}[A-Z]{1}$');
+    return panRegExp.hasMatch(input.toUpperCase());
+  }
+
+  static bool isValidDrivingLicense(String input) {
+    final dlRegExp = RegExp(r'^[A-Z]{2}[0-9]{2}[0-9]{4}[0-9]{7,8}$');
+    return dlRegExp.hasMatch(input.toUpperCase());
+  }
 }
 
 String getInitialLetter(String? name) {

@@ -15,4 +15,7 @@ class RegisterRepo {
   Future<Response> getVehicleMasteData({required String vehicleType}) async =>
       await apiClient
           .postData(AppConstants.vehiclesMaterUri, {'type': vehicleType});
+
+  Future<Response> getMiniTruckData() async =>
+      await apiClient.getData(AppConstants.miniTruckUri);
 }

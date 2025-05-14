@@ -12,6 +12,7 @@ import '../../../../generated/assets.dart';
 import '../../../../services/route_helper.dart';
 import '../../../base/common_button.dart';
 import '../signup_screen/signup_screen.dart';
+import '../under_review_screen.dart';
 import 'components/resend_otp_widget.dart';
 
 class OtpVerificationScreen extends StatelessWidget {
@@ -156,10 +157,20 @@ class OtpVerificationScreen extends StatelessWidget {
               (route) => false,
             );
           } else if (value.message == 'old') {
-            Navigator.pushAndRemoveUntil(
-              context,
-              getCustomRoute(child: const DashboardScreen()),
-              (route) => false,
+            authController.getUserProfileData().then(
+              (value) {
+                if (value.isSuccess) {
+                  if (authController.userModel?.status == 'pending') {
+                    Navigator.of(context).pushAndRemoveUntil(
+                        getCustomRoute(child: const ProfileUnderReviewScreen()),
+                        (route) => false);
+                  } else if (authController.userModel?.status == 'active') {
+                    Navigator.of(context).pushAndRemoveUntil(
+                        getCustomRoute(child: const DashboardScreen()),
+                        (route) => false);
+                  }
+                }
+              },
             );
           }
         } else {

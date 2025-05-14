@@ -7,6 +7,7 @@ import 'package:logistic_driver/services/constants.dart';
 import 'package:logistic_driver/services/route_helper.dart';
 
 import 'package:logistic_driver/views/screens/auth_screens/signup_screen/signup_screen.dart';
+import 'package:logistic_driver/views/screens/auth_screens/under_review_screen.dart';
 import 'package:logistic_driver/views/screens/dashboard/dashboard_screen.dart';
 import 'package:logistic_driver/views/screens/welcome_screen/welcome_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -98,6 +99,12 @@ class _SplashScreenState extends State<SplashScreen> {
     if (auth.isLoggedIn()) {
       auth.getUserProfileData().then((value) {
         if (value.isSuccess) {
+          if (auth.userModel?.status == 'pending') {
+            Navigator.of(context).pushAndRemoveUntil(
+                getCustomRoute(child: const ProfileUnderReviewScreen()),
+                (route) => false);
+            return;
+          }
           if (Get.find<AuthController>().checkUserData()) {
             Navigator.of(context).pushAndRemoveUntil(
                 getCustomRoute(child: const DashboardScreen()),

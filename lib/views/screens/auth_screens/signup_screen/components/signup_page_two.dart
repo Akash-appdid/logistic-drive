@@ -133,9 +133,7 @@ class _SignUpPageTwoState extends State<SignUpPageTwo> {
                       );
                     },
                     separatorBuilder: (BuildContext context, int index) {
-                      return const SizedBox(
-                        height: 10,
-                      );
+                      return const SizedBox(height: 10);
                     },
                   );
                 }),

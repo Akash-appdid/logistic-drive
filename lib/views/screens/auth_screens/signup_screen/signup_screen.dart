@@ -164,43 +164,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                   setState(() {});
                                 }
                               } else {
-                                dynamic data = {
-                                  'name': controller.name.text,
-                                  'email': controller.email.text,
-                                  'vehicle_type':
-                                      controller.selectedVehicle?.key,
-                                  'vehicle_id':
-                                      controller.vehicleMasterModel?.id,
-                                  'vehicle_number':
-                                      controller.vehicleNumber.text,
-                                  'build_year': controller.buildYear.text,
-                                  'registration_certificate':
-                                      controller.getMultipartFile(
-                                          controller.selectedRegistrationFile),
-                                  'driving_licence':
-                                      controller.getMultipartFile(
-                                          controller.selectedDrivingLicense),
-                                  'aadhar_card_front':
-                                      controller.getMultipartFile(
-                                          controller.selectedAadhaarCard),
-                                  'cancel_check': controller.getMultipartFile(
-                                      controller.selecedCancelCheck),
-                                  'aadhar_card_back':
-                                      controller.getMultipartFile(
-                                          controller.selectedAadhaarBackCard),
-                                  'pan_card': controller.getMultipartFile(
-                                      controller.selectedPancard),
-                                  'payee_name': controller.payeeName.text,
-                                  'account_number':
-                                      controller.accountNumber.text,
-                                  'ifsc_code': controller.ifscCode.text,
-                                  'bank_name': controller.bankName.text,
-                                  'bank_branch': controller.branchName.text,
-                                };
-                                log("$data");
-                                controller
-                                    .registerUser(data: data)
-                                    .then((value) {
+                                log("${controller.registerData()}",
+                                    name: "RegisterData");
+                                controller.registerUser().then((value) {
                                   if (value.isSuccess) {
                                     final auth = Get.find<AuthController>();
                                     Fluttertoast.showToast(msg: value.message);
