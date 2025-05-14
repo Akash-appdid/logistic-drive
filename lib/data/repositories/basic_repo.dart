@@ -20,6 +20,6 @@ class BasicRepo {
       await apiClient.getData(AppConstants.analyticsUri);
 
 //-----------update location------------------
-  Future<Response> updateLocation(Map<String, dynamic> data) async =>
+  Future<Response> updateLocation({required Map<String, dynamic> data}) async =>
       await apiClient.postData(AppConstants.updateLocationUri, data);
 }

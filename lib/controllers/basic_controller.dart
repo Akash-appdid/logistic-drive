@@ -1,12 +1,22 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
+
 import 'package:logistic_driver/data/models/response/analytics_model.dart';
 import 'package:logistic_driver/data/models/response/response_model.dart';
 import 'package:logistic_driver/data/repositories/basic_repo.dart';
 
 import '../data/api/api_checker.dart';
 import '../data/models/response/business_setting_model.dart';
+import '../services/constants.dart';
+
+enum BussinessSettingName {
+  privacyPolicy,
+  aboutUs,
+  contactUs,
+  termsAndCondition,
+  helpCenter
+}
 
 class BasicController extends GetxController implements GetxService {
   final BasicRepo basicRepo;
@@ -147,12 +157,31 @@ class BasicController extends GetxController implements GetxService {
     update();
     return responseModel;
   }
-}
+  //----------------------update location--------------------
+  //
 
-enum BussinessSettingName {
-  privacyPolicy,
-  aboutUs,
-  contactUs,
-  termsAndCondition,
-  helpCenter
+  Future<ResponseModel> updateLocation(Map<String, dynamic> data) async {
+    log("location$data");
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.loginUri}",
+        name: "login");
+    try {
+      Response response = await basicRepo.updateLocation(data: data);
+      if (response.statusCode == 200 && response.body['success']) {
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
+      } else {
+        responseModel = ResponseModel(false, response.statusText!);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('+++++++++++++++++++++++++++++++++++ ${e.toString()} +++++++++++++++++++++++++++++++++++++',
+          name: "ERROR AT updateLocation()");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
 }

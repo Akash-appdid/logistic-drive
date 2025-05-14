@@ -32,14 +32,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void init() async {
     final controller = Get.find<BookingController>();
-    await Get.find<BasicController>().getAnalyticsData();
+    final locationCtrl = Get.find<LocationController>();
+    final basicCtrl = Get.find<BasicController>();
+    locationCtrl.fetchCurrentLocationPlace().then((val) {
+      basicCtrl.updateLocation(locationCtrl.updateLocationData());
+    });
+    await basicCtrl.getAnalyticsData();
     controller.bookingInitMethodForPagination();
     if (controller.isOnGoingOrder) {
       await controller.getAllBooking(isClear: true);
     } else {
       await controller.getAllBooking(status: 'delivered', isClear: true);
     }
-    Get.find<LocationController>().fetchCurrentLocationPlace();
   }
 
   @override

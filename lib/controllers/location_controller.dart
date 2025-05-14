@@ -53,7 +53,6 @@ class LocationController extends GetxController implements GetxService {
       await getAddressFromLocation(
           latLng ?? const LatLng(19.198545796504945, 72.95579630029403));
     }
-
     _isLoading = false;
     update();
   }
@@ -132,5 +131,12 @@ class LocationController extends GetxController implements GetxService {
     searchController.clear();
     listOfLocations = [];
     update();
+  }
+
+  Map<String, dynamic> updateLocationData() {
+    return {
+      "latitude": latLng?.latitude,
+      "longitude": latLng?.longitude,
+    };
   }
 }
