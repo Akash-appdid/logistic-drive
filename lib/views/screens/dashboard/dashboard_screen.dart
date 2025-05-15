@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:logistic_driver/controllers/auth_controller.dart';
 import 'package:logistic_driver/controllers/basic_controller.dart';
 import 'package:logistic_driver/controllers/booking_controller.dart';
+import 'package:logistic_driver/controllers/local_bike_tempo_controller.dart';
 import 'package:logistic_driver/controllers/location_controller.dart';
 import 'package:logistic_driver/services/theme.dart';
 
@@ -12,6 +13,7 @@ import 'package:logistic_driver/views/screens/dashboard/components/appbar_widget
 
 import '../../../controllers/pusher_controller.dart';
 import 'components/bookinglist_section_widget.dart';
+import 'components/dutyonoff_button_widget.dart';
 import 'components/earning_card_widget.dart';
 import '../drawer_screens/drawer_screen.dart';
 import 'components/order_widget.dart';
@@ -33,22 +35,52 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   void init() async {
-    final controller = Get.find<BookingController>();
+    final authCtrl = Get.find<AuthController>();
     final locationCtrl = Get.find<LocationController>();
     final basicCtrl = Get.find<BasicController>();
+
+    ///------location
     locationCtrl.fetchCurrentLocationPlace().then((val) {
       basicCtrl.updateLocation(locationCtrl.updateLocationData());
     });
+
+    ///------pusher
+    if (authCtrl.userModel != null) {
+      Get.find<PusherController>().initializePusher(
+          driverId: Get.find<AuthController>().userModel?.id ?? 0);
+    }
+
+    ///--------analytics
     await basicCtrl.getAnalyticsData();
+
+    ///
+    if (authCtrl.userModel?.isMotorbike ?? false) {
+      localBikeAndTempoCallingInInit();
+    } else {
+      truckAndPackersDataCallingInInti();
+    }
+  }
+
+  void truckAndPackersDataCallingInInti() async {
+    final controller = Get.find<BookingController>();
     controller.bookingInitMethodForPagination();
     if (controller.isOnGoingOrder) {
       await controller.getAllBooking(isClear: true);
     } else {
       await controller.getAllBooking(status: 'delivered', isClear: true);
     }
-    if (Get.find<AuthController>().userModel != null) {
-      Get.find<PusherController>().initializePusher(
-          driverId: Get.find<AuthController>().userModel?.id ?? 0);
+  }
+
+  void localBikeAndTempoCallingInInit() async {
+    final controller = Get.find<BookingController>();
+    final orderController = Get.find<LocalBikeTempoController>();
+    orderController.bookingInitMethodForPagination(
+        isOnGoingOrder: controller.isOnGoingOrder,
+        scrollController: controller.scrollController);
+    if (controller.isOnGoingOrder) {
+      await orderController.getAllOrder(isClear: true);
+    } else {
+      await orderController.getAllOrder(status: 'delivered', isClear: true);
     }
   }
 
@@ -84,13 +116,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       //--------------Bookings--------------------
                       SizedBox(height: 15),
                       BookingsListSectionWidget(),
-                      // GetBuilder<AuthController>(builder: (authController) {
-                      //   log('${authController.userModel?.vehicleType}');
-                      //   if (authController.userModel?.isMotorbike ?? false) {
-                      //     return Column();
-                      //   }
-                      //   return
-                      // })
                     ],
                   ),
                 );
@@ -99,40 +124,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class DutyOnOffButtonWidget extends StatelessWidget {
-  const DutyOnOffButtonWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<AuthController>(
-      builder: (controller) {
-        if ((controller.userModel?.isDuty ?? false)) {
-          return const SizedBox.shrink();
-        }
-        return Container(
-          padding: const EdgeInsets.symmetric(vertical: 5),
-          width: double.infinity,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6),
-            color: Colors.red.shade500,
-          ),
-          child: Text(
-            'You are off duty',
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 20,
-                  color: Colors.white,
-                ),
-            textAlign: TextAlign.center,
-          ),
-        );
-      },
     );
   }
 }

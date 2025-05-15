@@ -284,9 +284,9 @@ class Location {
     this.createdAt,
     this.updatedAt,
     this.sequence,
+    this.doneAt,
     this.pickupDoneCount = 1,
     this.dropDoneCount = 1,
-    this.doneAt,
     this.pickupIndex = 0,
     this.dropIndex = 0,
   });

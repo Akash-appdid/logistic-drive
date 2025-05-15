@@ -6,7 +6,7 @@ import 'package:logistic_driver/controllers/booking_controller.dart';
 import 'package:logistic_driver/services/route_helper.dart';
 import 'package:logistic_driver/views/screens/booking_detail_screen/booking_detail_screen.dart';
 
-import '../../booking_detail_screen/components/booking_item_widget.dart';
+import '../../../booking_detail_screen/components/booking_item_widget.dart';
 
 class OngoingOrderWidget extends StatelessWidget {
   const OngoingOrderWidget({

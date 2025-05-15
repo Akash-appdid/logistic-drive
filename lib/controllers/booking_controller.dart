@@ -214,7 +214,7 @@ class BookingController extends GetxController implements GetxService {
         responseModel = ResponseModel(false, "${response.statusText}");
       }
     } catch (e) {
-      log('---- ${e.toString()} ----', name: "ERROR AT endBookingTrip()");
+      log('---- ${e.toString()} ----', name: "ERROR AT loactionMarkAsDone()");
       responseModel = ResponseModel(false, "$e");
     }
     _isLoading = false;

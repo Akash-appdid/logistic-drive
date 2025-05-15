@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logistic_driver/controllers/booking_controller.dart';
 
-AppBar bookingAppBar(BuildContext context) {
+import '../../../../controllers/local_bike_tempo_controller.dart';
+
+AppBar localBikeTempoBookingAppBar(BuildContext context) {
   return AppBar(
-    title: GetBuilder<BookingController>(builder: (controller) {
+    title: GetBuilder<LocalBikeTempoController>(builder: (controller) {
       if (controller.isLoading) {
         return const SizedBox.shrink();
       }
       return Text(
-        'ID #${(controller.bookingsDetailData?.bookingId ?? '').toUpperCase()}',
+        'ID #${(controller.localBikeTempoBookingData?.bookingId ?? '').toUpperCase()}',
         style: Theme.of(context).textTheme.labelMedium!.copyWith(
               fontSize: 16,
               fontWeight: FontWeight.w600,

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logistic_driver/controllers/auth_controller.dart';
 import 'package:logistic_driver/controllers/booking_controller.dart';
-import 'package:logistic_driver/views/base/dialogs/custom_nodata_found.dart';
-import 'package:logistic_driver/views/screens/dashboard/components/booking_shimmer.dart';
+import 'package:logistic_driver/controllers/local_bike_tempo_controller.dart';
+import 'package:logistic_driver/views/screens/dashboard/local_bike_and_tempo/local_bike_and_tempo_widget.dart';
+import 'package:logistic_driver/views/screens/dashboard/truck_and_packers/truck_and_pakers_widget.dart';
 
 import '../../../../services/theme.dart';
 import '../../../base/common_button.dart';
-import 'complete_order_widget.dart';
-import 'ongoing_order_widget.dart';
 
 class BookingsListSectionWidget extends StatelessWidget {
   const BookingsListSectionWidget({
@@ -40,9 +40,15 @@ class BookingsListSectionWidget extends StatelessWidget {
                       ? ButtonType.primary
                       : ButtonType.secondary,
                   onTap: () {
+                    final authCtrl = Get.find<AuthController>();
+                    final localBikeCtrl = Get.find<LocalBikeTempoController>();
                     controller.setIsComplete(true);
                     if (controller.isOnGoingOrder) {
-                      controller.getAllBooking(isClear: true);
+                      if (authCtrl.userModel?.isMotorbike ?? false) {
+                        localBikeCtrl.getAllOrder(isClear: true);
+                      } else {
+                        controller.getAllBooking(isClear: true);
+                      }
                     }
                   },
                   title: 'On Going',
@@ -59,10 +65,18 @@ class BookingsListSectionWidget extends StatelessWidget {
                       ? ButtonType.primary
                       : ButtonType.secondary,
                   onTap: () {
+                    final authCtrl = Get.find<AuthController>();
+                    final localBikeCtrl = Get.find<LocalBikeTempoController>();
                     controller.setIsComplete(false);
+
                     if (!controller.isOnGoingOrder) {
-                      controller.getAllBooking(
-                          status: 'delivered', isClear: true);
+                      if (authCtrl.userModel?.isMotorbike ?? false) {
+                        localBikeCtrl.getAllOrder(
+                            status: 'delivered', isClear: true);
+                      } else {
+                        controller.getAllBooking(
+                            status: 'delivered', isClear: true);
+                      }
                     }
                   },
                   title: 'Completed',
@@ -71,20 +85,14 @@ class BookingsListSectionWidget extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 6),
-          GetBuilder<BookingController>(builder: (bookingController) {
-            if (bookingController.isLoading) {
-              return const BookingShimmer();
-            }
-            if (bookingController.bookingsData.isEmpty) {
-              return const CustomNoDataFoundWidget();
-            }
-
-            if (controller.isOnGoingOrder) {
-              return const OngoingOrderWidget();
-            } else {
-              return const CompleteOrderWidget();
-            }
-          })
+          GetBuilder<AuthController>(
+            builder: (authCtrl) {
+              if (authCtrl.userModel?.isMotorbike ?? false) {
+                return const LocalBikeAndTempoWidget();
+              }
+              return const TruckAndPakersWidget();
+            },
+          ),
         ],
       );
     });

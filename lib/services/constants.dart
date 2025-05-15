@@ -94,6 +94,12 @@ class AppConstants {
       'api/driver/v1/two-wheelers/bookings/accept';
   static const String allOrders = 'api/driver/v1/two-wheelers/bookings';
   static const String orderDetail = 'api/driver/v1/two-wheelers/bookings';
+  static const String startBikeTempoUri =
+      'api/driver/v1/two-wheelers/bookings/verify-otp';
+  static const String bikeTempoMarkLocationDone =
+      'api/driver/v1/two-wheelers/bookings/mark-location-as-done';
+  static const String markAsDeliveredBikeTempo =
+      'api/driver/v1/two-wheelers/bookings/mark-as-delivered';
 
   //-------app details-------
   static String appName = 'Transportation';

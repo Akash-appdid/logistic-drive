@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:logistic_driver/controllers/pusher_controller.dart';
 import 'package:logistic_driver/services/extensions.dart';
 
-import '../../../../controllers/local_bike_tempo/order_controller.dart';
+import '../../../../controllers/local_bike_tempo_controller.dart';
 import '../../../../data/models/response/order_model.dart';
 import '../../../../services/extra_methods.dart';
 import '../../../../services/theme.dart';
@@ -52,21 +52,25 @@ class _OrdersItemWidgetState extends State<OrdersItemWidget> {
                       ),
                 ),
               ),
-              GetBuilder<OrderController>(builder: (controller) {
+              GetBuilder<LocalBikeTempoController>(builder: (controller) {
                 return InkWell(
                   onTap: () async {
                     if (controller.isLoading) return;
                     Map<String, dynamic> data = {
                       "booking_two_wheeler_id": widget.orderData.id
                     };
-                    await Get.find<OrderController>()
+                    await Get.find<LocalBikeTempoController>()
                         .acceptOrder(data: data)
-                        .then((value) {
+                        .then((value) async {
                       if (value.isSuccess) {
                         final controller = Get.find<PusherController>();
                         controller.stopAudioPlayer();
                         controller.removeItem(
                             orderRequestId: widget.orderData.id ?? 0);
+                        //
+                        final orderController =
+                            Get.find<LocalBikeTempoController>();
+                        await orderController.getAllOrder(isClear: true);
                       }
                       Fluttertoast.showToast(msg: value.message);
                     });

@@ -6,7 +6,7 @@ import 'package:get/instance_manager.dart';
 import 'package:logistic_driver/controllers/auth_controller.dart';
 import 'package:logistic_driver/controllers/basic_controller.dart';
 import 'package:logistic_driver/controllers/booking_controller.dart';
-import 'package:logistic_driver/controllers/local_bike_tempo/order_controller.dart';
+import 'package:logistic_driver/controllers/local_bike_tempo_controller.dart';
 import 'package:logistic_driver/controllers/location_controller.dart';
 import 'package:logistic_driver/controllers/otp_autofill_controller.dart';
 import 'package:logistic_driver/controllers/packer_mover_controller.dart';
@@ -16,7 +16,7 @@ import 'package:logistic_driver/data/api/api_client.dart';
 import 'package:logistic_driver/data/repositories/auth_repo.dart';
 import 'package:logistic_driver/data/repositories/basic_repo.dart';
 import 'package:logistic_driver/data/repositories/booking_repo.dart';
-import 'package:logistic_driver/data/repositories/order_repo.dart';
+import 'package:logistic_driver/data/repositories/local_bike_tempo_booking_repo.dart';
 import 'package:logistic_driver/data/repositories/packer_and_mover_repo.dart';
 import 'package:logistic_driver/data/repositories/register_repo.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -53,7 +53,7 @@ class Init {
       Get.lazyPut(() => RegisterRepo(apiClient: Get.find()));
       Get.lazyPut(() => BookingRepo(apiClient: Get.find()));
       Get.lazyPut(() => PakerAndMoverRepo(apiClient: Get.find()));
-      Get.lazyPut(() => OrderRepo(apiClient: Get.find()));
+      Get.lazyPut(() => LocalBikeTempoBookingRepo(apiClient: Get.find()));
 
       //--------Controller
       Get.lazyPut(() => PermissionController());
@@ -64,7 +64,8 @@ class Init {
       Get.lazyPut(() => BookingController(bookingRepo: Get.find()));
       Get.lazyPut(() => LocationController());
       Get.lazyPut(() => PusherController());
-      Get.lazyPut(() => OrderController(orderRepo: Get.find()));
+      Get.lazyPut(() =>
+          LocalBikeTempoController(localBikeTempoBookingRepo: Get.find()));
       Get.lazyPut(
           () => PackerAndMoverController(pakerAndMoverRepo: Get.find()));
       Get.lazyPut(() => OTPAutofillController());
