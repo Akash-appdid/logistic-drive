@@ -112,4 +112,5 @@ class UserModel {
       };
 
   bool get isDuty => onDuty == 'yes';
+  bool get isMotorbike => vehicleType == 'motorbike';
 }

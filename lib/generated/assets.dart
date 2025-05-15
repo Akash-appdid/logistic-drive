@@ -94,13 +94,9 @@ class Assets {
   /// assets/lotties/no_data_found.json
   static const String lottiesNoDataFound = "assets/lotties/no_data_found.json";
 
-  /// Assets for soundNotification1
-  /// assets/sound/notification_1.mp3
-  static const String soundNotification1 = "assets/sound/notification_1.mp3";
-
-  /// Assets for soundNotificationRinging
-  /// assets/sound/notification_ringing.mp3
-  static const String soundNotificationRinging = "assets/sound/notification_ringing.mp3";
+  /// Assets for soundNotificationSound
+  /// assets/sound/notification_sound.mp3
+  static const String soundNotificationSound = "assets/sound/notification_sound.mp3";
 
   /// Assets for svgsAboutUs
   /// assets/svgs/about-us.svg

@@ -2,26 +2,28 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:get/get_state_manager/src/rx_flutter/rx_disposable.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:get/get.dart';
+
 import 'package:just_audio/just_audio.dart';
+import 'package:logistic_driver/controllers/auth_controller.dart';
 
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
+import '../data/models/response/order_model.dart';
 import '../generated/assets.dart';
 
 class PusherController extends GetxController implements GetxService {
   final PusherChannelsFlutter pusher = PusherChannelsFlutter.getInstance();
 
-  // final String channel = 'my-channel';
-  final String channel = 'order_placed_vendor_';
+  String bookingTwoWheelerRequestChannel =
+      'booking_two_wheeler_request_${Get.find<AuthController>().userModel?.id}';
+
   final String myEvent = 'my-event';
   final AudioPlayer audioPlayer = AudioPlayer();
-
-  List<dynamic> orders = [];
+  List<OrderModel> orders = [];
   List<Timer> timers = [];
 
-  Future initializePusher({required int vendorId}) async {
+  Future initializePusher({required int driverId}) async {
     try {
       await pusher.init(
         apiKey: '1cdf1e7644ae7f3d2a26',
@@ -36,24 +38,21 @@ class PusherController extends GetxController implements GetxService {
       );
       await pusher.connect();
       await pusher.subscribe(
-          channelName: 'booking_two_wheeler_request_$vendorId');
+          channelName: 'booking_two_wheeler_request_$driverId');
     } catch (ex) {
       log('---------- $ex ---------', name: 'pusherInitialization');
     }
   }
 
-  // void removeItem({required int orderRequestId}) {
-  //   int index = orders
-  //       .indexWhere((element) => element.orderRequest?.id == orderRequestId);
-  //   if (index == -1) return;
+  void removeItem({required int orderRequestId}) {
+    int index = orders.indexWhere((element) => element.id == orderRequestId);
+    if (index == -1) return;
+    orders.removeAt(index);
+    stopAudioPlayer();
+    update();
+  }
 
-  //   // timers[index].cancel();
-  //   // timers.removeAt(index);
-  //   orders.removeAt(index);
-  //   update();
-  // }
-
-  void _onEvent(PusherEvent event) {
+  void _onEvent(PusherEvent event) async {
     log(event.data, name: 'PusherOutput');
     if (event.data == null && event.data is! String) return;
     log(event.data, name: 'PusherOutput');
@@ -62,25 +61,31 @@ class PusherController extends GetxController implements GetxService {
       Map<String, dynamic> decodedData = jsonDecode(event.data);
       if (decodedData.isEmpty) return;
 
-      // PusherMessageModel order = PusherMessageModel.fromJson(decodedData);
-      // orders.insert(0, order);
-
-      // timers.add(Timer(const Duration(seconds: 10), () {
-      //   removeItem(orderRequestId: order.orderRequest?.id ?? 0);
-      // }));
+      OrderModel order = OrderModel.fromJson(decodedData['bookingDetails']);
+      orders.insert(0, order);
+      timers.add(Timer(const Duration(seconds: 10), () {
+        removeItem(orderRequestId: order.id ?? 0);
+      }));
       update();
-
       // ------ Play Audio ------
-      audioPlayer
-        ..setAudioSource(
+      try {
+        await audioPlayer.setAudioSource(
           LoopingAudioSource(
-            child: AudioSource.asset(Assets.soundNotificationRinging),
+            child: AudioSource.asset(Assets.soundNotificationSound),
             count: 4,
           ),
-        )
-        ..play();
+        );
+        await audioPlayer.play();
+      } catch (e) {
+        log("Audio error: $e", name: 'sound');
+      }
     } catch (ex) {
       log('----------- $ex -----------', name: 'PusherModelException');
     }
+  }
+
+  //accept order
+  void stopAudioPlayer() async {
+    await audioPlayer.stop();
   }
 }

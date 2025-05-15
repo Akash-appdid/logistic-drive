@@ -14,6 +14,7 @@ import '../../../controllers/pusher_controller.dart';
 import 'components/bookinglist_section_widget.dart';
 import 'components/earning_card_widget.dart';
 import '../drawer_screens/drawer_screen.dart';
+import 'components/order_widget.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -47,7 +48,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
     if (Get.find<AuthController>().userModel != null) {
       Get.find<PusherController>().initializePusher(
-          vendorId: Get.find<AuthController>().userModel?.id ?? 0);
+          driverId: Get.find<AuthController>().userModel?.id ?? 0);
     }
   }
 
@@ -78,9 +79,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       SizedBox(height: 15),
                       //-----on off duty------
                       DutyOnOffButtonWidget(),
+                      SizedBox(height: 15),
+                      OrderWidget(),
                       //--------------Bookings--------------------
                       SizedBox(height: 15),
-                      BookingsListSectionWidget()
+                      BookingsListSectionWidget(),
+                      // GetBuilder<AuthController>(builder: (authController) {
+                      //   log('${authController.userModel?.vehicleType}');
+                      //   if (authController.userModel?.isMotorbike ?? false) {
+                      //     return Column();
+                      //   }
+                      //   return
+                      // })
                     ],
                   ),
                 );

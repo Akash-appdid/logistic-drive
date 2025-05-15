@@ -236,6 +236,18 @@ class Location {
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
       };
+
+  bool get getLocationType => type == 'pickup';
+
+  String get getAddress {
+    String address = '';
+    if (addressLineTwo != null) {
+      address = "$addressLineOne $addressLineTwo $city $pincode";
+    } else {
+      address = "$addressLineOne $city $pincode";
+    }
+    return address;
+  }
 }
 
 class TwoWheelerPackageType {
