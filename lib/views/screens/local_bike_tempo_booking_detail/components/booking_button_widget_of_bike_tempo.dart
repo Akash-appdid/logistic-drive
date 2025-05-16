@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:logistic_driver/services/extensions.dart';
+import 'package:logistic_driver/services/theme.dart';
 
 import '../../../../controllers/local_bike_tempo_controller.dart';
 import '../../../../generated/assets.dart';
@@ -28,7 +29,7 @@ class BookingButtonWidgetOfBikeTempo extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: CustomButton(
-                  color: const Color(0xFF0F8000),
+                  color: primaryColor, //const Color(0xFF0F8000),
                   onTap: () {
                     showModalBottomSheet(
                       enableDrag: false,
@@ -57,7 +58,7 @@ class BookingButtonWidgetOfBikeTempo extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: CustomButton(
-                  color: const Color(0xFF0F8000),
+                  color: primaryColor, // const Color(0xFF0F8000),
                   onTap: () {
                     showDialog(
                       barrierDismissible: false,
@@ -109,7 +110,7 @@ class BookingButtonWidgetOfBikeTempo extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: CustomButton(
-                  color: const Color(0xFF0F8000),
+                  color: primaryColor, //const Color(0xFF0F8000),
                   onTap: () {
                     showDialog(
                       barrierDismissible: false,

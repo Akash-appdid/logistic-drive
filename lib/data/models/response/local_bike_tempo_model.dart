@@ -182,6 +182,10 @@ class LocalBikeTempoBookingModel {
     }
     return false;
   }
+
+  String get getCustomerName => user?.name ?? '';
+  String get getCustomerMobileNo => user?.phone ?? '';
+  String get getPakageType => twoWheelerPackageType?.title ?? '';
 }
 
 class LocationofLocalBike {

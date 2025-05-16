@@ -16,18 +16,26 @@ class OrderTrackingStatusWidgetOfLocalBikeTempo extends StatelessWidget {
       if (controller.localBikeTempoBookingData?.isOrderTracking ?? true) {
         return const SizedBox.shrink();
       }
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+            border: Border.all(
+              color: Colors.grey.shade200,
+            )),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Order Tracking  Status:',
+              'Order Tracking  Status',
               style: Theme.of(context).textTheme.labelMedium!.copyWith(
                     fontSize: 16,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w700,
                   ),
             ),
+            const SizedBox(height: 10),
+            Divider(color: Colors.grey.shade200),
             const SizedBox(height: 10),
             ListView.builder(
               shrinkWrap: true,

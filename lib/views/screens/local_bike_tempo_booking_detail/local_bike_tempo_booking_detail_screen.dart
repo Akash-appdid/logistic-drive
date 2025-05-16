@@ -7,12 +7,13 @@ import '../../../controllers/auth_controller.dart';
 import '../../../controllers/booking_controller.dart';
 import '../../../controllers/local_bike_tempo_controller.dart';
 import '../../../services/theme.dart';
-
 import 'components/app_bar_local_bike_tempo.dart';
 import 'components/booking_button_widget_of_bike_tempo.dart';
+import 'components/customer_info_widget.dart';
+import 'components/date_widget.dart';
 import 'components/local_bike_tempo_custom_timeline_widget.dart';
 import 'components/localbiketempo_order_tracking_stattus_widget.dart';
-import 'components/order_heading_widget.dart';
+import 'components/order_status_widget.dart';
 import 'components/payment_inforamtion_widget.dart';
 
 class LocalBikeTempoBookingDetailScreen extends StatefulWidget {
@@ -81,11 +82,13 @@ class _LocalBikeTempoBookingDetailScreenState
             physics: AlwaysScrollableScrollPhysics(),
             child: Column(
               children: [
-                // const LocalBikeTempoOrderStatusWidget(),
-                OrderHeadingWidgetOfLocalBikeTempo(),
+                DateWidget(),
+                // OrderHeadingWidgetOfLocalBikeTempo(),
+                CustomerInfoWidget(),
                 CustomTimelineWidgetOfLocalBikeTempo(),
                 OrderTrackingStatusWidgetOfLocalBikeTempo(),
                 PaymentInformationWidgetOfLocalBikeTempo(),
+                OrderDelivredStatusWidget(),
                 SizedBox(height: 20),
               ],
             ),
