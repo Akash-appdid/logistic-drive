@@ -89,7 +89,7 @@ class AppConstants {
   //-------------location-------------------------
   static const String updateLocationUri = 'api/driver/v1/basic/update-location';
 
-  //----------order---------------
+  //----------bike tempo---------------
   static const String acceptOrder =
       'api/driver/v1/two-wheelers/bookings/accept';
   static const String allOrders = 'api/driver/v1/two-wheelers/bookings';
@@ -100,6 +100,8 @@ class AppConstants {
       'api/driver/v1/two-wheelers/bookings/mark-location-as-done';
   static const String markAsDeliveredBikeTempo =
       'api/driver/v1/two-wheelers/bookings/mark-as-delivered';
+  static const String bikeTempoAnalytic =
+      'api/driver/v1/two-wheelers/dashboard/analytics';
 
   //-------app details-------
   static String appName = 'Transportation';

@@ -60,35 +60,38 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                               ),
                             ),
                             const SizedBox(width: 15),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  (controller.userModel?.name ?? 'NA')
-                                      .capitalizeFirstOfEach,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .displayMedium!
-                                      .copyWith(
-                                        color: Colors.black,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w300,
-                                      ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  controller.userModel?.phone ?? 'NA',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .displayMedium!
-                                      .copyWith(
-                                        color: const Color(0xff626161),
-                                        fontSize: 11,
-                                        fontWeight: FontWeight.w300,
-                                      ),
-                                ),
-                              ],
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    (controller.userModel?.name ?? 'NA')
+                                        .capitalizeFirstOfEach,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displayMedium!
+                                        .copyWith(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w300,
+                                        ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    controller.userModel?.phone ?? 'NA',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displayMedium!
+                                        .copyWith(
+                                          color: const Color(0xff626161),
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w300,
+                                        ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         );

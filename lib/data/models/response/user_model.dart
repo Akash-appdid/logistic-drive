@@ -112,5 +112,9 @@ class UserModel {
       };
 
   bool get isDuty => onDuty == 'yes';
-  bool get isMotorbike => vehicleType == 'motorbike';
+  bool get isTwoWheelerVehicle => vehicleType == 'motorbike';
+  bool get isMiniTempoVehicle => vehicleType == 'mini_tempo';
+  bool get isOpenTruck => vehicleType == 'open_truck';
+  bool get isBodyPackTruck => vehicleType == 'body_pack_truck';
+  bool get isMotorbike => isTwoWheelerVehicle || isMiniTempoVehicle;
 }

@@ -22,4 +22,8 @@ class BasicRepo {
 //-----------update location------------------
   Future<Response> updateLocation({required Map<String, dynamic> data}) async =>
       await apiClient.postData(AppConstants.updateLocationUri, data);
+
+  ///-------bike and tempo analytic-----------
+  Future<Response> getBikeTempoAnalytic() async =>
+      await apiClient.getData(AppConstants.bikeTempoAnalytic);
 }

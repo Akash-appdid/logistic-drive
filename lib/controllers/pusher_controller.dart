@@ -53,9 +53,9 @@ class PusherController extends GetxController implements GetxService {
   }
 
   void _onEvent(PusherEvent event) async {
-    log(event.data, name: 'PusherOutput');
+    // log("${event.data}", name: 'PusherOutput');
     if (event.data == null && event.data is! String) return;
-    log(event.data, name: 'PusherOutput');
+    // log("${event.data}", name: 'PusherOutput');
 
     try {
       Map<String, dynamic> decodedData = jsonDecode(event.data);

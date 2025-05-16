@@ -51,12 +51,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
 
     ///--------analytics
-    await basicCtrl.getAnalyticsData();
 
     ///
     if (authCtrl.userModel?.isMotorbike ?? false) {
+      await basicCtrl.getBikeTempoAnalyticsData();
       localBikeAndTempoCallingInInit();
     } else {
+      await basicCtrl.getAnalyticsData();
       truckAndPackersDataCallingInInti();
     }
   }

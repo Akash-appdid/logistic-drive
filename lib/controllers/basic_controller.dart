@@ -184,4 +184,31 @@ class BasicController extends GetxController implements GetxService {
     update();
     return responseModel;
   }
+  //--------------bike and tempo analytic-----------------
+
+  Analytics? analyticsDataOfBikeTempo;
+  Future<ResponseModel> getBikeTempoAnalyticsData() async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    try {
+      Response response = await basicRepo.getBikeTempoAnalytic();
+      if (response.statusCode == 200 && response.body['success']) {
+        log(response.bodyString.toString(), name: "getBikeTempoAnalyticsData");
+        analyticsDataOfBikeTempo = Analytics.fromJson(response.body);
+
+        responseModel = ResponseModel(true, 'success');
+      } else {
+        ApiChecker.checkApi(response);
+        responseModel = ResponseModel(false, "${response.statusText}");
+      }
+    } catch (e) {
+      log('---- ${e.toString()} ----',
+          name: "ERROR AT getBikeTempoAnalyticsData()");
+      responseModel = ResponseModel(false, "$e");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
 }
