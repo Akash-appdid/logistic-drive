@@ -20,6 +20,7 @@ class LocationContanerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      // height: 70,
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white,

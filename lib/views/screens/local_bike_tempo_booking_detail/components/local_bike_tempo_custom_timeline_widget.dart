@@ -25,6 +25,7 @@ class _LocalBikeTempoCustomTimelineWidgetOfLocalBikeTempoState
   @override
   Widget build(BuildContext context) {
     return GetBuilder<LocalBikeTempoController>(builder: (controller) {
+      // final bookingDetail = controller.localBikeTempoBookingData;
       final location = controller.localBikeTempoBookingData?.locations;
       log("${location?.isEmpty}");
       if (location?.isEmpty ?? false) {

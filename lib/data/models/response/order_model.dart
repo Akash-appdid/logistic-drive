@@ -15,7 +15,7 @@ class OrderModel {
   int? parcelValue;
   double? subTotalForUser;
   double? subTotalForDriver;
-  int? promoCodeDiscountAmount;
+  double? promoCodeDiscountAmount;
   double? totalPayableAmountForUser;
   double? totalPayableAmountForDriver;
   double? commissionAmount;
@@ -88,7 +88,7 @@ class OrderModel {
         parcelValue: json["parcel_value"],
         subTotalForUser: json["sub_total_for_user"]?.toDouble(),
         subTotalForDriver: json["sub_total_for_driver"]?.toDouble(),
-        promoCodeDiscountAmount: json["promo_code_discount_amount"],
+        promoCodeDiscountAmount: json["promo_code_discount_amount"]?.toDouble(),
         totalPayableAmountForUser:
             json["total_payable_amount_for_user"]?.toDouble(),
         totalPayableAmountForDriver:

@@ -19,7 +19,7 @@ class LocalBikeTempoBookingModel {
   int? parcelValue;
   double? subTotalForUser;
   double? subTotalForDriver;
-  int? promoCodeDiscountAmount;
+  double? promoCodeDiscountAmount;
   double? totalPayableAmountForUser;
   double? totalPayableAmountForDriver;
   double? commissionAmount;
@@ -29,9 +29,9 @@ class LocalBikeTempoBookingModel {
   String? paymentMode;
   DateTime? placed;
   DateTime? accepted;
-  dynamic inprocess;
-  dynamic delivered;
-  dynamic cancelled;
+  DateTime? inprocess;
+  DateTime? delivered;
+  DateTime? cancelled;
   DateTime? createdAt;
   DateTime? updatedAt;
   String? pickupUserName;
@@ -95,7 +95,7 @@ class LocalBikeTempoBookingModel {
         parcelValue: json["parcel_value"],
         subTotalForUser: json["sub_total_for_user"]?.toDouble(),
         subTotalForDriver: json["sub_total_for_driver"]?.toDouble(),
-        promoCodeDiscountAmount: json["promo_code_discount_amount"],
+        promoCodeDiscountAmount: json["promo_code_discount_amount"]?.toDouble(),
         totalPayableAmountForUser:
             json["total_payable_amount_for_user"]?.toDouble(),
         totalPayableAmountForDriver:
@@ -108,9 +108,15 @@ class LocalBikeTempoBookingModel {
         placed: json["placed"] == null ? null : DateTime.parse(json["placed"]),
         accepted:
             json["accepted"] == null ? null : DateTime.parse(json["accepted"]),
-        inprocess: json["inprocess"],
-        delivered: json["delivered"],
-        cancelled: json["cancelled"],
+        inprocess: json["inprocess"] == null
+            ? null
+            : DateTime.parse(json['inprocess']),
+        delivered: json["delivered"] == null
+            ? null
+            : DateTime.parse(json['delivered']),
+        cancelled: json["cancelled"] == null
+            ? null
+            : DateTime.parse(json['cancelled']),
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),

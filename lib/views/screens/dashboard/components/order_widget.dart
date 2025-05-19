@@ -28,7 +28,9 @@ class OrderWidget extends StatelessWidget {
             itemBuilder: (context, index) {
               final order = controller.orders[index];
               log("${order.bookingType}");
+
               return OrdersItemWidget(
+                // height: (order.locations?.length ?? 0) * 70,
                 width: controller.orders.length == 1
                     ? size.width * .91
                     : size.width * .86,
