@@ -27,7 +27,7 @@ class CustomerInfoWidget extends StatelessWidget {
           children: [
             const SizedBox(height: 4),
             Text(
-              'Customer Info',
+              'Basic Info',
               style: Theme.of(context).textTheme.labelMedium!.copyWith(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,

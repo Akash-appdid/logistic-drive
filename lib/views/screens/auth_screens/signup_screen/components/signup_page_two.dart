@@ -6,7 +6,8 @@ import 'package:logistic_driver/services/theme.dart';
 import 'package:logistic_driver/views/base/custom_image.dart';
 
 class SignUpPageTwo extends StatefulWidget {
-  const SignUpPageTwo({super.key});
+  const SignUpPageTwo({super.key, this.isFrmProfile = false});
+  final bool isFrmProfile;
 
   @override
   State<SignUpPageTwo> createState() => _SignUpPageTwoState();
@@ -59,6 +60,7 @@ class _SignUpPageTwoState extends State<SignUpPageTwo> {
                       final vehicle = controller.vehicleOptions[index];
                       return GestureDetector(
                         onTap: () {
+                          if (widget.isFrmProfile) return;
                           controller.selectVehicle(vehicle);
                         },
                         child: Container(

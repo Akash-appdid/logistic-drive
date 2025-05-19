@@ -17,7 +17,8 @@ import 'components/signup_page_two.dart';
 import 'components/signup_page_three.dart';
 
 class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+  const SignupScreen({super.key, this.isFrmProfile = false});
+  final bool isFrmProfile;
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
@@ -39,9 +40,25 @@ class _SignupScreenState extends State<SignupScreen> {
   void initState() {
     super.initState();
     Timer.run(() {
-      final controller = Get.find<AuthController>();
-      if (controller.userModel != null) {
-        controller.setNumber();
+      signupPages = [
+        const SignupPageOne(),
+        SignUpPageTwo(
+          isFrmProfile: widget.isFrmProfile,
+        ),
+        SignupPageThree(
+          isFrmProfile: widget.isFrmProfile,
+        ),
+        const SignupPageFour(),
+        const SignUpPageFive(),
+      ];
+      final authCtrl = Get.find<AuthController>();
+      if (widget.isFrmProfile) {
+        authCtrl.updateProfileData();
+        //---updated---
+      } else {
+        if (authCtrl.userModel != null) {
+          authCtrl.setNumber();
+        }
       }
     });
   }

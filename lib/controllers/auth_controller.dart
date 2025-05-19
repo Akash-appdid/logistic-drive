@@ -2,8 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:logistic_driver/controllers/basic_controller.dart';
 
 import '../data/api/api_checker.dart';
@@ -13,6 +11,7 @@ import '../data/models/response/user_model.dart';
 import '../data/repositories/auth_repo.dart';
 import '../services/constants.dart';
 import '../services/extensions.dart';
+import 'register_controller.dart';
 
 class AuthController extends GetxController implements GetxService {
   final AuthRepo authRepo;
@@ -193,6 +192,24 @@ class AuthController extends GetxController implements GetxService {
 
   void setNumber() {
     numberController.text = userModel?.phone ?? '';
+    update();
+  }
+
+  void updateProfileData() {
+    final registrationCtrl = Get.find<RegisterController>();
+    //-----Sign page one----------
+    registrationCtrl.name.text = userModel?.name ?? 'NA';
+    numberController.text = userModel?.phone ?? '';
+    registrationCtrl.email.text = userModel?.email ?? '';
+    //----------skip 2nd-------
+    for (var element in registrationCtrl.vehicleOptions) {
+      if (element.key == userModel?.vehicleType) {
+        registrationCtrl.selectVehicle(element);
+      }
+    }
+    registrationCtrl.vehicleNumber.text = userModel?.vehicleNumber ?? '';
+    log("${userModel?.vehicleNumber}");
+    registrationCtrl.buildYear.text = userModel?.buildYear.toString() ?? '';
     update();
   }
 }

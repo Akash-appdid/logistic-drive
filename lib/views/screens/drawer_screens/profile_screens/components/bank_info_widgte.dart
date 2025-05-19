@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../data/models/response/user_model.dart';
-import '../../../../../services/extra_methods.dart';
 import '../../../../base/common_button.dart';
 import 'title_and_value.dart';
 
-class VehicleInfoWidget extends StatelessWidget {
-  const VehicleInfoWidget({
+class BankInfoWidget extends StatelessWidget {
+  const BankInfoWidget({
     super.key,
     this.userModel,
   });
@@ -16,8 +15,8 @@ class VehicleInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade200),
         color: Colors.white,
+        border: Border.all(color: Colors.grey.shade200),
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -31,20 +30,35 @@ class VehicleInfoWidget extends StatelessWidget {
       child: Column(
         children: [
           TitleAndValue(
-            title: 'Vehicle: ',
-            val: formatSentence(userModel?.vehicleType ?? 'NA'),
+            title: 'Payee name: ',
+            val: userModel?.payeeName ?? 'NA',
           ),
           Divider(color: Colors.grey.shade200),
           TitleAndValue(
-            title: "Vehicle No: ",
-            val: userModel?.vehicleNumber ?? 'NA',
+            title: "Account number: ",
+            val: userModel?.accountNumber ?? 'NA',
+          ),
+          Divider(color: Colors.grey.shade200),
+          TitleAndValue(
+            title: "IFSC code: ",
+            val: userModel?.ifscCode ?? 'NA',
+          ),
+          Divider(color: Colors.grey.shade200),
+          TitleAndValue(
+            title: "Bank name: ",
+            val: userModel?.bankName ?? 'NA',
+          ),
+          Divider(color: Colors.grey.shade200),
+          TitleAndValue(
+            title: "Bank branch: ",
+            val: userModel?.bankBranch ?? 'NA',
           ),
           Divider(color: Colors.grey.shade200),
           Row(
             children: [
               const Expanded(
                 child: TitleAndValue(
-                  title: 'Registration certificate:',
+                  title: 'Canceled check',
                   val: '',
                 ),
               ),

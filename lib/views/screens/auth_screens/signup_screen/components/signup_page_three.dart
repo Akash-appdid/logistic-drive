@@ -8,7 +8,8 @@ import 'components/motor_bike_widget.dart';
 import 'components/opentruck_and_bodypack_truck_widget.dart';
 
 class SignupPageThree extends StatefulWidget {
-  const SignupPageThree({super.key});
+  const SignupPageThree({super.key, this.isFrmProfile = false});
+  final bool isFrmProfile;
 
   @override
   State<SignupPageThree> createState() => _SignupPageThreeState();
@@ -19,9 +20,12 @@ class _SignupPageThreeState extends State<SignupPageThree> {
   void initState() {
     super.initState();
     Timer.run(() async {
+      log("Start");
       final controller = Get.find<RegisterController>();
       controller.genrateBuildYear();
       controller.cleanSignupPageThree();
+      log("${controller.selectedVehicle != null}");
+
       if (controller.selectedVehicle != null &&
           controller.selectedVehicle?.key != 'motorbike' &&
           controller.selectedVehicle?.key != 'mini_tempo') {
@@ -48,6 +52,7 @@ class _SignupPageThreeState extends State<SignupPageThree> {
         child: GetBuilder<RegisterController>(builder: (controller) {
           if (controller.selectedVehicle?.key == 'motorbike') {
             return MotorbikeWidget(
+              isFrmProfile: widget.isFrmProfile,
               controller: controller,
             );
           }

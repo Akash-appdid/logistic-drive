@@ -5,6 +5,7 @@ import 'package:logistic_driver/controllers/booking_controller.dart';
 import 'package:logistic_driver/services/extra_methods.dart';
 
 import '../../../../generated/assets.dart';
+import '../../../../services/theme.dart';
 
 class OrderStatusWidget extends StatelessWidget {
   const OrderStatusWidget({
@@ -21,7 +22,7 @@ class OrderStatusWidget extends StatelessWidget {
                       controller.bookingsDetailData?.deliveryStatus ?? 'NA') ==
                   'delay'
               ? Colors.red
-              : Color(0xFF0F8000),
+              : primaryColor, //Color(0xFF0F8000),
         ),
         child: Row(
           children: [

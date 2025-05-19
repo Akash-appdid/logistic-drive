@@ -54,6 +54,7 @@ class AppConstants {
   static const String otpVerifyUri = 'api/driver/v1/auth/otp/verify';
   static const String profileUri = 'api/driver/v1/basic/profile';
   static const String logOutUri = 'api/driver/v1/auth/logout';
+  static const String updateProfileUri = 'api/driver/v1/basic/update-profile';
 
   //--------basic---------
   static const String businessSettingUri = 'api/v1/settings';

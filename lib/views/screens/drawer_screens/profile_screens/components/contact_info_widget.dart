@@ -14,6 +14,7 @@ class ContactInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey.shade200),
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
@@ -28,7 +29,12 @@ class ContactInfoWidget extends StatelessWidget {
       child: Column(
         children: [
           TitleAndValue(
-            title: 'Mobile No: ',
+            title: 'Name : ',
+            val: userModel?.name ?? 'NA',
+          ),
+          Divider(color: Colors.grey.shade200),
+          TitleAndValue(
+            title: 'Mobile No : ',
             val: "+91 ${userModel?.phone}",
           ),
           if (userModel?.email != null)
@@ -36,7 +42,7 @@ class ContactInfoWidget extends StatelessWidget {
               children: [
                 Divider(color: Colors.grey.shade200),
                 TitleAndValue(
-                  title: "Email ID: ",
+                  title: "Email ID : ",
                   val: userModel?.email ?? 'NA',
                 ),
               ],

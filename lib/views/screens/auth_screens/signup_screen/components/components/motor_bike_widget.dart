@@ -12,8 +12,10 @@ class MotorbikeWidget extends StatelessWidget {
   const MotorbikeWidget({
     super.key,
     required this.controller,
+    this.isFrmProfile = false,
   });
   final RegisterController controller;
+  final bool isFrmProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +75,7 @@ class MotorbikeWidget extends StatelessWidget {
                       height: 20,
                     ),
                     TextFormField(
+                      readOnly: isFrmProfile ? true : false,
                       keyboardType: TextInputType.text,
                       controller: controller.vehicleNumber,
                       style: const TextStyle(color: Colors.black),
@@ -96,6 +99,7 @@ class MotorbikeWidget extends StatelessWidget {
                     const SizedBox(height: 16),
                     GestureDetector(
                       onTap: () {
+                        if (isFrmProfile) return;
                         Navigator.push(
                           context,
                           getCustomRoute(
@@ -110,7 +114,6 @@ class MotorbikeWidget extends StatelessWidget {
                         );
                       },
                       child: TextFormField(
-                        controller: controller.buildYear,
                         style: const TextStyle(color: Colors.black),
                         enabled: false,
                         readOnly: true,

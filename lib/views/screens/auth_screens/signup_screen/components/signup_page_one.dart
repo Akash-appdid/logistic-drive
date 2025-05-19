@@ -91,35 +91,36 @@ class _SignupPageOneState extends State<SignupPageOne> {
             },
           ),
           const SizedBox(height: 20),
-          TextFormField(
-            controller: Get.find<RegisterController>().address,
-            decoration: CustomDecoration.inputDecoration(
-              floating: true,
-              label: 'Address(Optional)',
-              icon: const Icon(
-                Icons.location_on_outlined,
-                size: 25,
-                color: Color(0xff000000),
+          // TextFormField(
+          //   controller: Get.find<RegisterController>().address,
+          //   decoration: CustomDecoration.inputDecoration(
+          //     floating: true,
+          //     label: 'Address(Optional)',
+          //     icon: const Icon(
+          //       Icons.location_on_outlined,
+          //       size: 25,
+          //       color: Color(0xff000000),
+          //     ),
+          //     hint: 'Enter Your Address',
+          //   ),
+          // ),
+          // const SizedBox(height: 20),
+          GetBuilder<AuthController>(builder: (authCtrl) {
+            return TextFormField(
+              readOnly: true,
+              enabled: false,
+              controller: TextEditingController(
+                  text: '+91 ${authCtrl.numberController.text}'),
+              decoration: CustomDecoration.inputDecoration(
+                label: 'Mobile Number',
+                icon: const Icon(
+                  Icons.phone,
+                  size: 25,
+                  color: Color(0xff000000),
+                ),
               ),
-              hint: 'Enter Your Address',
-            ),
-          ),
-          const SizedBox(height: 20),
-          TextFormField(
-            readOnly: true,
-            enabled: false,
-            controller: TextEditingController(
-                text:
-                    '+91 ${Get.find<AuthController>().numberController.text}'),
-            decoration: CustomDecoration.inputDecoration(
-              label: 'Mobile Number',
-              icon: const Icon(
-                Icons.phone,
-                size: 25,
-                color: Color(0xff000000),
-              ),
-            ),
-          ),
+            );
+          }),
           const SizedBox(height: 20),
         ],
       ),
