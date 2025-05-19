@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logistic_driver/services/extensions.dart';
+import 'package:logistic_driver/views/base/custom_image.dart';
 
 import '../../../../../data/models/response/local_bike_tempo_model.dart';
 import '../../../../../services/extra_methods.dart';
@@ -23,10 +24,10 @@ class LocalBikeAndTempoItemWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: primaryColor.withOpacity(0.1)),
+        border: Border.all(color: primaryColor.withValues(alpha: .1)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: .1),
             blurRadius: 8,
             offset: const Offset(0, 0),
           ),
@@ -78,9 +79,15 @@ class LocalBikeAndTempoItemWidget extends StatelessWidget {
             children: [
               if (bookings.placed != null)
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
                     children: [
+                      const CustomImage(
+                        height: 24,
+                        width: 24,
+                        path: Assets.imagesDeliveryBike,
+                      ),
+                      const SizedBox(width: 6),
+                      //
                       Text(
                         formatSentence(
                             (bookings.bookingType ?? '').capitalizeFirstOfEach),
@@ -91,34 +98,9 @@ class LocalBikeAndTempoItemWidget extends StatelessWidget {
                                   color: primaryColor,
                                 ),
                       ),
-                      // Text(
-                      //   'Delivery Date: ${(bookings.estimatedDeliveryDate?.toLocal() as DateTime).dMy}',
-                      //   style:
-                      //       Theme.of(context).textTheme.labelMedium!.copyWith(
-                      //             fontSize: 12,
-                      //             fontWeight: FontWeight.w600,
-                      //             color: Colors.black,
-                      //           ),
-                      // ),
                     ],
                   ),
                 ),
-              // Row(
-              //   children: [
-              //     CircleAvatar(
-              //       radius: 5,
-              //       backgroundColor: green,
-              //     ),
-              //     const SizedBox(width: 6),
-              //     // Text(
-              //     //   formatSentence(bookings.deliveryStatus ?? 'NA'),
-              //     //   style: Theme.of(context).textTheme.labelMedium!.copyWith(
-              //     //         fontSize: 14,
-              //     //         fontWeight: FontWeight.w600,
-              //     //       ),
-              //     // ),
-              //   ],
-              // ),
             ],
           )
         ],

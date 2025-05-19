@@ -29,6 +29,7 @@ class LocalBikeAndTempoOngoingOrderWidget extends StatelessWidget {
               if (booking.id == null) return;
               Navigator.of(context).push(getCustomRoute(
                   child: LocalBikeTempoBookingDetailScreen(
+                isFrmOnGoing: true,
                 bookingId: booking.id!,
               )));
             },

@@ -18,7 +18,14 @@ class LocalBikeTempoController extends GetxController implements GetxService {
 //
   bool _isLoading = false;
   bool get isLoading => _isLoading;
+//------------handle list page Api---------
+  bool isLoadData = false;
+  void setIsLoadData({required bool isload}) {
+    isLoadData = isload;
+    update();
+  }
 
+//-
   Future<ResponseModel> acceptOrder(
       {required Map<String, dynamic> data}) async {
     ResponseModel responseModel;
@@ -125,6 +132,7 @@ class LocalBikeTempoController extends GetxController implements GetxService {
           isFinished = true;
         }
         allOrderData.addAll(bookings);
+        isLoadData = false;
         _isLoading = false;
         update();
         // updateIndexOfAllBookingOrder();

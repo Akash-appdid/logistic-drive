@@ -76,6 +76,7 @@ class BookingButtonWidgetOfBikeTempo extends StatelessWidget {
                                             .localBikeTempoBookingData?.id ??
                                         0)
                                 .then((value) {
+                              controller.setIsLoadData(isload: true);
                               if (value.isSuccess) {
                                 Navigator.pop(context);
                                 controller.getLocalBikeTempBookingDetailData(
@@ -134,6 +135,7 @@ class BookingButtonWidgetOfBikeTempo extends StatelessWidget {
                             controller
                                 .loactionMarkAsDone(data: data)
                                 .then((value) {
+                              controller.setIsLoadData(isload: true);
                               if (value.isSuccess) {
                                 controller.getLocalBikeTempBookingDetailData(
                                     id: controller

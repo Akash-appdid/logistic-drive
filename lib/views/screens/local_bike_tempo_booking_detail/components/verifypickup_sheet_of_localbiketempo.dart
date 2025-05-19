@@ -141,6 +141,7 @@ class _VerifyPickUpSheetOfLocalBikeState
                       bookingId: controller.localBikeTempoBookingData?.id ?? 0,
                     )
                         .then((value) {
+                      controller.setIsLoadData(isload: true);
                       if (value.isSuccess) {
                         controller.getLocalBikeTempBookingDetailData(
                             id: controller.localBikeTempoBookingData?.id ?? 0);
