@@ -164,6 +164,13 @@ class OrderModel {
         "two_wheeler_package_type": twoWheelerPackageType?.toJson(),
         "user": user?.toJson(),
       };
+  //
+
+  double get getHeightForLocationCount {
+    double height = 0.0;
+    height = (locations?.length ?? 0) * 70;
+    return height;
+  }
 }
 
 class Location {

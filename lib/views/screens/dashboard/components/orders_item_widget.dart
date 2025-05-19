@@ -14,9 +14,9 @@ import 'location_contaner_widget.dart';
 class OrdersItemWidget extends StatefulWidget {
   final OrderModel orderData;
   final double? height;
-  final double width;
+  final double? width;
   const OrdersItemWidget(
-      {super.key, required this.orderData, required this.width, this.height});
+      {super.key, required this.orderData, this.height, this.width});
 
   @override
   State<OrdersItemWidget> createState() => _OrdersItemWidgetState();
@@ -29,7 +29,6 @@ class _OrdersItemWidgetState extends State<OrdersItemWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // height: widget.height,
       width: widget.width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
@@ -157,6 +156,7 @@ class _OrdersItemWidgetState extends State<OrdersItemWidget> {
               );
             },
           ),
+          const Spacer(),
           Divider(color: Colors.grey.shade200),
           Row(
             children: [

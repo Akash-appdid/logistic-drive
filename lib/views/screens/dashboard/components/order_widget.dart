@@ -1,4 +1,4 @@
-import 'dart:developer';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,21 +16,25 @@ class OrderWidget extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return GetBuilder<PusherController>(
       builder: (PusherController controller) {
+        double getHeight = 0;
+        if (controller.orders.isNotEmpty) {
+          getHeight = controller.orders
+              .map((e) => e.getHeightForLocationCount)
+              .reduce(math.max);
+        }
         if (controller.orders.isEmpty) {
           return const SizedBox.shrink();
         }
         return SizedBox(
-          height: 250,
+          height: getHeight + 118,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             separatorBuilder: (context, index) => const SizedBox(width: 5),
             itemCount: controller.orders.length,
             itemBuilder: (context, index) {
               final order = controller.orders[index];
-              log("${order.bookingType}");
 
               return OrdersItemWidget(
-                // height: (order.locations?.length ?? 0) * 70,
                 width: controller.orders.length == 1
                     ? size.width * .91
                     : size.width * .86,

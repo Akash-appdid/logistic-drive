@@ -46,7 +46,7 @@ class AppConstants {
   String get getBaseUrl => baseUrl;
   set setBaseUrl(String url) => baseUrl = url;
   static const String liveUrl = 'https://transport.appdid.com/';
-  static const String localUrl = 'http://192.168.94.49:8000/';
+  static const String localUrl = 'http://192.168.1.26:8000/';
   static String baseUrl = (kReleaseMode || isProduction) ? liveUrl : localUrl;
 
   //--------auth-----------\\

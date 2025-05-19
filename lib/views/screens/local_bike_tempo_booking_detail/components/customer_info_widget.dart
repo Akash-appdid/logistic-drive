@@ -82,25 +82,26 @@ class CustomerInfoWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    if (bookingDetail?.getCustomerMobileNo == null) return;
-                    ExtraMethods()
-                        .makeCall(bookingDetail?.getCustomerMobileNo ?? '');
-                  },
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: primaryColor,
-                      shape: BoxShape.circle,
+                if (bookingDetail?.delivered == null)
+                  GestureDetector(
+                    onTap: () {
+                      if (bookingDetail?.getCustomerMobileNo == null) return;
+                      ExtraMethods()
+                          .makeCall(bookingDetail?.getCustomerMobileNo ?? '');
+                    },
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: primaryColor,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.call,
+                        color: Colors.white,
+                      ),
                     ),
-                    child: const Icon(
-                      Icons.call,
-                      color: Colors.white,
-                    ),
-                  ),
-                )
+                  )
               ],
             ),
             const SizedBox(height: 4)

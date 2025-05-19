@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:logistic_driver/controllers/auth_controller.dart';
 import 'package:logistic_driver/controllers/booking_controller.dart';
@@ -42,6 +43,12 @@ class BookingsListSectionWidget extends StatelessWidget {
                   onTap: () {
                     final authCtrl = Get.find<AuthController>();
                     final localBikeCtrl = Get.find<LocalBikeTempoController>();
+                    if (controller.isLoading || localBikeCtrl.isLoading) {
+                      Fluttertoast.showToast(
+                          msg: 'Please wait data is loading');
+                      return;
+                    }
+
                     controller.setIsComplete(true);
                     if (controller.isOnGoingOrder) {
                       if (authCtrl.userModel?.isMotorbike ?? false) {
@@ -67,8 +74,14 @@ class BookingsListSectionWidget extends StatelessWidget {
                   onTap: () {
                     final authCtrl = Get.find<AuthController>();
                     final localBikeCtrl = Get.find<LocalBikeTempoController>();
-                    controller.setIsComplete(false);
+                    if (controller.isLoading || localBikeCtrl.isLoading) {
+                      Fluttertoast.showToast(
+                          msg:
+                              'Please wait a moment while we load your content.');
+                      return;
+                    }
 
+                    controller.setIsComplete(false);
                     if (!controller.isOnGoingOrder) {
                       if (authCtrl.userModel?.isMotorbike ?? false) {
                         localBikeCtrl.getAllOrder(
