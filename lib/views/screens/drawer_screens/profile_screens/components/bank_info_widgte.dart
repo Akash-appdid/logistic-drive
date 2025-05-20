@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../data/models/response/user_model.dart';
 import '../../../../base/common_button.dart';
+import 'documents_widget.dart';
 import 'title_and_value.dart';
 
 class BankInfoWidget extends StatelessWidget {
@@ -54,28 +55,40 @@ class BankInfoWidget extends StatelessWidget {
             val: userModel?.bankBranch ?? 'NA',
           ),
           Divider(color: Colors.grey.shade200),
-          Row(
-            children: [
-              const Expanded(
-                child: TitleAndValue(
-                  title: 'Canceled check',
-                  val: '',
+          if (userModel?.cancelCheck != null)
+            Row(
+              children: [
+                const Expanded(
+                  child: TitleAndValue(
+                    title: 'Canceled check',
+                    val: '',
+                  ),
                 ),
-              ),
-              CustomButton(
-                height: 30,
-                elevation: 0,
-                onTap: () {},
-                child: Text(
-                  'View',
-                  style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                        color: Colors.white,
-                      ),
+                CustomButton(
+                  height: 30,
+                  elevation: 0,
+                  onTap: () {
+                    if (userModel?.cancelCheck == null) return;
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return ViewImageDialog(
+                          title: 'Canceled check',
+                          image: userModel?.cancelCheck ?? '',
+                        );
+                      },
+                    );
+                  },
+                  child: Text(
+                    'View',
+                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                          color: Colors.white,
+                        ),
+                  ),
                 ),
-              ),
-              const SizedBox(width: 10),
-            ],
-          ),
+                const SizedBox(width: 10),
+              ],
+            ),
         ],
       ),
     );

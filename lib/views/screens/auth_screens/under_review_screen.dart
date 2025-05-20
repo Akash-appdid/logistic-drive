@@ -29,7 +29,7 @@ class ProfileUnderReviewScreen extends StatelessWidget {
                 },
               );
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.logout_outlined,
             ),
           )

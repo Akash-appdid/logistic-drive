@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logistic_driver/controllers/auth_controller.dart';
 import 'package:logistic_driver/data/models/body/vehicle_model.dart';
 import 'package:logistic_driver/data/models/response/mini_truck_model.dart';
 import 'package:logistic_driver/data/models/response/vehicle_master_model.dart';
@@ -334,6 +335,67 @@ class RegisterController extends GetxController implements GetxService {
     } catch (e) {
       log('---- ${e.toString()} ----', name: "ERROR AT fetchMiniTruckData()");
       responseModel = ResponseModel(false, "$e");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+  //----------------
+
+  Map<String, dynamic> updateProfileData() {
+    final userData = Get.find<AuthController>().userModel;
+    Map<String, dynamic> data = {};
+    data = {
+      'name': name.text,
+      'email': email.text,
+      'vehicle_type': selectedVehicle?.key,
+      'vehicle_id': vehicleMasterModel?.id,
+      'vehicle_number': vehicleNumber.text,
+      'build_year': buildYear.text,
+      if (userData?.registrationCertificate == null)
+        'registration_certificate': getMultipartFile(selectedRegistrationFile),
+      if (userData?.drivingLicence == null)
+        'driving_licence': getMultipartFile(selectedDrivingLicense),
+      if (userData?.aadharCardFront == null)
+        'aadhar_card_front': getMultipartFile(selectedAadhaarCard),
+      if (userData?.cancelCheck == null)
+        'cancel_check': getMultipartFile(selecedCancelCheck),
+      if (userData?.aadharCardBack == null)
+        'aadhar_card_back': getMultipartFile(selectedAadhaarBackCard),
+      if (userData?.panCard == null)
+        'pan_card': getMultipartFile(selectedPancard),
+      'payee_name': payeeName.text,
+      'account_number': accountNumber.text,
+      'ifsc_code': ifscCode.text,
+      'bank_name': bankName.text,
+      'bank_branch': branchName.text,
+      'driving_license_number': drivingLiceseNumber.text,
+      'aadhar_card_number': aadharCardNumber.text,
+      'pan_card_number': panCardNumber.text,
+      "two_wheeler_truck_id": selectedMiniTruck?.id,
+    };
+    return data;
+  }
+
+  Future<ResponseModel> updateProfile() async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+
+    try {
+      Response response =
+          await registerRepo.updateProfile(data: updateProfileData());
+
+      if (response.statusCode == 200 && response.body['success']) {
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
+      } else {
+        responseModel = ResponseModel(false, response.statusText!);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++++++++++++++++++++++++++++++++++++++++++ ${e.toString()} +++++++++++++++++++++++++++++++++++++++++++++',
+          name: "ERROR AT updateProfile()");
     }
     _isLoading = false;
     update();

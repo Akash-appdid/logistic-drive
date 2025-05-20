@@ -66,6 +66,17 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: widget.isFrmProfile
+          ? AppBar(
+              title: Text(
+                'Update Profile',
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
+            )
+          : null,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -181,43 +192,11 @@ class _SignupScreenState extends State<SignupScreen> {
                                   setState(() {});
                                 }
                               } else {
-                                log("${controller.registerData()}",
-                                    name: "RegisterData");
-                                controller.registerUser().then((value) {
-                                  if (value.isSuccess) {
-                                    final auth = Get.find<AuthController>();
-                                    Fluttertoast.showToast(msg: value.message);
-                                    auth.getUserProfileData().then((value) {
-                                      if (value.isSuccess) {
-                                        if (auth.userModel?.status ==
-                                            'active') {
-                                          Navigator.of(context)
-                                              .pushAndRemoveUntil(
-                                            getCustomRoute(
-                                                child: const DashboardScreen()),
-                                            (route) => false,
-                                          );
-                                        } else {
-                                          Navigator.of(context)
-                                              .pushAndRemoveUntil(
-                                            getCustomRoute(
-                                                child:
-                                                    const ProfileUnderReviewScreen()),
-                                            (route) => false,
-                                          );
-                                        }
-                                      } else {
-                                        Navigator.of(context)
-                                            .pushAndRemoveUntil(
-                                          getCustomRoute(
-                                              child:
-                                                  const ProfileUnderReviewScreen()),
-                                          (route) => false,
-                                        );
-                                      }
-                                    });
-                                  }
-                                });
+                                if (widget.isFrmProfile) {
+                                  updateProfile(controller);
+                                } else {
+                                  signupUser(controller);
+                                }
                               }
                             }
                           },
@@ -239,5 +218,45 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       ),
     );
+  }
+
+  void signupUser(RegisterController controller) {
+    controller.registerUser().then((value) {
+      if (value.isSuccess) {
+        final auth = Get.find<AuthController>();
+        Fluttertoast.showToast(msg: value.message);
+        auth.getUserProfileData().then((value) {
+          if (value.isSuccess) {
+            if (auth.userModel?.status == 'active') {
+              Navigator.of(context).pushAndRemoveUntil(
+                getCustomRoute(child: const DashboardScreen()),
+                (route) => false,
+              );
+            } else {
+              Navigator.of(context).pushAndRemoveUntil(
+                getCustomRoute(child: const ProfileUnderReviewScreen()),
+                (route) => false,
+              );
+            }
+          } else {
+            Navigator.of(context).pushAndRemoveUntil(
+              getCustomRoute(child: const ProfileUnderReviewScreen()),
+              (route) => false,
+            );
+          }
+        });
+      }
+    });
+  }
+
+  void updateProfile(RegisterController controller) {
+    log("${controller.updateProfileData()}");
+    controller.updateProfile().then((val) {
+      if (val.isSuccess) {
+        Navigator.pop(context);
+        Fluttertoast.showToast(msg: 'Profile updated successfully');
+        Get.find<AuthController>().getUserProfileData();
+      }
+    });
   }
 }

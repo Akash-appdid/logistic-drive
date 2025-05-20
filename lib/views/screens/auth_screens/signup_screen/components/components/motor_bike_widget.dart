@@ -92,9 +92,7 @@ class MotorbikeWidget extends StatelessWidget {
                         return null;
                       },
                     ),
-                    const SizedBox(
-                      height: 16,
-                    ),
+                    const SizedBox(height: 16),
                     const CertificateImageWidget(),
                     const SizedBox(height: 16),
                     GestureDetector(
@@ -114,6 +112,7 @@ class MotorbikeWidget extends StatelessWidget {
                         );
                       },
                       child: TextFormField(
+                        controller: controller.buildYear,
                         style: const TextStyle(color: Colors.black),
                         enabled: false,
                         readOnly: true,

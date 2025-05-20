@@ -20,22 +20,24 @@ class _SignupPageThreeState extends State<SignupPageThree> {
   void initState() {
     super.initState();
     Timer.run(() async {
-      log("Start");
       final controller = Get.find<RegisterController>();
-      controller.genrateBuildYear();
-      controller.cleanSignupPageThree();
-      log("${controller.selectedVehicle != null}");
-
-      if (controller.selectedVehicle != null &&
-          controller.selectedVehicle?.key != 'motorbike' &&
-          controller.selectedVehicle?.key != 'mini_tempo') {
-        await controller
-            .getVehicleMasterData(
-                vehicleType: controller.selectedVehicle?.key ?? '')
-            .then((value) {});
-      } else if (controller.selectedVehicle?.key == 'mini_tempo') {
-        log("test");
-        await controller.fetchMiniTruckData();
+      log("Start");
+      if (widget.isFrmProfile) {
+      } else {
+        controller.genrateBuildYear();
+        controller.cleanSignupPageThree();
+        log("${controller.selectedVehicle != null}");
+        if (controller.selectedVehicle != null &&
+            controller.selectedVehicle?.key != 'motorbike' &&
+            controller.selectedVehicle?.key != 'mini_tempo') {
+          await controller
+              .getVehicleMasterData(
+                  vehicleType: controller.selectedVehicle?.key ?? '')
+              .then((value) {});
+        } else if (controller.selectedVehicle?.key == 'mini_tempo') {
+          log("test");
+          await controller.fetchMiniTruckData();
+        }
       }
     });
   }

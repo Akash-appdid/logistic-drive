@@ -201,15 +201,26 @@ class AuthController extends GetxController implements GetxService {
     registrationCtrl.name.text = userModel?.name ?? 'NA';
     numberController.text = userModel?.phone ?? '';
     registrationCtrl.email.text = userModel?.email ?? '';
-    //----------skip 2nd-------
+    //----------signup 2nd-------
     for (var element in registrationCtrl.vehicleOptions) {
       if (element.key == userModel?.vehicleType) {
         registrationCtrl.selectVehicle(element);
       }
     }
+    //sizeup 3
     registrationCtrl.vehicleNumber.text = userModel?.vehicleNumber ?? '';
-    log("${userModel?.vehicleNumber}");
     registrationCtrl.buildYear.text = userModel?.buildYear.toString() ?? '';
+    //---signup 4
+    registrationCtrl.aadharCardNumber.text = userModel?.aadharCardNumber ?? '';
+    registrationCtrl.panCardNumber.text = userModel?.panCardNumber ?? '';
+    registrationCtrl.drivingLiceseNumber.text =
+        userModel?.drivingLicenseNumber ?? '';
+    //---signup 5
+    registrationCtrl.payeeName.text = userModel?.payeeName ?? "";
+    registrationCtrl.accountNumber.text = userModel?.accountNumber ?? "";
+    registrationCtrl.ifscCode.text = userModel?.ifscCode ?? "";
+    registrationCtrl.bankName.text = userModel?.bankName ?? "";
+    registrationCtrl.branchName.text = userModel?.bankBranch ?? "";
     update();
   }
 }

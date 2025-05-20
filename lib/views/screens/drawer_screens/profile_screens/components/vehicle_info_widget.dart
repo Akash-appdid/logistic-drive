@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../../data/models/response/user_model.dart';
 import '../../../../../services/extra_methods.dart';
 import '../../../../base/common_button.dart';
+import 'documents_widget.dart';
 import 'title_and_value.dart';
 
 class VehicleInfoWidget extends StatelessWidget {
@@ -40,28 +41,40 @@ class VehicleInfoWidget extends StatelessWidget {
             val: userModel?.vehicleNumber ?? 'NA',
           ),
           Divider(color: Colors.grey.shade200),
-          Row(
-            children: [
-              const Expanded(
-                child: TitleAndValue(
-                  title: 'Registration certificate:',
-                  val: '',
+          if (userModel?.registrationCertificate != null)
+            Row(
+              children: [
+                const Expanded(
+                  child: TitleAndValue(
+                    title: 'Registration certificate',
+                    val: '',
+                  ),
                 ),
-              ),
-              CustomButton(
-                height: 30,
-                elevation: 0,
-                onTap: () {},
-                child: Text(
-                  'View',
-                  style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                        color: Colors.white,
-                      ),
+                CustomButton(
+                  height: 30,
+                  elevation: 0,
+                  onTap: () {
+                    if (userModel?.registrationCertificate == null) return;
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return ViewImageDialog(
+                          title: 'Registration certificate',
+                          image: userModel?.registrationCertificate ?? '',
+                        );
+                      },
+                    );
+                  },
+                  child: Text(
+                    'View',
+                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                          color: Colors.white,
+                        ),
+                  ),
                 ),
-              ),
-              const SizedBox(width: 10),
-            ],
-          ),
+                const SizedBox(width: 10),
+              ],
+            ),
         ],
       ),
     );

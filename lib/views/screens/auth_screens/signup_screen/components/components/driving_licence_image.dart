@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logistic_driver/controllers/auth_controller.dart';
+import 'package:logistic_driver/views/base/custom_image.dart';
 
 import '../../../../../../controllers/register_controller.dart';
 import '../../../../../../services/route_helper.dart';
@@ -11,70 +13,81 @@ class DrivingLicenceImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RegisterController>(builder: (controller) {
-      return GestureDetector(
-        onTap: () async {
-          if (controller.selectedDrivingLicense != null) return;
-          await getImageBottomSheet(context).then((value) {
-            if (value != null) {
-              controller.selectFiles(isDrivingLicense: true, val: value);
-            }
-          });
-        },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Text(
-                'Driving Licence',
-                style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black87,
-                    ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: Text(
+            'Driving Licence',
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black87,
+                ),
+          ),
+        ),
+        GetBuilder<AuthController>(builder: (authCtrl) {
+          if (authCtrl.userModel?.drivingLicence != null) {
+            return Container(
+              height: 180,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(6),
+                border: Border.all(color: const Color(0xFFF2F2F2), width: 1),
               ),
-            ),
-            Stack(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: CustomImage(
+                  path: authCtrl.userModel?.drivingLicence ?? '',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            );
+          }
+          return GetBuilder<RegisterController>(builder: (controller) {
+            return Stack(
               children: [
-                Container(
-                  height: 150,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    // boxShadow: [
-                    //   BoxShadow(
-                    //     offset: const Offset(0, 2),
-                    //     blurRadius: 1,
-                    //     color: Colors.black.withOpacity(0.2),
-                    //   )
-                    // ],
-                    borderRadius: BorderRadius.circular(10),
-                    border:
-                        Border.all(color: const Color(0xFFF2F2F2), width: 1),
-                  ),
-                  child: controller.selectedDrivingLicense != null
-                      ? ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.file(
-                            controller.selectedDrivingLicense!,
-                            fit: BoxFit.cover,
-                          ),
-                        )
-                      // : userID != null &&
-                      //         controller
-                      //                 .clientModel?.drugLicenseCertificate !=
-                      //             null
-                      //     ? ClipRRect(
-                      //         borderRadius: BorderRadius.circular(10),
-                      //         child: CustomImage(
-                      //           viewFullScreen: true,
-                      //           path:
-                      //               "${controller.clientModel?.drugLicenseCertificate}",
-                      //           fit: BoxFit.cover,
-                      //         ),
-                      //       )
-                      : Center(
+                GestureDetector(
+                  onTap: () async {
+                    if (controller.selectedDrivingLicense != null) {
+                      Navigator.of(context).push(
+                        getCustomRoute(
+                          child: ShowImage(
+                              img: controller.selectedDrivingLicense!),
+                        ),
+                      );
+                      return;
+                    }
+
+                    await getImageBottomSheet(context).then((value) {
+                      if (value != null) {
+                        controller.selectFiles(
+                            isDrivingLicense: true, val: value);
+                      }
+                    });
+                  },
+                  child: Container(
+                      height: 180,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(
+                            color: const Color(0xFFF2F2F2), width: 1),
+                      ),
+                      child: Builder(builder: (_) {
+                        if (controller.selectedDrivingLicense != null) {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.file(
+                              controller.selectedDrivingLicense!,
+                              fit: BoxFit.cover,
+                            ),
+                          );
+                        }
+                        return Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -103,14 +116,14 @@ class DrivingLicenceImageWidget extends StatelessWidget {
                               )
                             ],
                           ),
-                        ),
+                        );
+                      })),
                 ),
-                //
                 if (controller.selectedDrivingLicense != null)
                   Positioned(
                       right: 0,
                       top: 0,
-                      child: Column(
+                      child: Row(
                         children: [
                           IconButton(
                               onPressed: () async {
@@ -125,25 +138,6 @@ class DrivingLicenceImageWidget extends StatelessWidget {
                               icon: const IconsWidget(
                                 icon: Icons.edit,
                               )),
-                          //
-                          if (controller.selectedDrivingLicense != null)
-                            IconButton(
-                              onPressed: () {
-                                if (controller.selectedDrivingLicense != null) {
-                                  Navigator.of(context).push(
-                                    getCustomRoute(
-                                      child: ShowImage(
-                                          img: controller
-                                              .selectedDrivingLicense!),
-                                    ),
-                                  );
-                                }
-                              },
-                              icon: const IconsWidget(
-                                icon: Icons.remove_red_eye_rounded,
-                              ),
-                            ),
-                          //
                           if (controller.selectedDrivingLicense != null)
                             IconButton(
                               onPressed: () {
@@ -157,10 +151,10 @@ class DrivingLicenceImageWidget extends StatelessWidget {
                         ],
                       )),
               ],
-            ),
-          ],
-        ),
-      );
-    });
+            );
+          });
+        }),
+      ],
+    );
   }
 }

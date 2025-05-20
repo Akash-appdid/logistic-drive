@@ -18,4 +18,7 @@ class RegisterRepo {
 
   Future<Response> getMiniTruckData() async =>
       await apiClient.getData(AppConstants.miniTruckUri);
+
+  Future<Response> updateProfile({required Map<String, dynamic> data}) async =>
+      await apiClient.postData(AppConstants.updateProfileUri, FormData(data));
 }
