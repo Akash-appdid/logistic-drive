@@ -215,56 +215,62 @@ class LocationofLocalBike {
   int dropDoneCount;
   int pickupIndex;
   int dropIndex;
+  String? name;
+  String? phone;
 
-  LocationofLocalBike({
-    this.id,
-    this.bookingTwoWheelerId,
-    this.type,
-    this.addressLineOne,
-    this.addressLineTwo,
-    this.stateId,
-    this.city,
-    this.pincode,
-    this.mapLocation,
-    this.latitude,
-    this.longitude,
-    this.takePayment,
-    this.createdAt,
-    this.updatedAt,
-    this.status,
-    this.doneAt,
-    this.pickupDoneCount = 1,
-    this.dropDoneCount = 1,
-    this.pickupIndex = 0,
-    this.dropIndex = 0,
-  });
+  LocationofLocalBike(
+      {this.id,
+      this.bookingTwoWheelerId,
+      this.type,
+      this.addressLineOne,
+      this.addressLineTwo,
+      this.stateId,
+      this.city,
+      this.pincode,
+      this.mapLocation,
+      this.latitude,
+      this.longitude,
+      this.takePayment,
+      this.createdAt,
+      this.updatedAt,
+      this.status,
+      this.doneAt,
+      this.pickupDoneCount = 1,
+      this.dropDoneCount = 1,
+      this.pickupIndex = 0,
+      this.dropIndex = 0,
+      this.name,
+      this.phone});
 
   factory LocationofLocalBike.fromJson(Map<String, dynamic> json) =>
       LocationofLocalBike(
-          id: json["id"],
-          bookingTwoWheelerId: json["booking_two_wheeler_id"],
-          type: json["type"],
-          addressLineOne: json["address_line_one"],
-          addressLineTwo: json["address_line_two"],
-          stateId: json["state_id"],
-          city: json["city"],
-          pincode: json["pincode"],
-          mapLocation: json["map_location"],
-          latitude: json["latitude"],
-          longitude: json["longitude"],
-          takePayment: json["take_payment"],
-          createdAt: json["created_at"] == null
-              ? null
-              : DateTime.parse(json["created_at"]),
-          updatedAt: json["updated_at"] == null
-              ? null
-              : DateTime.parse(json["updated_at"]),
-          status: json["status"],
-          doneAt: json["done_at"] == null
-              ? null
-              : DateTime.parse(
-                  json["done_at"],
-                ));
+        id: json["id"],
+        bookingTwoWheelerId: json["booking_two_wheeler_id"],
+        type: json["type"],
+        addressLineOne: json["address_line_one"],
+        addressLineTwo: json["address_line_two"],
+        stateId: json["state_id"],
+        city: json["city"],
+        pincode: json["pincode"],
+        mapLocation: json["map_location"],
+        latitude: json["latitude"],
+        longitude: json["longitude"],
+        takePayment: json["take_payment"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+        status: json["status"],
+        doneAt: json["done_at"] == null
+            ? null
+            : DateTime.parse(
+                json["done_at"],
+              ),
+        name: json['name'],
+        phone: json['phone'],
+      );
 
   Map<String, dynamic> toJson() => {
         "id": id,

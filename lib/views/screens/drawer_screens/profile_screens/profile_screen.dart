@@ -138,13 +138,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBox(height: 8),
                       VehicleInfoWidget(userModel: controller.userModel),
                       const SizedBox(height: 8),
-                      const HeadingWidget(title: "Bank info"),
-                      const SizedBox(height: 8),
-                      BankInfoWidget(userModel: controller.userModel),
-                      const SizedBox(height: 8),
-                      const HeadingWidget(title: "Documents"),
-                      const SizedBox(height: 8),
-                      const DocumentsWidget(),
+                      if (!(controller.userModel?.isBankInfoEmpty ?? false))
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const HeadingWidget(title: "Bank info"),
+                            const SizedBox(height: 8),
+                            BankInfoWidget(userModel: controller.userModel),
+                            const SizedBox(height: 8),
+                          ],
+                        ),
+                      if (!(controller.userModel?.isDocumentEmpty ?? false))
+                        const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            HeadingWidget(title: "Documents"),
+                            SizedBox(height: 8),
+                            DocumentsWidget(),
+                          ],
+                        )
                     ],
                   ),
                 ),

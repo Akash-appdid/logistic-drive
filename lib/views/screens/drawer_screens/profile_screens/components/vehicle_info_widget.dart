@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../../../data/models/response/user_model.dart';
 import '../../../../../services/extra_methods.dart';
 import '../../../../base/common_button.dart';
-import 'documents_widget.dart';
 import 'title_and_value.dart';
+import 'view_image_dialog.dart';
 
 class VehicleInfoWidget extends StatelessWidget {
   const VehicleInfoWidget({
@@ -40,7 +40,8 @@ class VehicleInfoWidget extends StatelessWidget {
             title: "Vehicle No: ",
             val: userModel?.vehicleNumber ?? 'NA',
           ),
-          Divider(color: Colors.grey.shade200),
+          if (userModel?.registrationCertificate != null)
+            Divider(color: Colors.grey.shade200),
           if (userModel?.registrationCertificate != null)
             Row(
               children: [

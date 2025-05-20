@@ -10,7 +10,6 @@ import '../../../services/theme.dart';
 import 'components/app_bar_local_bike_tempo.dart';
 import 'components/booking_button_widget_of_bike_tempo.dart';
 import 'components/booking_detail_shimmer_widget.dart';
-import 'components/customer_info_widget.dart';
 import 'components/date_widget.dart';
 import 'components/local_bike_tempo_custom_timeline_widget.dart';
 import 'components/localbiketempo_order_tracking_stattus_widget.dart';
@@ -95,7 +94,7 @@ class _LocalBikeTempoBookingDetailScreenState
             child: Column(
               children: [
                 DateWidget(),
-                CustomerInfoWidget(),
+                // CustomerInfoWidget(),
                 CustomTimelineWidgetOfLocalBikeTempo(),
                 OrderTrackingStatusWidgetOfLocalBikeTempo(),
                 PaymentInformationWidgetOfLocalBikeTempo(),

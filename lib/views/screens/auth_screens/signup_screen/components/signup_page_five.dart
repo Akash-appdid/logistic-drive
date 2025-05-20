@@ -67,6 +67,7 @@ class SignUpPageFive extends StatelessWidget {
                     ),
                     const SizedBox(height: 15),
                     TextFormField(
+                      keyboardType: TextInputType.number,
                       readOnly: data?.accountNumber != null,
                       controller: controller.accountNumber,
                       style: const TextStyle(color: Colors.black),

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -140,6 +142,8 @@ class _OrdersItemWidgetState extends State<OrdersItemWidget> {
             itemCount: widget.orderData.locations?.length,
             itemBuilder: (context, index) {
               final data = widget.orderData.locations?[index];
+              log("${data?.name}");
+              log("${data?.phone}");
 
               return LocationContanerWidget(
                 iconColor: (data?.getLocationType ?? false)
@@ -147,11 +151,8 @@ class _OrdersItemWidgetState extends State<OrdersItemWidget> {
                     : const Color(0xffEB0404),
                 icon: Icons.location_on,
                 label: (data?.getLocationType ?? false) ? "From" : 'To',
-                name: (data?.getLocationType ?? false)
-                    ? (widget.orderData.pickupUserName ?? 'NA')
-                    : (widget.orderData.dropUserName ?? 'NA'),
-                phone:
-                    "+91 ${(data?.getLocationType ?? false) ? widget.orderData.pickupUserPhone : widget.orderData.dropUserPhone}",
+                name: data?.name ?? '',
+                phone: "+91 ${data?.phone ?? ''}",
                 address: data?.getAddress ?? '',
               );
             },

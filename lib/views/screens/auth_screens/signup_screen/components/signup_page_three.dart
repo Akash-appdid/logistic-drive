@@ -21,11 +21,16 @@ class _SignupPageThreeState extends State<SignupPageThree> {
     super.initState();
     Timer.run(() async {
       final controller = Get.find<RegisterController>();
-      log("Start");
       if (widget.isFrmProfile) {
+        controller.vehicleMasterModel = null;
+        await controller
+            .getVehicleMasterData(
+                vehicleType: controller.selectedVehicle?.key ?? '')
+            .then((value) {});
+        controller.selectVehicleMasterFromList();
       } else {
-        controller.genrateBuildYear();
         controller.cleanSignupPageThree();
+        controller.genrateBuildYear();
         log("${controller.selectedVehicle != null}");
         if (controller.selectedVehicle != null &&
             controller.selectedVehicle?.key != 'motorbike' &&
@@ -35,7 +40,6 @@ class _SignupPageThreeState extends State<SignupPageThree> {
                   vehicleType: controller.selectedVehicle?.key ?? '')
               .then((value) {});
         } else if (controller.selectedVehicle?.key == 'mini_tempo') {
-          log("test");
           await controller.fetchMiniTruckData();
         }
       }
@@ -59,9 +63,13 @@ class _SignupPageThreeState extends State<SignupPageThree> {
             );
           }
           if (controller.selectedVehicle?.key == 'mini_tempo') {
-            return const MiniTempoWidget();
+            return MiniTempoWidget(
+              isFrmProfile: widget.isFrmProfile,
+            );
           }
-          return const OpentruckAndBodyPackTruckWidget();
+          return OpentruckAndBodyPackTruckWidget(
+            isFrmProfile: widget.isFrmProfile,
+          );
         }),
       ),
     );

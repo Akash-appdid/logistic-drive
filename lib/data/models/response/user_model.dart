@@ -35,6 +35,7 @@ class UserModel {
   String? latitude;
   String? longitude;
   String? lastLocationUpdated;
+  Vehicle? vehicle;
 
   UserModel({
     this.id,
@@ -67,6 +68,7 @@ class UserModel {
     this.latitude,
     this.longitude,
     this.lastLocationUpdated,
+    this.vehicle,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -105,6 +107,8 @@ class UserModel {
       latitude: json['latitude'],
       longitude: json['longitude'],
       lastLocationUpdated: json['last_location_updated'],
+      vehicle:
+          json['vehicle'] != null ? Vehicle.fromJson(json['vehicle']) : null,
     );
   }
 
@@ -149,4 +153,67 @@ class UserModel {
   bool get isOpenTruck => vehicleType == 'open_truck';
   bool get isBodyPackTruck => vehicleType == 'body_pack_truck';
   bool get isMotorbike => isTwoWheelerVehicle || isMiniTempoVehicle;
+
+  bool get isBankInfoEmpty {
+    return payeeName == null &&
+        accountNumber == null &&
+        ifscCode == null &&
+        bankName == null &&
+        bankBranch == null &&
+        cancelCheck == null;
+  }
+
+  bool get isDocumentEmpty {
+    return aadharCardNumber == null &&
+        panCardNumber == null &&
+        drivingLicenseNumber == null;
+  }
+}
+
+class Vehicle {
+  int? id;
+  String? name;
+  String? type;
+  String? weight;
+  String? status;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+
+  Vehicle({
+    this.id,
+    this.name,
+    this.type,
+    this.weight,
+    this.status,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory Vehicle.fromJson(Map<String, dynamic> json) {
+    return Vehicle(
+      id: json['id'],
+      name: json['name'],
+      type: json['type'],
+      weight: json['weight'],
+      status: json['status'],
+      createdAt: json['created_at'] != null
+          ? DateTime.tryParse(json['created_at'])
+          : null,
+      updatedAt: json['updated_at'] != null
+          ? DateTime.tryParse(json['updated_at'])
+          : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'type': type,
+      'weight': weight,
+      'status': status,
+      'created_at': createdAt?.toIso8601String(),
+      'updated_at': updatedAt?.toIso8601String(),
+    };
+  }
 }

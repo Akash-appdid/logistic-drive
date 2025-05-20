@@ -263,33 +263,36 @@ class Location {
   int dropDoneCount;
   int pickupIndex;
   int dropIndex;
+  String? name;
+  String? phone;
 
-  Location({
-    this.id,
-    this.bookingGoodId,
-    this.type,
-    this.addressLineOne,
-    this.addressLineTwo,
-    this.stateId,
-    this.city,
-    this.pincode,
-    this.loadingUnloadingStartTime,
-    this.loadingUnloadingEndTime,
-    this.intransitStartTime,
-    this.intransitEndTime,
-    this.mapLocation,
-    this.latitude,
-    this.longitude,
-    this.status,
-    this.createdAt,
-    this.updatedAt,
-    this.sequence,
-    this.doneAt,
-    this.pickupDoneCount = 1,
-    this.dropDoneCount = 1,
-    this.pickupIndex = 0,
-    this.dropIndex = 0,
-  });
+  Location(
+      {this.id,
+      this.bookingGoodId,
+      this.type,
+      this.addressLineOne,
+      this.addressLineTwo,
+      this.stateId,
+      this.city,
+      this.pincode,
+      this.loadingUnloadingStartTime,
+      this.loadingUnloadingEndTime,
+      this.intransitStartTime,
+      this.intransitEndTime,
+      this.mapLocation,
+      this.latitude,
+      this.longitude,
+      this.status,
+      this.createdAt,
+      this.updatedAt,
+      this.sequence,
+      this.doneAt,
+      this.pickupDoneCount = 1,
+      this.dropDoneCount = 1,
+      this.pickupIndex = 0,
+      this.dropIndex = 0,
+      this.name,
+      this.phone});
 
   factory Location.fromJson(Map<String, dynamic> json) => Location(
         id: json["id"],
@@ -317,6 +320,8 @@ class Location {
             ? null
             : DateTime.parse(json["updated_at"]),
         sequence: json["sequence"],
+        name: json['name'],
+        phone: json['phone'],
       );
 
   Map<String, dynamic> toJson() => {

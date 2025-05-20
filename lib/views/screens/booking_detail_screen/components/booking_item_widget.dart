@@ -25,10 +25,10 @@ class BookingItemWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: primaryColor.withOpacity(0.1)),
+        border: Border.all(color: primaryColor.withValues(alpha: .1)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: .1),
             blurRadius: 8,
             offset: const Offset(0, 0),
           ),
@@ -66,11 +66,8 @@ class BookingItemWidget extends StatelessWidget {
                     : const Color(0xffEB0404),
                 icon: Icons.location_on,
                 label: (data?.getLocationType ?? false) ? "From" : 'To',
-                name: (data?.getLocationType ?? false)
-                    ? (bookings.pickupUserName ?? 'NA')
-                    : (bookings.dropUserName ?? 'NA'),
-                phone:
-                    "+91 ${(data?.getLocationType ?? false) ? bookings.pickupUserPhone : bookings.dropUserPhone}",
+                name: data?.name ?? "",
+                phone: "+91 ${data?.phone}",
                 address: data?.getAddress ?? '',
               );
             },

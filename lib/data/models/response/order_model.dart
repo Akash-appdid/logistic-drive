@@ -188,6 +188,8 @@ class Location {
   String? takePayment;
   DateTime? createdAt;
   DateTime? updatedAt;
+  String? name;
+  String? phone;
 
   Location({
     this.id,
@@ -204,6 +206,8 @@ class Location {
     this.takePayment,
     this.createdAt,
     this.updatedAt,
+    this.name,
+    this.phone,
   });
 
   factory Location.fromJson(Map<String, dynamic> json) => Location(
@@ -225,6 +229,8 @@ class Location {
         updatedAt: json["updated_at"] == null
             ? null
             : DateTime.parse(json["updated_at"]),
+        name: json['name'] ?? '',
+        phone: json['phone'] ?? '',
       );
 
   Map<String, dynamic> toJson() => {

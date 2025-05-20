@@ -13,7 +13,9 @@ import 'certificate_image.dart';
 class MiniTempoWidget extends StatelessWidget {
   const MiniTempoWidget({
     super.key,
+    required this.isFrmProfile,
   });
+  final bool isFrmProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +75,7 @@ class MiniTempoWidget extends StatelessWidget {
                   const SizedBox(height: 15),
                   GestureDetector(
                     onTap: () {
+                      if (isFrmProfile) return;
                       showModalBottomSheet(
                         context: context,
                         builder: (context) {
@@ -132,6 +135,7 @@ class MiniTempoWidget extends StatelessWidget {
                           height: 20,
                         ),
                         TextFormField(
+                          readOnly: isFrmProfile,
                           keyboardType: TextInputType.text,
                           controller: controller.vehicleNumber,
                           style: const TextStyle(color: Colors.black),
@@ -155,6 +159,7 @@ class MiniTempoWidget extends StatelessWidget {
                         const SizedBox(height: 16),
                         GestureDetector(
                           onTap: () {
+                            if (isFrmProfile) return;
                             Navigator.push(
                               context,
                               getCustomRoute(

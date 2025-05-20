@@ -65,11 +65,12 @@ class LocalBikeAndTempoItemWidget extends StatelessWidget {
                     : const Color(0xffEB0404),
                 icon: Icons.location_on,
                 label: (data?.getLocationType ?? false) ? "From" : 'To',
-                name: (data?.getLocationType ?? false)
-                    ? (bookings.pickupUserName ?? 'NA')
-                    : (bookings.dropUserName ?? 'NA'),
-                phone:
-                    "+91 ${(data?.getLocationType ?? false) ? bookings.pickupUserPhone : bookings.dropUserPhone}",
+                name: data?.name ?? 'NA',
+                //  (data?.getLocationType ?? false)
+                //     ? (bookings.pickupUserName ?? 'NA')
+                //     : (bookings.dropUserName ?? 'NA'),
+                phone: "+91 ${data?.phone}",
+                // "+91 ${(da/ta?.getLocationType ?? false) ? bookings.pickupUserPhone : bookings.dropUserPhone}",
                 address: data?.getAddress ?? '',
               );
             },

@@ -15,7 +15,9 @@ import 'certificate_image.dart';
 class OpentruckAndBodyPackTruckWidget extends StatelessWidget {
   const OpentruckAndBodyPackTruckWidget({
     super.key,
+    required this.isFrmProfile,
   });
+  final bool isFrmProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,7 @@ class OpentruckAndBodyPackTruckWidget extends StatelessWidget {
       return RefreshIndicator(
         color: Colors.white,
         onRefresh: () async {
+          if (isFrmProfile) return;
           controller.cleanSignupPageThree();
           controller.getVehicleMasterData(
               vehicleType: controller.selectedVehicle?.key ?? '');
@@ -117,6 +120,7 @@ class OpentruckAndBodyPackTruckWidget extends StatelessWidget {
                       );
                     }).toList(),
                     onChanged: (value) {
+                      if (isFrmProfile) return;
                       if (value != null) {
                         controller.selectedVehicleMaster(value);
                       }
@@ -148,6 +152,7 @@ class OpentruckAndBodyPackTruckWidget extends StatelessWidget {
                           height: 20,
                         ),
                         TextFormField(
+                          readOnly: isFrmProfile,
                           keyboardType: TextInputType.text,
                           controller: controller.vehicleNumber,
                           style: const TextStyle(color: Colors.black),
@@ -171,6 +176,7 @@ class OpentruckAndBodyPackTruckWidget extends StatelessWidget {
                         const SizedBox(height: 16),
                         GestureDetector(
                           onTap: () {
+                            if (isFrmProfile) return;
                             Navigator.push(
                               context,
                               getCustomRoute(

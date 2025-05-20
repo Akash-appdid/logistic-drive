@@ -188,6 +188,16 @@ class RegisterController extends GetxController implements GetxService {
     return responseModel;
   }
 
+  void selectVehicleMasterFromList() {
+    final data = Get.find<AuthController>().userModel?.vehicle;
+    for (var element in vehicleMasterData) {
+      if (element.id == data?.id) {
+        vehicleMasterModel = element;
+      }
+    }
+    update();
+  }
+
   //------selecte file--------
   void selectFiles({
     bool isCertificationOfRegistration = false,

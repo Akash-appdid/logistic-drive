@@ -197,6 +197,7 @@ class AuthController extends GetxController implements GetxService {
 
   void updateProfileData() {
     final registrationCtrl = Get.find<RegisterController>();
+    registrationCtrl.cleanSignupPageThree();
     //-----Sign page one----------
     registrationCtrl.name.text = userModel?.name ?? 'NA';
     numberController.text = userModel?.phone ?? '';
@@ -210,11 +211,13 @@ class AuthController extends GetxController implements GetxService {
     //sizeup 3
     registrationCtrl.vehicleNumber.text = userModel?.vehicleNumber ?? '';
     registrationCtrl.buildYear.text = userModel?.buildYear.toString() ?? '';
+
     //---signup 4
     registrationCtrl.aadharCardNumber.text = userModel?.aadharCardNumber ?? '';
     registrationCtrl.panCardNumber.text = userModel?.panCardNumber ?? '';
     registrationCtrl.drivingLiceseNumber.text =
         userModel?.drivingLicenseNumber ?? '';
+
     //---signup 5
     registrationCtrl.payeeName.text = userModel?.payeeName ?? "";
     registrationCtrl.accountNumber.text = userModel?.accountNumber ?? "";

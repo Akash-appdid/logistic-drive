@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../../data/models/response/user_model.dart';
 import '../../../../base/common_button.dart';
-import 'documents_widget.dart';
 import 'title_and_value.dart';
+import 'view_image_dialog.dart';
 
 class BankInfoWidget extends StatelessWidget {
   const BankInfoWidget({
@@ -54,7 +54,8 @@ class BankInfoWidget extends StatelessWidget {
             title: "Bank branch: ",
             val: userModel?.bankBranch ?? 'NA',
           ),
-          Divider(color: Colors.grey.shade200),
+          if (userModel?.cancelCheck != null)
+            Divider(color: Colors.grey.shade200),
           if (userModel?.cancelCheck != null)
             Row(
               children: [
