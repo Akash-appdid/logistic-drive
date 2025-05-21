@@ -82,7 +82,7 @@ class _LocalBikeTempoCustomTimelineWidgetOfLocalBikeTempoState
                             strokeWidth: 2,
                             dashPattern: const [5, 5],
                             color: (status?.orderStatus ?? false)
-                                ? Colors.black.withOpacity(0.7)
+                                ? Colors.black.withValues(alpha: 0.7)
                                 : Colors.grey.shade600,
                             customPath: (size) {
                               return Path()
@@ -100,7 +100,7 @@ class _LocalBikeTempoCustomTimelineWidgetOfLocalBikeTempoState
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "${(status?.type ?? 'NA').capitalizeFirstOfEach} ${status?.getItemIndex}", // ${status?.getItemIndex}",
+                          "${(status?.type ?? 'NA').capitalizeFirstOfEach} ${status?.getItemIndex} | ${status?.name} | ${status?.phone} ", // ${status?.getItemIndex}",
                           style:
                               Theme.of(context).textTheme.labelMedium!.copyWith(
                                     fontSize: 14,
