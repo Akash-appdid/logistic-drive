@@ -14,6 +14,7 @@ class OrderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
     return GetBuilder<PusherController>(
       builder: (PusherController controller) {
         double getHeight = 0;
@@ -26,7 +27,7 @@ class OrderWidget extends StatelessWidget {
           return const SizedBox.shrink();
         }
         return SizedBox(
-          height: getHeight + 118,
+          height: getHeight + (size.height * .135).truncate(),
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             separatorBuilder: (context, index) => const SizedBox(width: 5),

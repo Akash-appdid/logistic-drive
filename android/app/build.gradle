@@ -69,4 +69,5 @@ dependencies {
     configurations.all {
     exclude group: 'com.google.errorprone', module: 'error_prone_annotations'
     }
+    implementation 'org.slf4j:slf4j-simple:1.7.30'
 }
