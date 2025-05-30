@@ -18,7 +18,7 @@
         </intent>
     </queries>
     <application
-        android:label="Transportation"
+        android:label="Easyshift vendor app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 

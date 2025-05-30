@@ -105,7 +105,7 @@ class AppConstants {
       'api/driver/v1/two-wheelers/dashboard/analytics';
 
   //-------app details-------
-  static String appName = 'Transportation';
+  static String appName = 'Easyshift vendor app';
   static String packageName = '';
   static String version = '';
   static String buildNumber = '';
