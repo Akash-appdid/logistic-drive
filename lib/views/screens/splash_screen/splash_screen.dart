@@ -135,7 +135,7 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CustomImage(
-              path: Assets.imagesLogo,
+              path: Assets.imagesAppLogo,
               height: appSizeHeight * .2,
               width: appSizeHeight * .2,
             ),
