@@ -1,4 +1,4 @@
-package com.logistic.logistic_driver
+package com.easyshiftlogisticsdriver
 
 import io.flutter.embedding.android.FlutterActivity
 
