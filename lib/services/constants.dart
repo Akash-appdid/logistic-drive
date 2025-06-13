@@ -45,7 +45,7 @@ class AppConstants {
       true; //if want to use live url in debug mode set to production mode true
   String get getBaseUrl => baseUrl;
   set setBaseUrl(String url) => baseUrl = url;
-  static const String liveUrl = 'https://appdid.in/';
+  static const String liveUrl = 'https://easyshiftlogistics.com/';
   static const String localUrl = 'http://192.168.1.26:8000/';
   static String baseUrl = (kReleaseMode || isProduction) ? liveUrl : localUrl;
 
