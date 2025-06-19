@@ -18,10 +18,9 @@
         </intent>
     </queries>
     <application
-        android:label="Easyshift vendor app"
+        android:label="Driver-PKUP"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-
 
         <activity
             android:name=".MainActivity"

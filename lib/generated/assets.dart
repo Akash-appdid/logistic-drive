@@ -7,8 +7,12 @@ class Assets {
   static const String images2Wheeler = "assets/images/2-wheeler.png";
 
   /// Assets for imagesAppLogo
-  /// assets/images/app_logo.png
-  static const String imagesAppLogo = "assets/images/app_logo.png";
+  /// assets/images/app_logo.jpg
+  static const String imagesAppLogo = "assets/images/app_logo.jpg";
+
+  /// Assets for imagesAppLogo2
+  /// assets/images/app_logo2.png
+  static const String imagesAppLogo2 = "assets/images/app_logo2.png";
 
   /// Assets for imagesArrowRight
   /// assets/images/arrow-right.png
