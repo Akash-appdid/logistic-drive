@@ -57,12 +57,12 @@ class PusherController extends GetxController implements GetxService {
       Map<String, dynamic> decodedData = jsonDecode(event.data);
       if (decodedData.isEmpty) return;
 
-      log("${jsonEncode(decodedData['bookingDetails'])}", name: 'Pushe');
+      log(jsonEncode(decodedData['bookingDetails']), name: 'Pushe');
       OrderModel order = OrderModel.fromJson(decodedData['bookingDetails']);
       orders.insert(0, order);
-      timers.add(Timer(const Duration(seconds: 10), () {
-        removeItem(orderRequestId: order.id ?? 0);
-      }));
+      // timers.add(Timer(const Duration(seconds: 10), () {
+      //   removeItem(orderRequestId: order.id ?? 0);
+      // }));
       update();
       // ------ Play Audio ------
       try {

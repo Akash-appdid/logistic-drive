@@ -92,13 +92,15 @@ class _OrdersItemWidgetState extends State<OrdersItemWidget> {
                         return const FittedBox(
                             child: CustomProgressIndicator(isMini: true));
                       }
-                      return Text(
-                        'Accept',
-                        style:
-                            Theme.of(context).textTheme.labelMedium!.copyWith(
-                                  color: Colors.white,
-                                ),
-                        textAlign: TextAlign.center,
+                      return Center(
+                        child: Text(
+                          'Accept',
+                          style:
+                              Theme.of(context).textTheme.labelMedium!.copyWith(
+                                    color: Colors.white,
+                                  ),
+                          textAlign: TextAlign.center,
+                        ),
                       );
                     }),
                   ),
@@ -122,12 +124,15 @@ class _OrdersItemWidgetState extends State<OrdersItemWidget> {
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Builder(builder: (context) {
-                    return Text(
-                      'Reject',
-                      style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                            color: Colors.white,
-                          ),
-                      textAlign: TextAlign.center,
+                    return Center(
+                      child: Text(
+                        'Reject',
+                        style:
+                            Theme.of(context).textTheme.labelMedium!.copyWith(
+                                  color: Colors.white,
+                                ),
+                        textAlign: TextAlign.center,
+                      ),
                     );
                   }),
                 ),

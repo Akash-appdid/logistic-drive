@@ -63,7 +63,6 @@ class LocationContanerWidget extends StatelessWidget {
                       TextSpan(
                         text: '$name . $phone',
                         style: const TextStyle(
-
                           fontSize: 12,
                         ),
                       ),

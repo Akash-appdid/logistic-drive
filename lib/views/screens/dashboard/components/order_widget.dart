@@ -27,7 +27,7 @@ class OrderWidget extends StatelessWidget {
           return const SizedBox.shrink();
         }
         return SizedBox(
-          height: getHeight + (size.height * .135).truncate(),
+          height: getHeight + (size.height * .15).truncate(),
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             separatorBuilder: (context, index) => const SizedBox(width: 5),
