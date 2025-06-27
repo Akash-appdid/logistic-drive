@@ -15,7 +15,7 @@ class Analytics {
 
   factory Analytics.fromJson(Map<String, dynamic> json) => Analytics(
         success: json["success"],
-        totalOrders: json["total_orders"],
+        totalOrders: json["total_orders"] ?? 0,
         totalIncome: json["total_income"],
         paymentReceived: json["payment_received"],
         duePayment: json["due_payment"],

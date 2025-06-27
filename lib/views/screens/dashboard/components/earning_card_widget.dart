@@ -64,7 +64,7 @@ class EarningCardWidget extends StatelessWidget {
                           ),
                           const SizedBox(height: 5),
                           Text(
-                            '${controller.analyticsDataOfBikeTempo?.totalOrders}',
+                            '${controller.analyticsDataOfBikeTempo?.totalOrders ?? 0}',
                             style: Theme.of(context)
                                 .textTheme
                                 .labelMedium!
