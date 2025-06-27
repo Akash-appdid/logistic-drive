@@ -57,13 +57,19 @@ class LocationContanerWidget extends StatelessWidget {
                         text: '$label ',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
+                          fontSize: 12,
                         ),
                       ),
                       TextSpan(
                         text: '$name . $phone',
+                        style: const TextStyle(
+
+                          fontSize: 12,
+                        ),
                       ),
                     ],
                   ),
+                  overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 4),
                 Text(
