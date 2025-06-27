@@ -41,12 +41,11 @@ String getStringFromList(List<dynamic>? data) {
 }
 
 class AppConstants {
-  static bool isProduction =
-      true; //if want to use live url in debug mode set to production mode true
+  static bool isProduction = false; //if want to use live url in debug mode set to production mode true
   String get getBaseUrl => baseUrl;
   set setBaseUrl(String url) => baseUrl = url;
   static const String liveUrl = 'https://easyshiftlogistics.com/';
-  static const String localUrl = 'http://192.168.1.26:8000/';
+  static const String localUrl = 'http://192.168.1.26:8005/';
   static String baseUrl = (kReleaseMode || isProduction) ? liveUrl : localUrl;
 
   //--------auth-----------\\

@@ -1,14 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:get/get.dart';
-
 import 'package:just_audio/just_audio.dart';
 import 'package:logistic_driver/controllers/auth_controller.dart';
-
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
-
 import '../data/models/response/order_model.dart';
 import '../generated/assets.dart';
 
