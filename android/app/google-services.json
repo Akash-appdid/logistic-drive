@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "706184671920",
+    "project_id": "pkup-9a134",
+    "storage_bucket": "pkup-9a134.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:706184671920:android:16d55bd115690b3ba3c175",
+        "android_client_info": {
+          "package_name": "com.easyshiftlogistics"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkj1jTFFmMMsNfBZ5-5NoRGs90QrAqFrM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

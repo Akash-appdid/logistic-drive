@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 class OneSingleController extends GetxController implements GetxService {
-  static const String oneSignalAppId = 'AppId';
+  static const String oneSignalAppId = '626a0ad9-b608-4f23-9739-2e1c383168e2';
 
   initPlatForm() async {
     OneSignal.Debug.setLogLevel(OSLogLevel.none);
