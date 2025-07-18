@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,14 +9,13 @@ import 'package:logistic_driver/controllers/booking_controller.dart';
 import 'package:logistic_driver/controllers/local_bike_tempo_controller.dart';
 import 'package:logistic_driver/controllers/location_controller.dart';
 import 'package:logistic_driver/services/theme.dart';
-
 import 'package:logistic_driver/views/screens/dashboard/components/appbar_widget.dart';
 
 import '../../../controllers/pusher_controller.dart';
+import '../drawer_screens/drawer_screen.dart';
 import 'components/bookinglist_section_widget.dart';
 import 'components/dutyonoff_button_widget.dart';
 import 'components/earning_card_widget.dart';
-import '../drawer_screens/drawer_screen.dart';
 import 'components/order_widget.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -46,8 +46,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     ///------pusher
     if (authCtrl.userModel != null) {
-      Get.find<PusherController>().initializePusher(
-          driverId: Get.find<AuthController>().userModel?.id ?? 0);
+      Get.find<PusherController>().initializePusher(driverId: Get.find<AuthController>().userModel?.id ?? 0);
     }
 
     ///--------analytics
@@ -75,9 +74,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void localBikeAndTempoCallingInInit() async {
     final controller = Get.find<BookingController>();
     final orderController = Get.find<LocalBikeTempoController>();
-    orderController.bookingInitMethodForPagination(
-        isOnGoingOrder: controller.isOnGoingOrder,
-        scrollController: controller.scrollController);
+    orderController.bookingInitMethodForPagination(isOnGoingOrder: controller.isOnGoingOrder, scrollController: controller.scrollController);
     if (controller.isOnGoingOrder) {
       await orderController.getAllOrder(isClear: true);
     } else {
@@ -105,10 +102,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   physics: const AlwaysScrollableScrollPhysics(),
                   controller: controller.scrollController,
                   padding: const EdgeInsets.symmetric(horizontal: 14),
-                  child: const Column(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      EarningCardWidget(),
+                      if (Platform.isAndroid
+                          ? Get.find<BasicController>().getBusinessSettingValue("production_mode_android_for_driver") == "0"
+                          : Get.find<BasicController>().getBusinessSettingValue("production_mode_ios_for_driver") == "0")
+                        EarningCardWidget(),
                       SizedBox(height: 15),
                       //-----on off duty------
                       DutyOnOffButtonWidget(),

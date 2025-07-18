@@ -1,6 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:logistic_driver/controllers/auth_controller.dart';
+import 'package:logistic_driver/services/route_helper.dart';
+import 'package:logistic_driver/views/screens/splash_screen/splash_screen.dart';
 
 import '../../../services/theme.dart';
 import '../common_button.dart';
@@ -106,7 +110,19 @@ class DeleteAccountDialogState extends State<DeleteAccountDialog> {
                     child: CustomButton(
                       radius: 6,
                       elevation: 0,
-                      onTap: () async {},
+                      onTap: () async {
+                        Get.find<AuthController>().logOut().then(
+                          (value) {
+                            if (value.isSuccess) {
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                getCustomRoute(child: SplashScreen()),
+                                (route) => false,
+                              );
+                            }
+                          },
+                        );
+                      },
                       child: const Text(
                         'Delete',
                         style: TextStyle(
