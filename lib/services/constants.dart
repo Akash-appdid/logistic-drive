@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import 'package:intl/intl.dart';
 import 'package:logistic_driver/main.dart';
 
@@ -41,11 +40,11 @@ String getStringFromList(List<dynamic>? data) {
 }
 
 class AppConstants {
-  static bool isProduction = true; //if want to use live url in debug mode set to production mode true
+  static bool isProduction = false; //if want to use live url in debug mode set to production mode true
   String get getBaseUrl => baseUrl;
   set setBaseUrl(String url) => baseUrl = url;
   static const String liveUrl = 'https://easyshiftlogistics.com/';
-  static const String localUrl = 'http://192.168.1.26:8005/';
+  static const String localUrl = 'http://192.168.1.30:8000/';
   static String baseUrl = (kReleaseMode || isProduction) ? liveUrl : localUrl;
 
   //--------auth-----------\\
@@ -67,41 +66,30 @@ class AppConstants {
 
   //----------bookings----------------
   static const String bookingsUri = 'api/driver/v1/goods/bookings';
-  static const String bookingTripStartUri =
-      'api/driver/v1/goods/bookings/start';
+  static const String bookingTripStartUri = 'api/driver/v1/goods/bookings/start';
   static const String bookingTripEndUri = 'api/driver/v1/goods/bookings/end';
-  static const String locationMarkAsDone =
-      'api/driver/v1/goods/bookings/location-mark-as-done';
+  static const String locationMarkAsDone = 'api/driver/v1/goods/bookings/location-mark-as-done';
   //------------order-----------------
-  static const String orderAccept =
-      'api/driver/v1/two-wheelers/bookings/accept';
+  static const String orderAccept = 'api/driver/v1/two-wheelers/bookings/accept';
   //
 
   //----------home items-----------------
   static const String homeItemUri = 'api/v1/home-items';
-  static const String addHomeItem =
-      'api/driver/v1/packers-and-movers/bookings/home-items';
-  static const String updateHomeItem =
-      'api/driver/v1/packers-and-movers/bookings/home-items';
-  static const String deleteHomeItem =
-      'api/driver/v1/packers-and-movers/bookings/home-items';
+  static const String addHomeItem = 'api/driver/v1/packers-and-movers/bookings/home-items';
+  static const String updateHomeItem = 'api/driver/v1/packers-and-movers/bookings/home-items';
+  static const String deleteHomeItem = 'api/driver/v1/packers-and-movers/bookings/home-items';
 
   //-------------location-------------------------
   static const String updateLocationUri = 'api/driver/v1/basic/update-location';
 
   //----------bike tempo---------------
-  static const String acceptOrder =
-      'api/driver/v1/two-wheelers/bookings/accept';
+  static const String acceptOrder = 'api/driver/v1/two-wheelers/bookings/accept';
   static const String allOrders = 'api/driver/v1/two-wheelers/bookings';
   static const String orderDetail = 'api/driver/v1/two-wheelers/bookings';
-  static const String startBikeTempoUri =
-      'api/driver/v1/two-wheelers/bookings/verify-otp';
-  static const String bikeTempoMarkLocationDone =
-      'api/driver/v1/two-wheelers/bookings/mark-location-as-done';
-  static const String markAsDeliveredBikeTempo =
-      'api/driver/v1/two-wheelers/bookings/mark-as-delivered';
-  static const String bikeTempoAnalytic =
-      'api/driver/v1/two-wheelers/dashboard/analytics';
+  static const String startBikeTempoUri = 'api/driver/v1/two-wheelers/bookings/verify-otp';
+  static const String bikeTempoMarkLocationDone = 'api/driver/v1/two-wheelers/bookings/mark-location-as-done';
+  static const String markAsDeliveredBikeTempo = 'api/driver/v1/two-wheelers/bookings/mark-as-delivered';
+  static const String bikeTempoAnalytic = 'api/driver/v1/two-wheelers/dashboard/analytics';
 
   //-------app details-------
   static String appName = 'Easyshift vendor app';

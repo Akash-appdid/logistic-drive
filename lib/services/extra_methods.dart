@@ -26,8 +26,7 @@ class ExtraMethods {
 
   void makeMail(String email, [String subject = '']) {
     try {
-      Uri emailLaunchUri = Uri(
-          scheme: 'mailto', path: email, queryParameters: {'subject': subject});
+      Uri emailLaunchUri = Uri(scheme: 'mailto', path: email, queryParameters: {'subject': subject});
       var url = emailLaunchUri.toString().replaceAll('+', ' ');
       launchInBrowser(url);
     } catch (e) {
@@ -104,10 +103,7 @@ String getInitialLetter(String? name) {
 String formatSentence(String text) {
   return text.split(' ').map((word) {
     if (word.contains('_')) {
-      return word
-          .split('_')
-          .map((part) => part[0].toUpperCase() + part.substring(1))
-          .join(' ');
+      return word.split('_').map((part) => part[0].toUpperCase() + part.substring(1)).join(' ');
     } else {
       return word;
     }
