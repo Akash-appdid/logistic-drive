@@ -14,6 +14,10 @@ class Assets {
   /// assets/images/app_logo2.png
   static const String imagesAppLogo2 = "assets/images/app_logo2.png";
 
+  /// Assets for imagesAppstore
+  /// assets/images/appstore.png
+  static const String imagesAppstore = "assets/images/appstore.png";
+
   /// Assets for imagesArrowRight
   /// assets/images/arrow-right.png
   static const String imagesArrowRight = "assets/images/arrow-right.png";
@@ -53,10 +57,6 @@ class Assets {
   /// Assets for imagesImage
   /// assets/images/image.png
   static const String imagesImage = "assets/images/image.png";
-
-  /// Assets for imagesLogo
-  /// assets/images/logo.png
-  static const String imagesLogo = "assets/images/logo.png";
 
   /// Assets for imagesMap
   /// assets/images/map.png

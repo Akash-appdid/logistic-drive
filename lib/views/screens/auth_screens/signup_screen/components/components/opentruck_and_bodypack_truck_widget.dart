@@ -100,12 +100,17 @@ class OpentruckAndBodyPackTruckWidget extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              (value.name ?? 'NA').capitalizeFirstOfEach,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelLarge!
-                                  .copyWith(fontSize: 16, color: Colors.black),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * .4,
+                              child: Text(
+                                (value.name ?? 'NA').capitalizeFirstOfEach,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelLarge!
+                                    .copyWith(
+                                        fontSize: 16, color: Colors.black),
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                             const SizedBox(width: 10),
                             Text(

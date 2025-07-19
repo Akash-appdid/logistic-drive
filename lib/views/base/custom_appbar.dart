@@ -39,7 +39,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final IconThemeData? iconTheme;
 
   @override
-  Size get preferredSize => Size.fromHeight(toolbarHeight + (bottom?.preferredSize.height ?? 0));
+  Size get preferredSize =>
+      Size.fromHeight(toolbarHeight + (bottom?.preferredSize.height ?? 0));
 
   @override
   Widget build(BuildContext context) {
@@ -54,13 +55,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         if (isHome) {
           return const CustomImage(
             height: 35,
-            path: Assets.imagesLogo,
+            path: Assets.imagesAppstore,
           );
         } else {
           if (title != null) {
             return Text(
               title!,
-              style: Theme.of(context).appBarTheme.titleTextStyle?.copyWith(fontSize: 18.0, color: titleColor, fontWeight: fontWeight),
+              style: Theme.of(context).appBarTheme.titleTextStyle?.copyWith(
+                  fontSize: 18.0, color: titleColor, fontWeight: fontWeight),
             );
           } else {
             return const SizedBox.shrink();

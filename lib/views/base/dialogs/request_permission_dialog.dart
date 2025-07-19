@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -6,7 +8,9 @@ import '../common_button.dart';
 import '../custom_image.dart';
 
 class RequestPermissionDialog extends StatelessWidget {
-  const RequestPermissionDialog({Key? key, required this.permission, this.extraMessage}) : super(key: key);
+  const RequestPermissionDialog(
+      {Key? key, required this.permission, this.extraMessage})
+      : super(key: key);
 
   final String permission;
   final String? extraMessage;
@@ -21,7 +25,7 @@ class RequestPermissionDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             CustomImage(
-              path: Assets.imagesLogo,
+              path: Assets.imagesAppstore,
               height: size.height * .07,
               width: size.width * .7,
             ),
@@ -46,16 +50,17 @@ class RequestPermissionDialog extends StatelessWidget {
             const SizedBox(height: 14.0),
             Row(
               children: [
-                Expanded(
-                  child: CustomButton(
-                    elevation: 0,
-                    type: ButtonType.secondary,
-                    // color: Colors.white,
-                    onTap: () => Navigator.pop(context, false),
-                    title: 'Reject',
+                if (Platform.isAndroid)
+                  Expanded(
+                    child: CustomButton(
+                      elevation: 0,
+                      type: ButtonType.secondary,
+                      // color: Colors.white,
+                      onTap: () => Navigator.pop(context, false),
+                      title: 'Reject',
+                    ),
                   ),
-                ),
-                const SizedBox(width: 10),
+                if (Platform.isAndroid) const SizedBox(width: 10),
                 Expanded(
                   child: CustomButton(
                     elevation: 0,

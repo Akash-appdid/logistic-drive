@@ -30,7 +30,7 @@ class UpdateDialog extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(100),
                   child: Image(
-                    image: const AssetImage(Assets.imagesLogo),
+                    image: const AssetImage(Assets.imagesAppstore),
                     height: size.height * 0.16,
                   ),
                 ),
@@ -39,7 +39,10 @@ class UpdateDialog extends StatelessWidget {
                   child: Text(
                     "Update App",
                     textAlign: TextAlign.justify,
-                    style: GoogleFonts.poppins(fontSize: 14.0, fontWeight: FontWeight.w400, color: Colors.grey[900]),
+                    style: GoogleFonts.poppins(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.grey[900]),
                   ),
                 ),
                 const SizedBox(
@@ -48,7 +51,10 @@ class UpdateDialog extends StatelessWidget {
                 Text(
                   remark,
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.quicksand(fontSize: 12.0, fontWeight: FontWeight.w700, color: Colors.grey[800]),
+                  style: GoogleFonts.quicksand(
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.grey[800]),
                 ),
                 const SizedBox(
                   height: 20,
@@ -64,7 +70,9 @@ class UpdateDialog extends StatelessWidget {
                         child: Container(
                           height: 40,
                           width: size.width * 0.3,
-                          decoration: BoxDecoration(color: Colors.grey.shade100, borderRadius: BorderRadius.circular(5)),
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade100,
+                              borderRadius: BorderRadius.circular(5)),
                           child: Center(
                             child: Text(
                               'Later',
@@ -83,14 +91,18 @@ class UpdateDialog extends StatelessWidget {
                       onTap: () async {
                         if (GetPlatform.isAndroid) {
                           //TODO: CHANGE ANDROID LINK
-                          final appDownloadLink = Get.find<BasicController>().getAppLinkAndAppVersion('app_download_link_for_driver');
+                          final appDownloadLink = Get.find<BasicController>()
+                              .getAppLinkAndAppVersion(
+                                  'app_download_link_for_driver');
                           log('$appDownloadLink');
                           if (appDownloadLink != null) {
                             ExtraMethods.launchInBrowser(appDownloadLink);
                           }
                         } else {
                           //TODO: CHANGE IOS LINK
-                          final iosDownloadLink = Get.find<BasicController>().getAppLinkAndAppVersion('app_download_ios_for_driver');
+                          final iosDownloadLink = Get.find<BasicController>()
+                              .getAppLinkAndAppVersion(
+                                  'app_download_ios_for_driver');
                           log('$iosDownloadLink');
                           if (iosDownloadLink != null) {
                             ExtraMethods.launchInBrowser(iosDownloadLink);
@@ -100,7 +112,9 @@ class UpdateDialog extends StatelessWidget {
                       child: Container(
                         height: 40,
                         width: size.width * 0.3,
-                        decoration: BoxDecoration(color: Theme.of(context).primaryColor, borderRadius: BorderRadius.circular(5)),
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            borderRadius: BorderRadius.circular(5)),
                         child: const Center(
                           child: Text(
                             'Update Now',

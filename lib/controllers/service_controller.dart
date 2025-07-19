@@ -18,16 +18,15 @@ class ServiceController {
     XFile? pickedFile;
     bool permission = false;
     if (source == ImageSource.camera) {
-      permission = await Get.find<PermissionController>()
-          .getPermission(Permission.camera, context);
+      permission = Platform.isAndroid
+          ? true
+          : await Get.find<PermissionController>()
+              .getPermission(Permission.camera, context);
     } else {
-      if (Platform.isAndroid) {
-        permission = true;
-      } else {
-        permission = await Get.find<PermissionController>().getPermission(
-            Platform.isAndroid ? Permission.storage : Permission.photos,
-            context);
-      }
+      permission = Platform.isAndroid
+          ? true
+          : await Get.find<PermissionController>()
+              .getPermission(Permission.photos, context);
     }
     if (permission) {
       pickedFile = await picker.pickImage(source: source, imageQuality: 25);
