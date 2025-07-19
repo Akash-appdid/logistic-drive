@@ -1,5 +1,3 @@
-// ignore_for_file: depend_on_referenced_packages, no_leading_underscores_for_local_identifiers
-
 import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
@@ -208,16 +206,27 @@ class ApiClient extends GetConnect implements GetxService {
 
   Response handleResponse(Response response) {
     Response _response = response;
-    if (_response.hasError && _response.body != null && _response.body is! String) {
+    if (_response.hasError &&
+        _response.body != null &&
+        _response.body is! String) {
       if (_response.body.toString().startsWith('{errors: [{code:')) {
         ErrorResponse errorResponse = ErrorResponse.fromJson(_response.body);
-        _response = Response(statusCode: _response.statusCode, body: _response.body, statusText: errorResponse.errors[0].message);
+        _response = Response(
+            statusCode: _response.statusCode,
+            body: _response.body,
+            statusText: errorResponse.errors[0].message);
       } else if (_response.body.toString().startsWith('{message')) {
-        _response = Response(statusCode: _response.statusCode, body: _response.body, statusText: _response.body['message']);
+        _response = Response(
+            statusCode: _response.statusCode,
+            body: _response.body,
+            statusText: _response.body['message']);
       }
     } else if (_response.hasError && _response.body == null) {
       log(_response.statusCode.toString(), name: "STATUS CODE");
-      _response = const Response(statusCode: 0, statusText: 'Connection to API server failed due to internet connection');
+      _response = const Response(
+          statusCode: 0,
+          statusText:
+              'Connection to API server failed due to internet connection');
     }
     return _response;
   }
@@ -237,13 +246,17 @@ class ApiClient extends GetConnect implements GetxService {
       log(response.body);
       // log(response.body.length.toString());
       // log(response.body.substring(0,response.body.length));
-      log("/${response.request!.url.path.split('/').last} ============ ${response.statusCode}\n", name: "API SUCCESS PATH CAC");
+      log("/${response.request!.url.path.split('/').last} ============ ${response.statusCode}\n",
+          name: "API SUCCESS PATH CAC");
 
       return response;
     } catch (e) {
-      log("/${postUri.path.split('/').last} ============ " /*+ getResponseStatus(response)*/, name: "API FAILURE PATH CAC");
+      log("/${postUri.path.split('/').last} ============ " /*+ getResponseStatus(response)*/,
+          name: "API FAILURE PATH CAC");
       log('+++++++ ${e.toString().replaceAll('\n', ' ')} +++++++\n',
-          name: "API ERROR CAC(/${"${postUri.path.split('/').last} ============ " /*+ getResponseStatus(response)*/})", level: 1);
+          name:
+              "API ERROR CAC(/${"${postUri.path.split('/').last} ============ " /*+ getResponseStatus(response)*/})",
+          level: 1);
       return null;
     }
   }
@@ -262,13 +275,17 @@ class ApiClient extends GetConnect implements GetxService {
       log(response.body);
       // log(response.body.length.toString());
       // log(response.body.substring(0,response.body.length));
-      log("/${response.request!.url.path.split('/').last} ============ ${response.statusCode}\n", name: "API SUCCESS PATH CAC");
+      log("/${response.request!.url.path.split('/').last} ============ ${response.statusCode}\n",
+          name: "API SUCCESS PATH CAC");
 
       return response;
     } catch (e) {
-      log("/${postUri.path.split('/').last} ============ " /*+ getResponseStatus(response)*/, name: "API FAILURE PATH CAC");
+      log("/${postUri.path.split('/').last} ============ " /*+ getResponseStatus(response)*/,
+          name: "API FAILURE PATH CAC");
       log('+++++++ ${e.toString().replaceAll('\n', ' ')} +++++++\n',
-          name: "API ERROR CAC(/${"${postUri.path.split('/').last} ============ " /*+ getResponseStatus(response)*/})", level: 1);
+          name:
+              "API ERROR CAC(/${"${postUri.path.split('/').last} ============ " /*+ getResponseStatus(response)*/})",
+          level: 1);
       return null;
     }
   }
