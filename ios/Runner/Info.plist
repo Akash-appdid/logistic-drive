@@ -34,9 +34,9 @@
 	<key>NSCameraUsageDescription</key>
 	<string>We need access to your camera to let you take pictures.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>We use location permission to fetch the current location to query properties according to it.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to your location.</string>
+    <string>Pkup Driver uses your location to find nearby delivery or ride requests and to track trip progress during active rides.</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Pkup Driver uses your location to find nearby delivery or ride requests and to track trip progress during active rides.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We don't actively use this permission if you see this message contact our support team.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
