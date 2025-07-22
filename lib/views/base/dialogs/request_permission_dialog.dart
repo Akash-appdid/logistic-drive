@@ -8,9 +8,7 @@ import '../common_button.dart';
 import '../custom_image.dart';
 
 class RequestPermissionDialog extends StatelessWidget {
-  const RequestPermissionDialog(
-      {Key? key, required this.permission, this.extraMessage})
-      : super(key: key);
+  const RequestPermissionDialog({Key? key, required this.permission, this.extraMessage}) : super(key: key);
 
   final String permission;
   final String? extraMessage;
@@ -67,7 +65,7 @@ class RequestPermissionDialog extends StatelessWidget {
                     type: ButtonType.primary,
                     // color: Colors.black,
                     onTap: () => Navigator.pop(context, true),
-                    title: 'Accept',
+                    title: 'Continue',
                   ),
                 ),
               ],

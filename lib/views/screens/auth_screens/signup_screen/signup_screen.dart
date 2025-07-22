@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -9,12 +10,13 @@ import 'package:logistic_driver/services/theme.dart';
 import 'package:logistic_driver/views/screens/auth_screens/signup_screen/components/signup_page_five.dart';
 import 'package:logistic_driver/views/screens/auth_screens/signup_screen/components/signup_page_four.dart';
 import 'package:logistic_driver/views/screens/auth_screens/under_review_screen.dart';
+
 import '../../../../services/route_helper.dart';
 import '../../../base/common_button.dart';
 import '../../dashboard/dashboard_screen.dart';
 import 'components/signup_page_one.dart';
-import 'components/signup_page_two.dart';
 import 'components/signup_page_three.dart';
+import 'components/signup_page_two.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key, this.isFrmProfile = false});
@@ -97,24 +99,17 @@ class _SignupScreenState extends State<SignupScreen> {
                             children: [
                               Expanded(
                                 child: Container(
-                                  color: selectedIndex < i
-                                      ? Colors.grey
-                                      : primaryColor,
+                                  color: selectedIndex < i ? Colors.grey : primaryColor,
                                   height: 2,
                                 ),
                               ),
                               CircleAvatar(
                                 radius: 12,
-                                backgroundColor: selectedIndex < i
-                                    ? Colors.grey
-                                    : primaryColor,
+                                backgroundColor: selectedIndex < i ? Colors.grey : primaryColor,
                                 child: Center(
                                   child: Text(
                                     '${i + 1}',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium!
-                                        .copyWith(
+                                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
                                           fontSize: 10,
                                           fontWeight: FontWeight.w500,
                                           color: Colors.white,
@@ -124,9 +119,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               ),
                               Expanded(
                                 child: Container(
-                                  color: selectedIndex < i
-                                      ? Colors.grey
-                                      : primaryColor,
+                                  color: selectedIndex < i ? Colors.grey : primaryColor,
                                   height: 2,
                                 ),
                               ),
@@ -172,17 +165,16 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                     const SizedBox(width: 10),
                     Expanded(
-                      child:
-                          GetBuilder<RegisterController>(builder: (controller) {
+                      child: GetBuilder<RegisterController>(builder: (controller) {
                         return CustomButton(
                           isLoading: controller.isLoading,
                           onTap: () {
+                            log(selectedIndex.toString());
                             if (formkey.currentState!.validate()) {
                               if (selectedIndex < signupPages.length - 1) {
                                 if (selectedIndex == 1) {
                                   if (controller.selectedVehicle == null) {
-                                    Fluttertoast.showToast(
-                                        msg: 'Select vehicle');
+                                    Fluttertoast.showToast(msg: 'Select vehicle');
                                   } else {
                                     selectedIndex++;
                                     setState(() {});
@@ -201,11 +193,8 @@ class _SignupScreenState extends State<SignupScreen> {
                             }
                           },
                           child: Text(
-                            selectedIndex >= 3
-                                ? "Skip & Continue"
-                                : " Continue",
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 14),
+                            selectedIndex >= 3 ? "Skip & Continue" : " Continue",
+                            style: const TextStyle(color: Colors.white, fontSize: 14),
                           ),
                         );
                       }),
