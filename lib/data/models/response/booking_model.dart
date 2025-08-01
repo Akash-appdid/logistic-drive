@@ -43,6 +43,7 @@ class BookingsModel {
   Vehicle? vehicle;
   Driver? driver;
   List<BookingGoodHomeItem>? bookingGoodHomeItems;
+  String? epod;
 
   BookingsModel({
     this.id,
@@ -80,72 +81,70 @@ class BookingsModel {
     this.vehicle,
     this.driver,
     this.bookingGoodHomeItems,
+    this.epod,
   });
 
   factory BookingsModel.fromJson(Map<String, dynamic> json) => BookingsModel(
-        id: json["id"],
-        bookingId: json["booking_id"],
-        userId: json["user_id"],
-        driverId: json["driver_id"],
-        amountForDriver: json["amount_for_driver"],
-        amountForUser: json["amount_for_user"],
-        status: json["status"],
-        pickupUserName: json["pickup_user_name"],
-        pickupUserPhone: json["pickup_user_phone"],
-        pickupDate: json["pickup_date"] == null
-            ? null
-            : DateTime.parse(json["pickup_date"]),
-        estimatedDeliveryDate: json["estimated_delivery_date"] == null
-            ? null
-            : DateTime.parse(json["estimated_delivery_date"]),
-        dropUserName: json["drop_user_name"],
-        dropUserPhone: json["drop_user_phone"],
-        goodTypeId: json["good_type_id"],
-        truckType: json["truck_type"],
-        vehicleId: json["vehicle_id"],
-        vehicleNumber: json["vehicle_number"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
-        updatedAt: json["updated_at"] == null
-            ? null
-            : DateTime.parse(json["updated_at"]),
-        placed: json["placed"] == null ? null : DateTime.parse(json["placed"]),
-        confirmed: json["confirmed"] == null
-            ? null
-            : DateTime.parse(json["confirmed"]),
-        intransit: json["intransit"] == null
-            ? null
-            : DateTime.parse(json["intransit"]),
-        delivered: json["delivered"] == null
-            ? null
-            : DateTime.parse(json["delivered"]),
-        cancelled: json["cancelled"],
-        cancelReason: json["cancel_reason"],
-        tripStartOtp: json["trip_start_otp"],
-        tripStartOtpVerified: json["trip_start_otp_verified"],
-        deliveryStatus: json["delivery_status"],
-        locations: json["locations"] == null
-            ? []
-            : List<Location>.from(
-                json["locations"]!.map((x) => Location.fromJson(x))),
-        payoutBookingGoodDrivers: json["payout_booking_good_drivers"] == null
-            ? []
-            : List<PayoutBookingGood>.from(json["payout_booking_good_drivers"]!
-                .map((x) => PayoutBookingGood.fromJson(x))),
-        payoutBookingGoodUsers: json["payout_booking_good_users"] == null
-            ? []
-            : List<PayoutBookingGood>.from(json["payout_booking_good_users"]!
-                .map((x) => PayoutBookingGood.fromJson(x))),
-        vehicle:
-            json['vehicle'] != null ? Vehicle.fromJson(json['vehicle']) : null,
-        driver: json['driver'] != null ? Driver.fromJson(json['driver']) : null,
-        bookingType: json['booking_type'],
-        bookingGoodHomeItems: json["booking_good_home_items"] == null
-            ? []
-            : List<BookingGoodHomeItem>.from(json["booking_good_home_items"]!
-                .map((x) => BookingGoodHomeItem.fromJson(x))),
-      );
+      id: json["id"],
+      bookingId: json["booking_id"],
+      userId: json["user_id"],
+      driverId: json["driver_id"],
+      amountForDriver: json["amount_for_driver"],
+      amountForUser: json["amount_for_user"],
+      status: json["status"],
+      pickupUserName: json["pickup_user_name"],
+      pickupUserPhone: json["pickup_user_phone"],
+      pickupDate: json["pickup_date"] == null
+          ? null
+          : DateTime.parse(json["pickup_date"]),
+      estimatedDeliveryDate: json["estimated_delivery_date"] == null
+          ? null
+          : DateTime.parse(json["estimated_delivery_date"]),
+      dropUserName: json["drop_user_name"],
+      dropUserPhone: json["drop_user_phone"],
+      goodTypeId: json["good_type_id"],
+      truckType: json["truck_type"],
+      vehicleId: json["vehicle_id"],
+      vehicleNumber: json["vehicle_number"],
+      createdAt: json["created_at"] == null
+          ? null
+          : DateTime.parse(json["created_at"]),
+      updatedAt: json["updated_at"] == null
+          ? null
+          : DateTime.parse(json["updated_at"]),
+      placed: json["placed"] == null ? null : DateTime.parse(json["placed"]),
+      confirmed:
+          json["confirmed"] == null ? null : DateTime.parse(json["confirmed"]),
+      intransit:
+          json["intransit"] == null ? null : DateTime.parse(json["intransit"]),
+      delivered:
+          json["delivered"] == null ? null : DateTime.parse(json["delivered"]),
+      cancelled: json["cancelled"],
+      cancelReason: json["cancel_reason"],
+      tripStartOtp: json["trip_start_otp"],
+      tripStartOtpVerified: json["trip_start_otp_verified"],
+      deliveryStatus: json["delivery_status"],
+      locations: json["locations"] == null
+          ? []
+          : List<Location>.from(
+              json["locations"]!.map((x) => Location.fromJson(x))),
+      payoutBookingGoodDrivers: json["payout_booking_good_drivers"] == null
+          ? []
+          : List<PayoutBookingGood>.from(json["payout_booking_good_drivers"]!
+              .map((x) => PayoutBookingGood.fromJson(x))),
+      payoutBookingGoodUsers: json["payout_booking_good_users"] == null
+          ? []
+          : List<PayoutBookingGood>.from(json["payout_booking_good_users"]!
+              .map((x) => PayoutBookingGood.fromJson(x))),
+      vehicle:
+          json['vehicle'] != null ? Vehicle.fromJson(json['vehicle']) : null,
+      driver: json['driver'] != null ? Driver.fromJson(json['driver']) : null,
+      bookingType: json['booking_type'],
+      bookingGoodHomeItems: json["booking_good_home_items"] == null
+          ? []
+          : List<BookingGoodHomeItem>.from(json["booking_good_home_items"]!
+              .map((x) => BookingGoodHomeItem.fromJson(x))),
+      epod: json['epod']);
 
   Map<String, dynamic> toJson() => {
         "id": id,

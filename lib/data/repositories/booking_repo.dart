@@ -27,4 +27,7 @@ class BookingRepo {
 
   Future<Response> locationMarkAsDone({required int id}) async =>
       await apiClient.getData("${AppConstants.locationMarkAsDone}/$id");
+
+  Future<Response> uploadEpod({required Map<String, dynamic> data}) async =>
+      await apiClient.postData(AppConstants.epodUri, FormData(data));
 }

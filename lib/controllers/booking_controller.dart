@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -320,5 +321,42 @@ class BookingController extends GetxController implements GetxService {
       }
     }
     return booking.status ?? 'NA';
+  }
+
+  //-----------------------Epod upload--------------------
+  File? ePodFile;
+
+  void selectFiles({File? val}) {
+    ePodFile = val;
+    update();
+  }
+
+  //
+  void removeFiles() {
+    ePodFile = null;
+    update();
+  }
+
+  bool isUploading = false;
+
+  Future<ResponseModel> uploadEpod({required Map<String, dynamic> data}) async {
+    ResponseModel responseModel;
+    isUploading = true;
+    update();
+    try {
+      Response response = await bookingRepo.uploadEpod(data: data);
+      if (response.statusCode == 200 && response.body['success']) {
+        responseModel = ResponseModel(true, 'success');
+      } else {
+        ApiChecker.checkApi(response);
+        responseModel = ResponseModel(false, "${response.statusText}");
+      }
+    } catch (e) {
+      log('---- ${e.toString()} ----', name: "ERROR AT uploadEpod()");
+      responseModel = ResponseModel(false, "$e");
+    }
+    isUploading = false;
+    update();
+    return responseModel;
   }
 }
