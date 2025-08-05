@@ -8,7 +8,6 @@ import '../../../../controllers/local_bike_tempo_controller.dart';
 import '../../../../generated/assets.dart';
 import '../../../base/common_button.dart';
 import '../../../base/dialogs/logout_dialog.dart';
-import 'verifypickup_sheet_of_localbiketempo.dart';
 
 class BookingButtonWidgetOfBikeTempo extends StatelessWidget {
   const BookingButtonWidgetOfBikeTempo({
@@ -30,14 +29,42 @@ class BookingButtonWidgetOfBikeTempo extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 child: CustomButton(
                   color: primaryColor, //const Color(0xFF0F8000),
-                  onTap: () {
-                    showModalBottomSheet(
-                      enableDrag: false,
-                      isScrollControlled: true,
+                  onTap: () async {
+                    // showModalBottomSheet(
+                    //   enableDrag: false,
+                    //   isScrollControlled: true,
+                    //   context: context,
+                    //   builder: (context) {
+                    //     return VerifyPickUpSheetOfLocalBike(
+                    //       orderId: controller.localBikeTempoBookingData?.id,
+                    //     );
+                    //   },
+                    // );
+
+                    showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (context) {
-                        return VerifyPickUpSheetOfLocalBike(
-                          orderId: controller.localBikeTempoBookingData?.id,
+                        return ConfirmationDialog(
+                          title: 'Are you sure you want to mark  as Start Trip?',
+                          imageIcon: Assets.imagesImage,
+                          isLoading: controller.isLoading,
+                          onTap: () async {
+                            await controller
+                                .startBikeTempoBookingTrip(
+                              // tripOtp: otpController.text,
+                              bookingId: controller.localBikeTempoBookingData?.id ?? 0,
+                            )
+                                .then((value) {
+                              controller.setIsLoadData(isload: true);
+                              if (value.isSuccess) {
+                                controller.getLocalBikeTempBookingDetailData(id: controller.localBikeTempoBookingData?.id ?? 0);
+                                Navigator.pop(context);
+                              } else {
+                                Fluttertoast.showToast(msg: value.message);
+                              }
+                            });
+                          },
                         );
                       },
                     );
@@ -49,8 +76,7 @@ class BookingButtonWidgetOfBikeTempo extends StatelessWidget {
           ),
         );
       }
-      if (controller.isDelivered() &&
-          controller.localBikeTempoBookingData?.delivered == null) {
+      if (controller.isDelivered() && controller.localBikeTempoBookingData?.delivered == null) {
         return SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -65,24 +91,15 @@ class BookingButtonWidgetOfBikeTempo extends StatelessWidget {
                       context: context,
                       builder: (context) {
                         return ConfirmationDialog(
-                          title:
-                              'Are you sure you want to mark this as delivered?',
+                          title: 'Are you sure you want to mark this as delivered?',
                           imageIcon: Assets.imagesImage,
                           isLoading: controller.isLoading,
                           onTap: () {
-                            controller
-                                .markAsDelivredBikeTempo(
-                                    id: controller
-                                            .localBikeTempoBookingData?.id ??
-                                        0)
-                                .then((value) {
+                            controller.markAsDelivredBikeTempo(id: controller.localBikeTempoBookingData?.id ?? 0).then((value) {
                               controller.setIsLoadData(isload: true);
                               if (value.isSuccess) {
                                 Navigator.pop(context);
-                                controller.getLocalBikeTempBookingDetailData(
-                                    id: controller
-                                            .localBikeTempoBookingData?.id ??
-                                        0);
+                                controller.getLocalBikeTempBookingDetailData(id: controller.localBikeTempoBookingData?.id ?? 0);
                               } else {
                                 Fluttertoast.showToast(msg: value.message);
                               }
@@ -118,29 +135,21 @@ class BookingButtonWidgetOfBikeTempo extends StatelessWidget {
                       context: context,
                       builder: (context) {
                         return ConfirmationDialog(
-                          title:
-                              'Are you sure you want to mark ${controller.selectedLocation?.type.capitalizeFirstOfEach} ${controller.selectedLocation?.getIndex} as done?',
+                          title: 'Are you sure you want to mark ${controller.selectedLocation?.type.capitalizeFirstOfEach} ${controller.selectedLocation?.getIndex} as done?',
                           imageIcon: Assets.imagesImage,
                           isLoading: controller.isLoading,
                           onTap: () {
                             dynamic data = {
-                              "booking_id":
-                                  controller.localBikeTempoBookingData?.id,
-                              "booking_two_wheeler_location_id":
-                                  controller.selectedLocation?.id,
+                              "booking_id": controller.localBikeTempoBookingData?.id,
+                              "booking_two_wheeler_location_id": controller.selectedLocation?.id,
                             };
                             // log('---Pickup---');
                             Navigator.pop(context);
 
-                            controller
-                                .loactionMarkAsDone(data: data)
-                                .then((value) {
+                            controller.loactionMarkAsDone(data: data).then((value) {
                               controller.setIsLoadData(isload: true);
                               if (value.isSuccess) {
-                                controller.getLocalBikeTempBookingDetailData(
-                                    id: controller
-                                            .localBikeTempoBookingData?.id ??
-                                        0);
+                                controller.getLocalBikeTempBookingDetailData(id: controller.localBikeTempoBookingData?.id ?? 0);
                               } else {
                                 Fluttertoast.showToast(msg: value.message);
                               }
@@ -150,8 +159,7 @@ class BookingButtonWidgetOfBikeTempo extends StatelessWidget {
                       },
                     );
                   },
-                  title:
-                      '${controller.selectedLocation?.type.capitalizeFirstOfEach} ${controller.selectedLocation?.getIndex}is done'),
+                  title: '${controller.selectedLocation?.type.capitalizeFirstOfEach} ${controller.selectedLocation?.getIndex}is done'),
             ),
             const SizedBox(height: 10),
           ],
