@@ -35,7 +35,6 @@ class OrderTrackingStatusWidget extends StatelessWidget {
               itemCount: controller.bookingsDetailData?.locations?.length,
               itemBuilder: (context, index) {
                 final data = controller.bookingsDetailData?.locations?[index];
-
                 if (data?.status != 'done') {
                   return const SizedBox.shrink();
                 }

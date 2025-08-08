@@ -179,6 +179,8 @@ class BookingsModel {
             : List<dynamic>.from(locations!.map((x) => x.toJson())),
       };
 
+  bool get isCarAndBike => bookingType == 'car-and-bike-booking';
+
   double get remaingAmount {
     double amt = 0;
     if (payoutBookingGoodDrivers == null) amt = 0;

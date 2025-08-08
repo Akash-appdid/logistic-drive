@@ -28,30 +28,24 @@ class _CustomTimelineWidgetState extends State<CustomTimelineWidget> {
         return const SizedBox.shrink();
       }
       return Container(
-        // height: ((location?.length ?? 0) * (appSizeHeight * .09)) + 20,
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.grey.shade200),
           borderRadius: BorderRadius.circular(6),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-        // child: ReorderableListView.builder(
         child: ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          // onReorder: (oldIndex, newIndex) {
-          //   controller.reorderList(oldIndex: oldIndex, newIndex: newIndex);
-          // },
           itemCount: location?.length ?? 0,
           itemBuilder: (context, index) {
             bool isLast = index ==
                 (controller.bookingsDetailData?.locations?.length ?? 0) - 1;
-            double circleSize = 22; //isFirst || isLast ? 40 : 30;
+            double circleSize = 22;
             final status = controller.bookingsDetailData?.locations?[index];
 
             return Container(
               margin: const EdgeInsets.only(top: 14),
-              // height: appSizeHeight * .09,
               key: ValueKey(status?.id),
               alignment: Alignment.center,
               child: Row(
@@ -66,16 +60,11 @@ class _CustomTimelineWidgetState extends State<CustomTimelineWidget> {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: (status?.orderStatus ?? false)
-                              //  (status?.getLocationType ?? false)
                               ? const Color(0xFF00C060)
                               : Colors.grey.shade500,
-                          // : const Color(0xFFEB0404),
                         ),
                         child: const Icon(
-                          // (status?.orderStatus ?? false)`
-                          // ?
                           Icons.check,
-                          // : Icons.location_on,
                           color: Colors.white,
                           size: 14,
                         ),
@@ -83,7 +72,6 @@ class _CustomTimelineWidgetState extends State<CustomTimelineWidget> {
                       if (!isLast)
                         SizedBox(
                           height: 30,
-                          // width: 40,
                           child: DottedBorder(
                             strokeWidth: 2,
                             dashPattern: const [5, 5],

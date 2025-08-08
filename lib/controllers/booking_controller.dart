@@ -11,6 +11,7 @@ import 'package:logistic_driver/data/repositories/booking_repo.dart';
 import 'package:logistic_driver/services/extensions.dart';
 
 import '../data/api/api_checker.dart';
+import '../data/models/response/car_and_bike_model.dart';
 import '../data/models/response/response_model.dart';
 import '../services/constants.dart';
 
@@ -356,6 +357,97 @@ class BookingController extends GetxController implements GetxService {
       responseModel = ResponseModel(false, "$e");
     }
     isUploading = false;
+    update();
+    return responseModel;
+  }
+
+  //------------------------Car and Bikes----------------------------
+  List<CarAndBikeModel> carBikeBookingData = [];
+  Future<ResponseModel> getAllCarandBikesBooking(
+      {String? status, String? url, bool isClear = false}) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    try {
+      Response response =
+          await bookingRepo.getCarAndBikesBookings(status: status, url: url);
+      if (response.statusCode == 200 && response.body['success']) {
+        log("${response.bodyString}", name: 'getAllCarandBikesBooking');
+        carBikeBookingData = (response.body['data'] as List<dynamic>)
+            .map((res) => CarAndBikeModel.fromJson(res))
+            .toList();
+        update();
+        responseModel = ResponseModel(true, 'success');
+      } else {
+        ApiChecker.checkApi(response);
+        responseModel = ResponseModel(false, "${response.statusText}");
+      }
+    } catch (e) {
+      log('---- ${e.toString()} ----',
+          name: "ERROR AT getAllCarandBikesBooking()");
+      responseModel = ResponseModel(false, "$e");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  CarAndBikeModel? carAndBokingDetailData;
+  Future<ResponseModel> getCarAndBikeBookingDetail({required int id}) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    try {
+      Response response = await bookingRepo.getCarAndBikesBookingDetail(id: id);
+      if (response.statusCode == 200 && response.body['success']) {
+        log('${response.bodyString}', name: 'getCarAndBikeBookingDetail');
+        carAndBokingDetailData =
+            CarAndBikeModel.fromJson(response.body['data']);
+        responseModel = ResponseModel(true, 'success');
+        // updateIndexOfBookingOrder();
+        // selectLocation();
+      } else {
+        ApiChecker.checkApi(response);
+        responseModel = ResponseModel(false, "${response.statusText}");
+      }
+    } catch (e) {
+      log('---- ${e.toString()} ----',
+          name: "ERROR AT getCarAndBikeBookingDetail()");
+      responseModel = ResponseModel(false, "$e");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  List<dynamic> bookingData = [];
+  void combinedCarAndBikeWithGoodsAndPakageAndMoverData() {
+    bookingData = [...bookingsData, ...carBikeBookingData];
+    update();
+  }
+
+  //-------------start booking trip for car and bike------------------
+  Future<ResponseModel> startBookingTripForCarAndBike(
+      {required String tripOtp, required int bookingId}) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    try {
+      Response response = await bookingRepo.startBookingTripForCarAndBike(
+          tripOtp: tripOtp, bookingId: bookingId);
+      if (response.statusCode == 200 && response.body['success']) {
+        // _userModel =
+        //     UserModel.fromJson(response.body['data'] as Map<String, dynamic>);
+        responseModel = ResponseModel(true, 'success');
+      } else {
+        ApiChecker.checkApi(response);
+        responseModel = ResponseModel(false, "${response.statusText}");
+      }
+    } catch (e) {
+      log('---- ${e.toString()} ----', name: "ERROR AT startBookingTrip()");
+      responseModel = ResponseModel(false, "$e");
+    }
+    _isLoading = false;
     update();
     return responseModel;
   }

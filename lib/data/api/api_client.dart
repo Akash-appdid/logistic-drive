@@ -59,7 +59,8 @@ class ApiClient extends GetConnect implements GetxService {
       );
       // log('aasdas'+response.bodyString!+'aasdas',name: '$uri');
 
-      log('====> GetX Response: [${response.statusCode}] $uri\n${response.body}');
+      log('====> GetX Response: [${response.statusCode}] $uri\n');
+      // log('====> GetX Response: [${response.statusCode}] $uri\n${response.body}');
       response = handleResponse(response);
       if (kDebugMode) {
         // log('====> GetX Response: [${response.statusCode}] $uri\n${uri.contains('astros') || uri.contains('shop') || uri.contains('shop') ? response.body[0] : response.body}');
@@ -94,7 +95,7 @@ class ApiClient extends GetConnect implements GetxService {
         decoder: decoder,
         uploadProgress: uploadProgress,
       );
-      log('====> GetX Response: [${response.statusCode}] $uri\n${response.body}');
+      log('====> GetX Response: [${response.statusCode}] $uri\n');
       response = handleResponse(response);
       log('====> GetX Response: [${response.statusCode}] $uri');
       if (kDebugMode) {
@@ -131,7 +132,7 @@ class ApiClient extends GetConnect implements GetxService {
         uploadProgress: uploadProgress,
       );
       response = handleResponse(response);
-      log('====> GetX Response: [${response.statusCode}] $uri\n${response.body}');
+      log('====> GetX Response: [${response.statusCode}] $uri\n');
       if (kDebugMode) {
         // print('====> GetX Response: [${response.statusCode}] $uri\n${response.body}');
       }
@@ -165,7 +166,7 @@ class ApiClient extends GetConnect implements GetxService {
         uploadProgress: uploadProgress,
       );
       response = handleResponse(response);
-      log('====> GetX Response: [${response.statusCode}] $uri\n${response.body}');
+      log('====> GetX Response: [${response.statusCode}] $uri\n');
       if (kDebugMode) {
         // print('====> GetX Response: [${response.statusCode}] $uri\n${response.body}');
       }
@@ -194,7 +195,7 @@ class ApiClient extends GetConnect implements GetxService {
         decoder: decoder,
       );
       response = handleResponse(response);
-      log('====> GetX Response: [${response.statusCode}] $uri\n${response.body}');
+      log('====> GetX Response: [${response.statusCode}] $uri\n');
       if (kDebugMode) {
         // print('====> GetX Response: [${response.statusCode}] $uri\n${response.body}');
       }

@@ -48,13 +48,13 @@ class BookingsListSectionWidget extends StatelessWidget {
                           msg: 'Please wait data is loading');
                       return;
                     }
-
                     controller.setIsComplete(true);
                     if (controller.isOnGoingOrder) {
                       if (authCtrl.userModel?.isMotorbike ?? false) {
                         localBikeCtrl.getAllOrder(isClear: true);
                       } else {
                         controller.getAllBooking(isClear: true);
+                        controller.getAllCarandBikesBooking();
                       }
                     }
                   },

@@ -12,7 +12,8 @@ import '../../../base/common_button.dart';
 
 class VerifyPickUpSheet extends StatefulWidget {
   final int? orderId;
-  const VerifyPickUpSheet({super.key, this.orderId});
+  const VerifyPickUpSheet({super.key, this.orderId, this.isCarAndBike = false});
+  final bool isCarAndBike;
 
   @override
   State<VerifyPickUpSheet> createState() => _VerifyPickUpSheetState();
@@ -134,6 +135,24 @@ class _VerifyPickUpSheetState extends State<VerifyPickUpSheet> {
                   isLoading: controller.isLoading,
                   onTap: () async {
                     if (!(_formKey.currentState?.validate() ?? false)) return;
+                    if (widget.isCarAndBike) {
+                      await controller
+                          .startBookingTripForCarAndBike(
+                        tripOtp: otpController.text,
+                        bookingId: controller.carAndBokingDetailData?.id ?? 0,
+                      )
+                          .then((value) {
+                        if (value.isSuccess) {
+                          controller.getCarAndBikeBookingDetail(
+                              id: controller.carAndBokingDetailData?.id ?? 0);
+                          Navigator.pop(context);
+                        } else {
+                          Fluttertoast.showToast(msg: value.message);
+                        }
+                      });
+
+                      return;
+                    }
                     await controller
                         .startBookingTrip(
                       tripOtp: otpController.text,

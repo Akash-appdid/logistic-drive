@@ -7,12 +7,18 @@ import '../../../base/custom_image.dart';
 class OrderHeadingWidget extends StatelessWidget {
   const OrderHeadingWidget({
     super.key,
+    required this.type,
+    required this.vehicleNumber,
+    required this.vehicalName,
   });
+  final String type;
+  final String vehicleNumber;
+  final String vehicalName;
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BookingController>(builder: (controller) {
-      if (controller.bookingsDetailData?.bookingType == 'packers_and_movers') {
+      if (type == 'packers_and_movers') {
         return const SizedBox.shrink();
       }
       return Container(
@@ -32,7 +38,7 @@ class OrderHeadingWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    controller.bookingsDetailData?.vehicle?.name ?? 'NA',
+                    vehicalName,
                     style: Theme.of(context).textTheme.labelMedium!.copyWith(
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
@@ -40,8 +46,7 @@ class OrderHeadingWidget extends StatelessWidget {
                         ),
                   ),
                   Text(
-                    controller.bookingsDetailData?.driver?.vehicleNumber ??
-                        'NA',
+                    vehicleNumber,
                     style: Theme.of(context).textTheme.labelMedium!.copyWith(
                           fontSize: 18,
                           fontWeight: FontWeight.w500,

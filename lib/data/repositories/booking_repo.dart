@@ -30,4 +30,21 @@ class BookingRepo {
 
   Future<Response> uploadEpod({required Map<String, dynamic> data}) async =>
       await apiClient.postData(AppConstants.epodUri, FormData(data));
+
+  //----------car and bikes bookins----------------
+  Future<Response> getCarAndBikesBookings(
+          {String? status, String? url}) async =>
+      await apiClient.getData(url ??
+          "${AppConstants.carAndBikebookingsUri}?order_status=${status ?? 'ongoing'}");
+
+  Future<Response> getCarAndBikesBookingDetail({required int id}) async =>
+      await apiClient
+          .getData("${AppConstants.carAndBikebookingsDetailsUri}/$id");
+
+  Future<Response> startBookingTripForCarAndBike(
+          {required String tripOtp, required int bookingId}) async =>
+      await apiClient.postData(AppConstants.bookingTripStartForCarAndBikeUri, {
+        'booking_id': bookingId,
+        'otp': tripOtp,
+      });
 }

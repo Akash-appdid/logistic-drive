@@ -46,7 +46,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     ///------pusher
     if (authCtrl.userModel != null) {
-      Get.find<PusherController>().initializePusher(driverId: Get.find<AuthController>().userModel?.id ?? 0);
+      Get.find<PusherController>().initializePusher(
+          driverId: Get.find<AuthController>().userModel?.id ?? 0);
     }
 
     ///--------analytics
@@ -66,6 +67,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     controller.bookingInitMethodForPagination();
     if (controller.isOnGoingOrder) {
       await controller.getAllBooking(isClear: true);
+      await controller.getAllCarandBikesBooking();
+      controller.combinedCarAndBikeWithGoodsAndPakageAndMoverData();
     } else {
       await controller.getAllBooking(status: 'delivered', isClear: true);
     }
@@ -74,7 +77,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void localBikeAndTempoCallingInInit() async {
     final controller = Get.find<BookingController>();
     final orderController = Get.find<LocalBikeTempoController>();
-    orderController.bookingInitMethodForPagination(isOnGoingOrder: controller.isOnGoingOrder, scrollController: controller.scrollController);
+    orderController.bookingInitMethodForPagination(
+        isOnGoingOrder: controller.isOnGoingOrder,
+        scrollController: controller.scrollController);
     if (controller.isOnGoingOrder) {
       await orderController.getAllOrder(isClear: true);
     } else {
@@ -106,17 +111,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       if (Platform.isAndroid
-                          ? Get.find<BasicController>().getBusinessSettingValue("production_mode_android_for_driver") == "0"
-                          : Get.find<BasicController>().getBusinessSettingValue("production_mode_ios_for_driver") == "0")
-                        EarningCardWidget(),
-                      SizedBox(height: 15),
+                          ? Get.find<BasicController>().getBusinessSettingValue(
+                                  "production_mode_android_for_driver") ==
+                              "0"
+                          : Get.find<BasicController>().getBusinessSettingValue(
+                                  "production_mode_ios_for_driver") ==
+                              "0")
+                        const EarningCardWidget(),
+                      const SizedBox(height: 15),
                       //-----on off duty------
-                      DutyOnOffButtonWidget(),
-                      SizedBox(height: 15),
-                      OrderWidget(),
+                      const DutyOnOffButtonWidget(),
+                      const SizedBox(height: 15),
+                      const OrderWidget(),
                       //--------------Bookings--------------------
-                      SizedBox(height: 15),
-                      BookingsListSectionWidget(),
+                      const SizedBox(height: 15),
+                      const BookingsListSectionWidget(),
                     ],
                   ),
                 );

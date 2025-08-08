@@ -7,14 +7,12 @@ class DeliveryDateAndDistanceWidget extends StatelessWidget {
   const DeliveryDateAndDistanceWidget({
     super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: GetBuilder<BookingController>(builder: (controller) {
         final data = controller.bookingsDetailData;
-
         if (data?.delivered != null) {
           return CustomTitleAndValueWidget(
             title: 'Delivered Date',

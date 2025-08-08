@@ -6,6 +6,7 @@ import 'package:logistic_driver/services/extra_methods.dart';
 
 import '../../../../generated/assets.dart';
 import '../../../../services/theme.dart';
+import '../../../base/custom_horizontal_line.dart';
 
 class OrderStatusWidget extends StatelessWidget {
   const OrderStatusWidget({
@@ -29,11 +30,9 @@ class OrderStatusWidget extends StatelessWidget {
             Expanded(
               child: Row(
                 children: [
-                  Text(
-                    '- - - - - - - - - - - - - - - - - - - - - - - - -',
-                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                          color: Colors.white,
-                        ),
+                  const SizedBox(
+                    width: 200,
+                    child: CustomHorizontalDottendLine(),
                   ),
                   const SizedBox(width: 4),
                   SvgPicture.asset(
