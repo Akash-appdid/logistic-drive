@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-
 import 'package:logistic_driver/data/models/response/booking_model.dart';
 import 'package:logistic_driver/data/repositories/booking_repo.dart';
 import 'package:logistic_driver/services/extensions.dart';
@@ -64,8 +63,7 @@ class BookingController extends GetxController implements GetxService {
         log(offset.toString(), name: "Check Offset");
         log("$scrollPercentage", name: "Scroll Percentage");
 
-        String url =
-            '${AppConstants.bookingsUri}?status=${isOnGoingOrder ? 'ongoing' : 'delivered'}&page=$offset';
+        String url = '${AppConstants.bookingsUri}?status=${isOnGoingOrder ? 'ongoing' : 'delivered'}&page=$offset';
 
         log(url, name: 'ORDERURI');
         await getAllBooking(url: url);
@@ -76,9 +74,9 @@ class BookingController extends GetxController implements GetxService {
   }
 
   //----get all booking----------
+  bool isanyongoing = false;
   List<BookingsModel> bookingsData = [];
-  Future<ResponseModel> getAllBooking(
-      {String? status, String? url, bool isClear = false}) async {
+  Future<ResponseModel> getAllBooking({String? status, String? url, bool isClear = false}) async {
     ResponseModel responseModel;
     if (isClear) {
       bookingsData.clear();
@@ -92,17 +90,22 @@ class BookingController extends GetxController implements GetxService {
 
     update();
     try {
-      Response response =
-          await bookingRepo.getBookings(status: status, url: url);
+      Response response = await bookingRepo.getBookings(status: status, url: url);
       if (response.statusCode == 200 && response.body['success']) {
         log("${response.bodyString}", name: 'getAllBooking');
-        var bookings = (response.body['data']['data'] as List<dynamic>)
-            .map((res) => BookingsModel.fromJson(res))
-            .toList();
+        var bookings = (response.body['data']['data'] as List<dynamic>).map((res) => BookingsModel.fromJson(res)).toList();
         if (bookings.isEmpty) {
           isFinished = true;
         }
         bookingsData.addAll(bookings);
+
+        if ((status == "ongoing" || status == null) && bookingsData.isNotEmpty) {
+          isanyongoing = true;
+        } else if ((status == "ongoing" || status == null) && bookingsData.isEmpty) {
+          isanyongoing = false;
+        }
+        update();
+        log(isanyongoing.toString(), name: "isanyongoing");
         _isLoading = false;
         update();
         updateIndexOfAllBookingOrder();
@@ -156,8 +159,7 @@ class BookingController extends GetxController implements GetxService {
     _isLoading = true;
     update();
     try {
-      Response response = await bookingRepo.startBookingTrip(
-          tripOtp: tripOtp, bookingId: bookingId);
+      Response response = await bookingRepo.startBookingTrip(tripOtp: tripOtp, bookingId: bookingId);
       if (response.statusCode == 200 && response.body['success']) {
         // _userModel =
         //     UserModel.fromJson(response.body['data'] as Map<String, dynamic>);
@@ -229,9 +231,7 @@ class BookingController extends GetxController implements GetxService {
 
     if (bookingsDetailData?.locations == null) return;
     if (bookingsDetailData?.locations?[oldIndex].getLocationType ?? false) {
-      Fluttertoast.showToast(
-          msg:
-              'Position update is not allowed after the product has been dropped.');
+      Fluttertoast.showToast(msg: 'Position update is not allowed after the product has been dropped.');
     } else {
       if (newIndex > oldIndex) {
         newIndex -= 1;

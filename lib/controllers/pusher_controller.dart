@@ -1,18 +1,19 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:logistic_driver/controllers/auth_controller.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
+
 import '../data/models/response/order_model.dart';
 import '../generated/assets.dart';
 
 class PusherController extends GetxController implements GetxService {
   final PusherChannelsFlutter pusher = PusherChannelsFlutter.getInstance();
 
-  String bookingTwoWheelerRequestChannel =
-      'booking_two_wheeler_request_${Get.find<AuthController>().userModel?.id}';
+  String bookingTwoWheelerRequestChannel = 'booking_two_wheeler_request_${Get.find<AuthController>().userModel?.id}';
 
   final String myEvent = 'my-event';
   final AudioPlayer audioPlayer = AudioPlayer();
@@ -33,8 +34,7 @@ class PusherController extends GetxController implements GetxService {
         },
       );
       await pusher.connect();
-      await pusher.subscribe(
-          channelName: 'booking_two_wheeler_request_$driverId');
+      await pusher.subscribe(channelName: 'booking_two_wheeler_request_$driverId');
     } catch (ex) {
       log('---------- $ex ---------', name: 'pusherInitialization');
     }
@@ -50,7 +50,7 @@ class PusherController extends GetxController implements GetxService {
 
   void _onEvent(PusherEvent event) async {
     // log("${event.data}", name: 'PusherOutput');
-    if (event.data == null && event.data is! String) return;
+    if (event.data == null || event.data is! String) return;
     // log("${event.data}", name: 'PusherOutput');
 
     try {

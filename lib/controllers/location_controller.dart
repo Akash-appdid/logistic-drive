@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:http/http.dart' as http;
+
 import '../main.dart';
 
 class LocationController extends GetxController implements GetxService {
@@ -24,11 +26,9 @@ class LocationController extends GetxController implements GetxService {
 
     // Check Location Permission
     await Geolocator.checkPermission().then((value) async {
-      if (value != LocationPermission.always &&
-          value != LocationPermission.whileInUse) {
+      if (value != LocationPermission.always && value != LocationPermission.whileInUse) {
         await Geolocator.requestPermission();
-      } else if (value == LocationPermission.denied ||
-          value == LocationPermission.deniedForever) {
+      } else if (value == LocationPermission.denied || value == LocationPermission.deniedForever) {
         await Geolocator.openAppSettings();
       } else {
         return;
@@ -50,8 +50,7 @@ class LocationController extends GetxController implements GetxService {
     // -- Update Location --
     // -- Fetch Address --
     if (!noAddress) {
-      await getAddressFromLocation(
-          latLng ?? const LatLng(19.198545796504945, 72.95579630029403));
+      await getAddressFromLocation(latLng ?? const LatLng(19.198545796504945, 72.95579630029403));
     }
     _isLoading = false;
     update();
@@ -62,21 +61,24 @@ class LocationController extends GetxController implements GetxService {
     _isLoading = true;
     update();
 
-    await placemarkFromCoordinates(latLong.latitude, latLong.longitude)
-        .then((placeMark) {
-      if (placeMark.isNotEmpty) {
-        placeMarkData = placeMark;
-        log('${placeMark.first.toJson()}', name: "Location");
+    try {
+      await placemarkFromCoordinates(latLong.latitude, latLong.longitude).then((placeMark) {
+        if (placeMark.isNotEmpty) {
+          placeMarkData = placeMark;
+          log('${placeMark.first.toJson()}', name: "Location");
 
-        List<String?> addressParts = [
-          placeMark.first.street,
-          placeMark.first.subLocality,
-          placeMark.first.administrativeArea,
-          placeMark.first.country,
-        ].where((part) => part != null && part.isNotEmpty).toList();
-        location = addressParts.join(', ');
-      }
-    });
+          List<String?> addressParts = [
+            placeMark.first.street,
+            placeMark.first.subLocality,
+            placeMark.first.administrativeArea,
+            placeMark.first.country,
+          ].where((part) => part != null && part.isNotEmpty).toList();
+          location = addressParts.join(', ');
+        }
+      });
+    } catch (e) {
+      log(e.toString(), name: "Error at getAddressFromLocation");
+    }
     _isLoading = false;
     update();
   }
@@ -106,8 +108,7 @@ class LocationController extends GetxController implements GetxService {
   final TextEditingController searchController = TextEditingController();
   List<dynamic> listOfLocations = [];
   Future<void> searchLocation(String query) async {
-    final url = Uri.parse(
-        "https://nominatim.openstreetmap.org/search?q=$query&countrycodes=in&format=json&addressdetails=1");
+    final url = Uri.parse("https://nominatim.openstreetmap.org/search?q=$query&countrycodes=in&format=json&addressdetails=1");
     if (timer?.isActive ?? false) timer?.cancel();
     timer = Timer(const Duration(milliseconds: 500), () async {
       isSearch = true;

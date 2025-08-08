@@ -40,9 +40,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final basicCtrl = Get.find<BasicController>();
 
     ///------location
+
     locationCtrl.fetchCurrentLocationPlace().then((val) {
       basicCtrl.updateLocation(locationCtrl.updateLocationData());
     });
+
+    basicCtrl.initsendinglocation();
 
     ///------pusher
     if (authCtrl.userModel != null) {
