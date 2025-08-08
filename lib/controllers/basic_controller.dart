@@ -1,6 +1,10 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:logistic_driver/controllers/booking_controller.dart';
+import 'package:logistic_driver/controllers/location_controller.dart';
 import 'package:logistic_driver/data/models/response/analytics_model.dart';
 import 'package:logistic_driver/data/models/response/response_model.dart';
 import 'package:logistic_driver/data/repositories/basic_repo.dart';
@@ -206,5 +210,22 @@ class BasicController extends GetxController implements GetxService {
     _isLoading = false;
     update();
     return responseModel;
+  }
+
+  LatLng currlocation = LatLng(19.1985659, 72.9532572);
+  Timer? _locationTimer;
+
+  void initsendinglocation() {
+    _locationTimer?.cancel();
+    LocationController locationCtrl = LocationController();
+    if (Get.find<BookingController>().isanyongoing) {
+      log(currlocation.toString());
+      _locationTimer = Timer.periodic(Duration(seconds: 10), (timer) {
+        locationCtrl.fetchCurrentLocationPlace().then((val) {
+          updateLocation(locationCtrl.updateLocationData());
+        });
+        log(currlocation.toString(), name: "location10second");
+      });
+    }
   }
 }
