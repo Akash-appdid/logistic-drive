@@ -64,7 +64,8 @@ class BookingController extends GetxController implements GetxService {
         log(offset.toString(), name: "Check Offset");
         log("$scrollPercentage", name: "Scroll Percentage");
 
-        String url = '${AppConstants.bookingsUri}?status=${isOnGoingOrder ? 'ongoing' : 'delivered'}&page=$offset';
+        String url =
+            '${AppConstants.bookingsUri}?status=${isOnGoingOrder ? 'ongoing' : 'delivered'}&page=$offset';
 
         log(url, name: 'ORDERURI');
         await getAllBooking(url: url);
@@ -77,7 +78,8 @@ class BookingController extends GetxController implements GetxService {
   //----get all booking----------
   bool isanyongoing = false;
   List<BookingsModel> bookingsData = [];
-  Future<ResponseModel> getAllBooking({String? status, String? url, bool isClear = false}) async {
+  Future<ResponseModel> getAllBooking(
+      {String? status, String? url, bool isClear = false}) async {
     ResponseModel responseModel;
     if (isClear) {
       bookingsData.clear();
@@ -91,18 +93,23 @@ class BookingController extends GetxController implements GetxService {
 
     update();
     try {
-      Response response = await bookingRepo.getBookings(status: status, url: url);
+      Response response =
+          await bookingRepo.getBookings(status: status, url: url);
       if (response.statusCode == 200 && response.body['success']) {
         log("${response.bodyString}", name: 'getAllBooking');
-        var bookings = (response.body['data']['data'] as List<dynamic>).map((res) => BookingsModel.fromJson(res)).toList();
+        var bookings = (response.body['data']['data'] as List<dynamic>)
+            .map((res) => BookingsModel.fromJson(res))
+            .toList();
         if (bookings.isEmpty) {
           isFinished = true;
         }
         bookingsData.addAll(bookings);
 
-        if ((status == "ongoing" || status == null) && bookingsData.isNotEmpty) {
+        if ((status == "ongoing" || status == null) &&
+            bookingsData.isNotEmpty) {
           isanyongoing = true;
-        } else if ((status == "ongoing" || status == null) && bookingsData.isEmpty) {
+        } else if ((status == "ongoing" || status == null) &&
+            bookingsData.isEmpty) {
           isanyongoing = false;
         }
         update();
@@ -160,7 +167,8 @@ class BookingController extends GetxController implements GetxService {
     _isLoading = true;
     update();
     try {
-      Response response = await bookingRepo.startBookingTrip(tripOtp: tripOtp, bookingId: bookingId);
+      Response response = await bookingRepo.startBookingTrip(
+          tripOtp: tripOtp, bookingId: bookingId);
       if (response.statusCode == 200 && response.body['success']) {
         // _userModel =
         //     UserModel.fromJson(response.body['data'] as Map<String, dynamic>);
@@ -232,7 +240,9 @@ class BookingController extends GetxController implements GetxService {
 
     if (bookingsDetailData?.locations == null) return;
     if (bookingsDetailData?.locations?[oldIndex].getLocationType ?? false) {
-      Fluttertoast.showToast(msg: 'Position update is not allowed after the product has been dropped.');
+      Fluttertoast.showToast(
+          msg:
+              'Position update is not allowed after the product has been dropped.');
     } else {
       if (newIndex > oldIndex) {
         newIndex -= 1;
@@ -445,6 +455,58 @@ class BookingController extends GetxController implements GetxService {
       }
     } catch (e) {
       log('---- ${e.toString()} ----', name: "ERROR AT startBookingTrip()");
+      responseModel = ResponseModel(false, "$e");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> markAsDonrForCarAndBike(
+      {required int bookingId, bool isPickup = false}) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    try {
+      Response response = await bookingRepo.markAsDoneCarAndBike(
+          id: bookingId, isPickup: isPickup);
+      if (response.statusCode == 200 && response.body['success']) {
+        // _userModel =
+        //     UserModel.fromJson(response.body['data'] as Map<String, dynamic>);
+        responseModel = ResponseModel(true, 'success');
+      } else {
+        ApiChecker.checkApi(response);
+        responseModel = ResponseModel(false, "${response.statusText}");
+      }
+    } catch (e) {
+      log('---- ${e.toString()} ----',
+          name: "ERROR AT markAsDonrForCarAndBike()");
+      responseModel = ResponseModel(false, "$e");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> orderDeliveredForCarAndBike(
+      {required int bookingId}) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    try {
+      Response response =
+          await bookingRepo.orderDelivredCarAndBike(id: bookingId);
+      if (response.statusCode == 200 && response.body['success']) {
+        // _userModel =
+        //     UserModel.fromJson(response.body['data'] as Map<String, dynamic>);
+        responseModel = ResponseModel(true, 'success');
+      } else {
+        ApiChecker.checkApi(response);
+        responseModel = ResponseModel(false, "${response.statusText}");
+      }
+    } catch (e) {
+      log('---- ${e.toString()} ----',
+          name: "ERROR AT orderDeliveredForCarAndBike()");
       responseModel = ResponseModel(false, "$e");
     }
     _isLoading = false;

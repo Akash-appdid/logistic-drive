@@ -78,9 +78,12 @@ class AppConstants {
       'api/driver/v1/car-and-bike/bookings';
   static const String carAndBikebookingsDetailsUri =
       'api/driver/v1/car-and-bike/bookings';
-
   static const String bookingTripStartForCarAndBikeUri =
-      'api/driver/v1/car-and-bike/bookings/trip-start';
+      'api/driver/v1/car-and-bike/bookings/start';
+  static const String bookingDeliveredForCarAndBikeUri =
+      'api/driver/v1/car-and-bike/bookings/end';
+  static const String bookingMarkAsDoneForCarAndBikeUri =
+      'api/driver/v1/car-and-bike/bookings/location-mark-as-done';
 
   //------------order-----------------
   static const String orderAccept =

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:logistic_driver/views/screens/booking_detail_screen/car_and_bike_detail_screen/components/delivery_date_and_distance_widget_for_car_and_bike.dart';
 import '../../../../controllers/booking_controller.dart';
@@ -96,6 +97,7 @@ class BookingButtonOfCarAndBike extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BookingController>(builder: (controller) {
+      log("${controller.carAndBokingDetailData?.id}", name: 'Order');
       if (controller.isLoading) {
         return const SizedBox.shrink();
       }
@@ -150,18 +152,22 @@ class BookingButtonOfCarAndBike extends StatelessWidget {
                             onTap: () {
                               log('---Pickup---');
                               Navigator.pop(context);
-                              // controller
-                              //     .loactionMarkAsDone(
-                              //         id: controller.selectedLocation?.id ?? 0)
-                              //     .then((value) {
-                              //   if (value.isSuccess) {
-                              //     controller.getBookingDetail(
-                              //         id: controller.bookingsDetailData?.id ??
-                              //             0);
-                              //   } else {
-                              //     Fluttertoast.showToast(msg: value.message);
-                              //   }
-                              // });
+                              controller
+                                  .markAsDonrForCarAndBike(
+                                bookingId:
+                                    controller.carAndBokingDetailData?.id ?? 0,
+                                isPickup: true,
+                              )
+                                  .then((value) {
+                                if (value.isSuccess) {
+                                  controller.getCarAndBikeBookingDetail(
+                                      id: controller
+                                              .carAndBokingDetailData?.id ??
+                                          0);
+                                } else {
+                                  Fluttertoast.showToast(msg: value.message);
+                                }
+                              });
                             },
                           );
                         },
@@ -195,18 +201,20 @@ class BookingButtonOfCarAndBike extends StatelessWidget {
                           onTap: () {
                             log('---Drop---');
                             Navigator.pop(context);
-                            // controller
-                            //     .loactionMarkAsDone(
-                            //         id: controller.selectedLocation?.id ?? 0)
-                            //     .then((value) {
-                            //   if (value.isSuccess) {
-                            //     controller.getBookingDetail(
-                            //         id: controller.bookingsDetailData?.id ??
-                            //             0);
-                            //   } else {
-                            //     Fluttertoast.showToast(msg: value.message);
-                            //   }
-                            // });
+                            controller
+                                .markAsDonrForCarAndBike(
+                                    bookingId:
+                                        controller.carAndBokingDetailData?.id ??
+                                            0)
+                                .then((value) {
+                              if (value.isSuccess) {
+                                controller.getCarAndBikeBookingDetail(
+                                    id: controller.carAndBokingDetailData?.id ??
+                                        0);
+                              } else {
+                                Fluttertoast.showToast(msg: value.message);
+                              }
+                            });
                           },
                         );
                       },
@@ -241,18 +249,21 @@ class BookingButtonOfCarAndBike extends StatelessWidget {
                           imageIcon: Assets.imagesImage,
                           isLoading: controller.isLoading,
                           onTap: () {
-                            // controller
-                            //     .endBookingTrip(
-                            //         id: controller.bookingsDetailData?.id ?? 0)
-                            //     .then((value) {
-                            //   if (value.isSuccess) {
-                            //     Navigator.pop(context);
-                            //     controller.getBookingDetail(
-                            //         id: controller.bookingsDetailData?.id ?? 0);
-                            //   } else {
-                            //     Fluttertoast.showToast(msg: value.message);
-                            //   }
-                            // });
+                            controller
+                                .orderDeliveredForCarAndBike(
+                                    bookingId:
+                                        controller.carAndBokingDetailData?.id ??
+                                            0)
+                                .then((value) {
+                              if (value.isSuccess) {
+                                Navigator.pop(context);
+                                controller.getCarAndBikeBookingDetail(
+                                    id: controller.carAndBokingDetailData?.id ??
+                                        0);
+                              } else {
+                                Fluttertoast.showToast(msg: value.message);
+                              }
+                            });
                           },
                         );
                       },

@@ -23,16 +23,16 @@ class OrderHeadingWidget extends StatelessWidget {
       }
       return Container(
         color: const Color(0xFFF5F5F5),
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Row(
           children: [
-            const CustomImage(
-              path: Assets.imagesTruck,
-              height: 50,
-              fit: BoxFit.cover,
-            ),
+            // const CustomImage(
+            //   path: Assets.imagesTruck,
+            //   height: 50,
+            //   fit: BoxFit.cover,
+            // ),
             //
-            const Spacer(),
+            // const Spacer(),
             GetBuilder<BookingController>(builder: (controller) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

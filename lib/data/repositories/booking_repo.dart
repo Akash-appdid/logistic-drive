@@ -47,4 +47,17 @@ class BookingRepo {
         'booking_id': bookingId,
         'otp': tripOtp,
       });
+
+  Future<Response> markAsDoneCarAndBike(
+          {required int id, bool isPickup = false}) async =>
+      await apiClient.postData(
+        AppConstants.bookingMarkAsDoneForCarAndBikeUri,
+        {
+          'id': '$id',
+          'type': isPickup ? 'pickup' : 'drop',
+        },
+      );
+  Future<Response> orderDelivredCarAndBike({required int id}) async =>
+      await apiClient
+          .getData("${AppConstants.bookingDeliveredForCarAndBikeUri}/$id");
 }
