@@ -13,7 +13,13 @@ import '../data/api/api_checker.dart';
 import '../data/models/response/business_setting_model.dart';
 import '../services/constants.dart';
 
-enum BussinessSettingName { privacyPolicy, aboutUs, contactUs, termsAndCondition, helpCenter }
+enum BussinessSettingName {
+  privacyPolicy,
+  aboutUs,
+  contactUs,
+  termsAndCondition,
+  helpCenter
+}
 
 class BasicController extends GetxController implements GetxService {
   final BasicRepo basicRepo;
@@ -40,7 +46,9 @@ class BasicController extends GetxController implements GetxService {
       Response response = await basicRepo.getBussinessSettingData();
       if (response.statusCode == 200 && response.body['success']) {
         log(response.bodyString.toString(), name: "getBussinessSettingData");
-        bussinessSettings = (response.body['data'] as List<dynamic>).map((response) => BussinessSetting.fromJson(response)).toList();
+        bussinessSettings = (response.body['data'] as List<dynamic>)
+            .map((response) => BussinessSetting.fromJson(response))
+            .toList();
         responseModel = ResponseModel(true, 'success');
       } else {
         ApiChecker.checkApi(response);
@@ -169,28 +177,32 @@ class BasicController extends GetxController implements GetxService {
     ResponseModel responseModel;
     _isLoading = true;
     update();
-    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.loginUri}", name: "login");
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.loginUri}",
+        name: "login");
     try {
       Response response = await basicRepo.updateLocation(data: data);
       if (response.statusCode == 200 && response.body['success']) {
-        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
       } else {
         responseModel = ResponseModel(false, response.statusText!);
       }
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
-      log('+++++++++++++++++++++++++++++++++++ ${e.toString()} +++++++++++++++++++++++++++++++++++++', name: "ERROR AT updateLocation()");
+      log('+++++++++++++++++++++++++++++++++++ ${e.toString()} +++++++++++++++++++++++++++++++++++++',
+          name: "ERROR AT updateLocation()");
     }
     _isLoading = false;
     update();
     return responseModel;
   }
-  //--------------bike and tempo analytic-----------------
 
+  //--------------bike and tempo analytic-----------------
+  bool isAnalyticLoading = false;
   Analytics? analyticsDataOfBikeTempo;
   Future<ResponseModel> getBikeTempoAnalyticsData() async {
     ResponseModel responseModel;
-    _isLoading = true;
+    isAnalyticLoading = true;
     update();
     try {
       Response response = await basicRepo.getBikeTempoAnalytic();
@@ -204,10 +216,11 @@ class BasicController extends GetxController implements GetxService {
         responseModel = ResponseModel(false, "${response.statusText}");
       }
     } catch (e) {
-      log('---- ${e.toString()} ----', name: "ERROR AT getBikeTempoAnalyticsData()");
+      log('---- ${e.toString()} ----',
+          name: "ERROR AT getBikeTempoAnalyticsData()");
       responseModel = ResponseModel(false, "$e");
     }
-    _isLoading = false;
+    isAnalyticLoading = false;
     update();
     return responseModel;
   }

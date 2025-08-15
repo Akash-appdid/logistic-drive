@@ -17,7 +17,7 @@ class EarningCardWidget extends StatelessWidget {
     return GetBuilder<AuthController>(builder: (authCtrl) {
       if (authCtrl.userModel?.isMotorbike ?? false) {
         return GetBuilder<BasicController>(builder: (controller) {
-          if (controller.isLoading) {
+          if (controller.isAnalyticLoading) {
             return Shimmer.fromColors(
               baseColor: Colors.grey.shade300,
               highlightColor: Colors.grey.shade100,
