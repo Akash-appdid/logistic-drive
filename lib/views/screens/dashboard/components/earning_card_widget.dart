@@ -172,7 +172,7 @@ class EarningCardWidget extends StatelessWidget {
         });
       }
       return GetBuilder<BasicController>(builder: (controller) {
-        if (controller.isLoading) {
+        if (controller.isAnalyticLoading) {
           return Shimmer.fromColors(
             baseColor: Colors.grey.shade300,
             highlightColor: Colors.grey.shade100,

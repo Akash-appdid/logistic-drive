@@ -11,11 +11,55 @@ import '../../../base/custom_horizontal_line.dart';
 class OrderStatusWidget extends StatelessWidget {
   const OrderStatusWidget({
     super.key,
+    this.isFrmCarAndBike = false,
   });
+  final bool isFrmCarAndBike;
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BookingController>(builder: (controller) {
+      if (isFrmCarAndBike) {
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+          decoration: BoxDecoration(
+            color: formatSentence(
+                        controller.carAndBokingDetailData?.deliveryStatus ??
+                            'NA') ==
+                    'delay'
+                ? Colors.red
+                : primaryColor, //Color(0xFF0F8000),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    const SizedBox(
+                      width: 200,
+                      child: CustomHorizontalDottendLine(),
+                    ),
+                    const SizedBox(width: 4),
+                    SvgPicture.asset(
+                      Assets.svgsTruck,
+                      colorFilter:
+                          const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                    ),
+                  ],
+                ),
+              ),
+              Text(
+                formatSentence(
+                    controller.carAndBokingDetailData?.deliveryStatus ?? 'NA'),
+                style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+              )
+            ],
+          ),
+        );
+      }
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
         decoration: BoxDecoration(

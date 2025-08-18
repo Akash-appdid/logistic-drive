@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'booking_model.dart';
+import 'order_model.dart';
+
 List<CarAndBikeModel> carAndBikeModelFromJson(String str) =>
     List<CarAndBikeModel>.from(
         json.decode(str).map((x) => CarAndBikeModel.fromJson(x)));
@@ -11,7 +14,7 @@ class CarAndBikeModel {
   int? id;
   String? bookingId;
   int? userId;
-  dynamic vehicleData;
+  List<VehicleDatum>? vehicleData;
   DateTime? estimatedMovingDate;
   String? whereToMove;
   String? pickupUserName;
@@ -53,6 +56,10 @@ class CarAndBikeModel {
   DateTime? pickupDoneAt;
   DateTime? dropDoneAt;
   String? bookingType;
+  User? user;
+  Driver? driver;
+  List<PayoutBookingGood>? payoutBookingUsers;
+  List<PayoutBookingGood>? payoutBookingDriver;
 
   CarAndBikeModel({
     this.id,
@@ -100,6 +107,10 @@ class CarAndBikeModel {
     this.pickupDoneAt,
     this.dropDoneAt,
     this.bookingType,
+    this.driver,
+    this.user,
+    this.payoutBookingUsers,
+    this.payoutBookingDriver,
   });
 
   factory CarAndBikeModel.fromJson(Map<String, dynamic> json) =>
@@ -107,7 +118,10 @@ class CarAndBikeModel {
         id: json["id"],
         bookingId: json["booking_id"],
         userId: json["user_id"],
-        vehicleData: json["vehicle_data"],
+        vehicleData: json["vehicle_data"] == null
+            ? []
+            : List<VehicleDatum>.from(
+                json["vehicle_data"]!.map((x) => VehicleDatum.fromJson(x))),
         estimatedMovingDate: json["estimated_moving_date"] == null
             ? null
             : DateTime.parse(json["estimated_moving_date"]),
@@ -169,6 +183,16 @@ class CarAndBikeModel {
             ? null
             : DateTime.parse(json["drop_done_at"]),
         bookingType: json["booking_type"],
+        user: json["user"] == null ? null : User.fromJson(json["user"]),
+        driver: json["driver"] == null ? null : Driver.fromJson(json["driver"]),
+        payoutBookingUsers: json["payout_booking_users"] == null
+            ? []
+            : List<PayoutBookingGood>.from(json["payout_booking_users"]!
+                .map((x) => PayoutBookingGood.fromJson(x))),
+        payoutBookingDriver: json["payout_booking_driver"] == null
+            ? []
+            : List<PayoutBookingGood>.from(json["payout_booking_driver"]!
+                .map((x) => PayoutBookingGood.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -242,17 +266,39 @@ class CarAndBikeModel {
     return address;
   }
 
-  // double get remaingAmount {
-  //   double amt = 0;
-  //   if (payoutBookingGoodDrivers == null) amt = 0;
-  //   if (payoutBookingGoodDrivers!.isEmpty) amt = 0;
-  //   for (var element in payoutBookingGoodDrivers!) {
-  //     amt += (element.amount ?? 0).toDouble();
-  //   }
+  double get remaingAmount {
+    double amt = 0;
+    if (payoutBookingDriver == null) amt = 0;
+    if (payoutBookingDriver!.isEmpty) amt = 0;
+    for (var element in payoutBookingDriver!) {
+      amt += (element.amount ?? 0).toDouble();
+    }
 
-  //   return amt;
-  // }
+    return amt;
+  }
 
-  // double get calcualteRemaingAmtAfterSubAmt =>
-  //     (amountForDriver?.toDouble() ?? 0) - remaingAmount;
+  double get calcualteRemaingAmtAfterSubAmt =>
+      (amountForDriver?.toDouble() ?? 0) - remaingAmount;
+
+  bool get isDelivered => (status != null && status == 'delivered');
+}
+
+class VehicleDatum {
+  String? type;
+  String? model;
+
+  VehicleDatum({
+    this.type,
+    this.model,
+  });
+
+  factory VehicleDatum.fromJson(Map<String, dynamic> json) => VehicleDatum(
+        type: json["type"],
+        model: json["model"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "type": type,
+        "model": model,
+      };
 }

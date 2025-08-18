@@ -1,19 +1,15 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:logistic_driver/services/extensions.dart';
 import 'package:logistic_driver/views/screens/booking_detail_screen/car_and_bike_detail_screen/components/delivery_date_and_distance_widget_for_car_and_bike.dart';
 import '../../../../controllers/booking_controller.dart';
-import '../../../../generated/assets.dart';
+import '../../../../services/extra_methods.dart';
 import '../../../../services/theme.dart';
-import '../../../base/common_button.dart';
-import '../../../base/dialogs/logout_dialog.dart';
 import '../components/booking_app_bar.dart';
-
 import '../components/order_heading_widget.dart';
 import '../components/order_status_widget.dart';
-import '../components/verify_pickup_sheet.dart';
+import 'components/booking_button_of_car_and_bike.dart';
 import 'components/custom_time_line_widget_for_car_and_bike.dart';
 
 class CarAndBikeDetailScreen extends StatefulWidget {
@@ -36,15 +32,15 @@ class _CarAndBikeDetailScreenState extends State<CarAndBikeDetailScreen> {
     });
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    Timer.run(() async {
-      final controller = Get.find<BookingController>();
-      controller.setIsComplete(true);
-      await controller.getAllBooking(isClear: true);
-    });
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   Timer.run(() async {
+  //     final controller = Get.find<BookingController>();
+  //     controller.setIsComplete(true);
+  //     await controller.getAllBooking(isClear: true);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -60,24 +56,25 @@ class _CarAndBikeDetailScreenState extends State<CarAndBikeDetailScreen> {
           backgroundColor: backgroundLight,
           onRefresh: () async {
             await Get.find<BookingController>()
-                .getBookingDetail(id: widget.bookingId);
+                .getCarAndBikeBookingDetail(id: widget.bookingId);
           },
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
             child: Column(
               children: [
-                const OrderStatusWidget(),
+                const OrderStatusWidget(isFrmCarAndBike: true),
                 OrderHeadingWidget(
-                  type: controller.bookingsDetailData?.bookingType ?? '',
-                  vehicleNumber:
-                      controller.bookingsDetailData?.vehicle?.name ?? '',
-                  vehicalName:
-                      controller.bookingsDetailData?.driver?.vehicleNumber ??
-                          '',
+                  type: controller.carAndBokingDetailData?.bookingType ?? 'NA',
+                  vehicleNumber: controller
+                          .carAndBokingDetailData?.driver?.vehicleNumber ??
+                      'NA',
+                  vehicalName: controller
+                          .carAndBokingDetailData?.vehicleData?.first.type ??
+                      'NA',
                 ),
                 const CustomTimelineWidgetForCarAndBike(),
                 const DeliveryDateAndDistanceWidgetForCarAndBike(),
-                // const PaymentInformationWidget(),
+                const PaymentInformationWidgetForCarAndBike(),
                 const SizedBox(height: 30),
               ],
             ),
@@ -89,196 +86,163 @@ class _CarAndBikeDetailScreenState extends State<CarAndBikeDetailScreen> {
   }
 }
 
-class BookingButtonOfCarAndBike extends StatelessWidget {
-  const BookingButtonOfCarAndBike({
+class PaymentInformationWidgetForCarAndBike extends StatelessWidget {
+  const PaymentInformationWidgetForCarAndBike({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<BookingController>(
+      builder: (controller) {
+        if (controller.isLoading) {
+          return const SizedBox.shrink();
+        }
+
+        return Container(
+          margin: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey.shade300),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(6),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Payment Info",
+                style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+              ),
+              const SizedBox(height: 10),
+              Divider(color: Colors.grey[200]),
+              const SizedBox(height: 10),
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Total Amount",
+                        style:
+                            Theme.of(context).textTheme.displayMedium?.copyWith(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                      ),
+                      Text(
+                        "₹ ${formatPrice(controller.carAndBokingDetailData?.amountForDriver?.toDouble() ?? 0)}",
+                        style:
+                            Theme.of(context).textTheme.displayMedium?.copyWith(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  const Paymenthistory(),
+                  Divider(color: Colors.grey[200]),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Remaining Receivable Amount",
+                        style:
+                            Theme.of(context).textTheme.displayMedium?.copyWith(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                      ),
+                      Text(
+                        "₹ ${formatPrice(controller.carAndBokingDetailData?.calcualteRemaingAmtAfterSubAmt ?? 0)}",
+                        style:
+                            Theme.of(context).textTheme.displayMedium?.copyWith(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class Paymenthistory extends StatelessWidget {
+  const Paymenthistory({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BookingController>(builder: (controller) {
-      log("${controller.carAndBokingDetailData?.id}", name: 'Order');
-      if (controller.isLoading) {
+      if (controller.carAndBokingDetailData?.payoutBookingDriver?.isEmpty ??
+          true) {
         return const SizedBox.shrink();
       }
-      if (controller.carAndBokingDetailData?.intransit == null) {
-        return SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: CustomButton(
-                  color: primaryColor,
-                  onTap: () {
-                    showModalBottomSheet(
-                      enableDrag: false,
-                      isScrollControlled: true,
-                      context: context,
-                      builder: (context) {
-                        return VerifyPickUpSheet(
-                          isCarAndBike: true,
-                          orderId: controller.carAndBokingDetailData?.id,
-                        );
-                      },
-                    );
-                  },
-                  title: 'Start Trip',
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Divider(
+            color: Colors.grey[200],
+            thickness: 1,
+          ),
+          const SizedBox(height: 10),
+          Text(
+            "Payment History",
+            style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                  color: Colors.black,
+                  fontSize: 14,
                 ),
-              )
-            ],
           ),
-        );
-      }
-      if (controller.carAndBokingDetailData?.pickupDoneAt == null) {
-        return SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: CustomButton(
-                    color: primaryColor,
-                    onTap: () {
-                      showDialog(
-                        barrierDismissible: false,
-                        context: context,
-                        builder: (context) {
-                          return ConfirmationDialog(
-                            title:
-                                'Are you sure you want to mark Pickup as done?',
-                            imageIcon: Assets.imagesImage,
-                            isLoading: controller.isLoading,
-                            onTap: () {
-                              log('---Pickup---');
-                              Navigator.pop(context);
-                              controller
-                                  .markAsDonrForCarAndBike(
-                                bookingId:
-                                    controller.carAndBokingDetailData?.id ?? 0,
-                                isPickup: true,
-                              )
-                                  .then((value) {
-                                if (value.isSuccess) {
-                                  controller.getCarAndBikeBookingDetail(
-                                      id: controller
-                                              .carAndBokingDetailData?.id ??
-                                          0);
-                                } else {
-                                  Fluttertoast.showToast(msg: value.message);
-                                }
-                              });
-                            },
-                          );
-                        },
-                      );
-                    },
-                    title: 'Pickup is done'),
-              ),
-              const SizedBox(height: 10),
-            ],
-          ),
-        );
-      }
-      if (controller.carAndBokingDetailData?.dropDoneAt == null) {
-        return SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: CustomButton(
-                  color: primaryColor,
-                  onTap: () {
-                    showDialog(
-                      barrierDismissible: false,
-                      context: context,
-                      builder: (context) {
-                        return ConfirmationDialog(
-                          title: 'Are you sure you want to mark Drop as done?',
-                          imageIcon: Assets.imagesImage,
-                          isLoading: controller.isLoading,
-                          onTap: () {
-                            log('---Drop---');
-                            Navigator.pop(context);
-                            controller
-                                .markAsDonrForCarAndBike(
-                                    bookingId:
-                                        controller.carAndBokingDetailData?.id ??
-                                            0)
-                                .then((value) {
-                              if (value.isSuccess) {
-                                controller.getCarAndBikeBookingDetail(
-                                    id: controller.carAndBokingDetailData?.id ??
-                                        0);
-                              } else {
-                                Fluttertoast.showToast(msg: value.message);
-                              }
-                            });
-                          },
-                        );
-                      },
-                    );
-                  },
-                  title: 'Drop is done',
-                ),
-              ),
-              const SizedBox(height: 10),
-            ],
-          ),
-        );
-      }
+          const SizedBox(height: 15),
+          ListView.separated(
+            separatorBuilder: (context, index) => const SizedBox(height: 5),
+            shrinkWrap: true,
+            itemCount: controller
+                    .carAndBokingDetailData?.payoutBookingDriver?.length ??
+                0,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final payout = controller
+                  .carAndBokingDetailData?.payoutBookingDriver?[index];
 
-      if (controller.carAndBokingDetailData?.delivered == null) {
-        return SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: CustomButton(
-                  color: primaryColor, //const Color(0xFF0F8000),
-                  onTap: () {
-                    showDialog(
-                      barrierDismissible: false,
-                      context: context,
-                      builder: (context) {
-                        return ConfirmationDialog(
-                          title:
-                              'Are you sure you want to mark this as delivered?',
-                          imageIcon: Assets.imagesImage,
-                          isLoading: controller.isLoading,
-                          onTap: () {
-                            controller
-                                .orderDeliveredForCarAndBike(
-                                    bookingId:
-                                        controller.carAndBokingDetailData?.id ??
-                                            0)
-                                .then((value) {
-                              if (value.isSuccess) {
-                                Navigator.pop(context);
-                                controller.getCarAndBikeBookingDetail(
-                                    id: controller.carAndBokingDetailData?.id ??
-                                        0);
-                              } else {
-                                Fluttertoast.showToast(msg: value.message);
-                              }
-                            });
-                          },
-                        );
-                      },
-                    );
-                    //
-                  },
-                  title: 'Mark as Delivered',
-                ),
-              )
-            ],
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    (payout?.createdAt?.toLocal() as DateTime).dateTime,
+                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                          fontSize: 14,
+                          color: const Color(0xff868686),
+                        ),
+                  ),
+                  Text(
+                    "₹ ${formatPrice(payout?.amount?.toDouble() ?? 0)}",
+                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                          fontSize: 14,
+                          color: const Color(0xff868686),
+                        ),
+                  )
+                ],
+              );
+            },
           ),
-        );
-      }
-
-      return const SizedBox.shrink();
+        ],
+      );
     });
   }
 }

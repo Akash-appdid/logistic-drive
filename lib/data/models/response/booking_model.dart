@@ -237,6 +237,8 @@ class BookingsModel {
   }
 
   bool get isBookinTypePakerandMover => bookingType == 'packers_and_movers';
+
+  bool get isDelivered => status != null && status == 'delivered';
 }
 
 class Location {

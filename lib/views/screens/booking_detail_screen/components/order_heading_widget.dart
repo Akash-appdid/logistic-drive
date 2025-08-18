@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logistic_driver/controllers/booking_controller.dart';
 
-import '../../../base/custom_image.dart';
-
 class OrderHeadingWidget extends StatelessWidget {
   const OrderHeadingWidget({
     super.key,

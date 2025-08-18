@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -100,6 +102,7 @@ class BookingsListSectionWidget extends StatelessWidget {
           const SizedBox(height: 6),
           GetBuilder<AuthController>(
             builder: (authCtrl) {
+              log('${authCtrl.userModel?.isMotorbike}');
               if (authCtrl.userModel?.isMotorbike ?? false) {
                 return const LocalBikeAndTempoWidget();
               }

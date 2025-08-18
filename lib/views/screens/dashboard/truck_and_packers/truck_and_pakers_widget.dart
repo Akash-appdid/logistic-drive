@@ -16,7 +16,7 @@ class TruckAndPakersWidget extends StatelessWidget {
       if (bookingCtrl.isLoading) {
         return const BookingShimmer();
       }
-      if (bookingCtrl.bookingsData.isEmpty) {
+      if (bookingCtrl.bookingData.isEmpty) {
         return const CustomNoDataFoundWidget();
       }
       if (bookingCtrl.isOnGoingOrder) {

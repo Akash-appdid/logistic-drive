@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:io';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -72,6 +72,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       await controller.getAllBooking(isClear: true);
       await controller.getAllCarandBikesBooking();
       controller.combinedCarAndBikeWithGoodsAndPakageAndMoverData();
+      log('${controller.bookingData}', name: 'truck data');
     } else {
       await controller.getAllBooking(status: 'delivered', isClear: true);
     }
@@ -110,25 +111,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   physics: const AlwaysScrollableScrollPhysics(),
                   controller: controller.scrollController,
                   padding: const EdgeInsets.symmetric(horizontal: 14),
-                  child: Column(
+                  child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (Platform.isAndroid
-                          ? Get.find<BasicController>().getBusinessSettingValue(
-                                  "production_mode_android_for_driver") ==
-                              "0"
-                          : Get.find<BasicController>().getBusinessSettingValue(
-                                  "production_mode_ios_for_driver") ==
-                              "0")
-                        const EarningCardWidget(),
-                      const SizedBox(height: 15),
+                      // if (Platform.isAndroid
+                      //     ? Get.find<BasicController>().getBusinessSettingValue(
+                      //             "production_mode_android_for_driver") ==
+                      //         "0"
+                      //     : Get.find<BasicController>().getBusinessSettingValue(
+                      //             "production_mode_ios_for_driver") ==
+                      //         "0")
+                      EarningCardWidget(),
+                      SizedBox(height: 15),
                       //-----on off duty------
-                      const DutyOnOffButtonWidget(),
-                      const SizedBox(height: 15),
-                      const OrderWidget(),
+                      DutyOnOffButtonWidget(),
+                      SizedBox(height: 15),
+                      OrderWidget(),
                       //--------------Bookings--------------------
-                      const SizedBox(height: 15),
-                      const BookingsListSectionWidget(),
+                      SizedBox(height: 15),
+                      BookingsListSectionWidget(),
                     ],
                   ),
                 );
