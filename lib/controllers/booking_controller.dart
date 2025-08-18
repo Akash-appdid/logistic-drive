@@ -513,4 +513,13 @@ class BookingController extends GetxController implements GetxService {
     update();
     return responseModel;
   }
+
+  //--------tab controller------------\\
+  CompleteOrderType selectedTab = CompleteOrderType.goods;
+  void handlecompleteOrdersTab(CompleteOrderType tab) {
+    selectedTab = tab;
+    update();
+  }
 }
+
+enum CompleteOrderType { goods, packersAndMovers, carAndBike }

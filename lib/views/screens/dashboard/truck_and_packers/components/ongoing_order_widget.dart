@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logistic_driver/controllers/booking_controller.dart';
@@ -9,6 +8,7 @@ import 'package:logistic_driver/services/route_helper.dart';
 import 'package:logistic_driver/views/screens/booking_detail_screen/booking_detail_screen.dart';
 import '../../../../../services/extra_methods.dart';
 import '../../../../../services/theme.dart';
+import '../../../../base/dialogs/custom_nodata_found.dart';
 import '../../../booking_detail_screen/car_and_bike_detail_screen/car_and_bike_detail_page.dart';
 import '../../../booking_detail_screen/components/booking_item_widget.dart';
 import '../../../booking_detail_screen/components/status_widget.dart';
@@ -22,7 +22,9 @@ class OngoingOrderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BookingController>(builder: (controller) {
-      log("${controller.bookingData.length}", name: "Lenght---");
+      if (controller.bookingData.isEmpty) {
+        return const CustomNoDataFoundWidget();
+      }
       return ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
