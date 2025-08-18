@@ -8,9 +8,12 @@ class BookingRepo {
   BookingRepo({required this.apiClient});
 
   //
-  Future<Response> getBookings({String? status, String? url}) async =>
+  Future<Response> getBookings(
+          {String? status, String? url, String? bookingType}) async =>
       await apiClient.getData(
-          url ?? "${AppConstants.bookingsUri}?status=${status ?? 'ongoing'}");
+        url ??
+            "${AppConstants.bookingsUri}?status=${status ?? 'ongoing'}&booking_type=$bookingType",
+      );
 
   Future<Response> getBookingDetail({required int id}) async =>
       await apiClient.getData("${AppConstants.bookingsUri}/$id");

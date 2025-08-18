@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logistic_driver/services/theme.dart';
-
+import 'package:logistic_driver/views/screens/dashboard/truck_and_packers/components/ongoing_order_widget.dart';
 import '../../../../../controllers/booking_controller.dart';
 import '../../../../../services/route_helper.dart';
 import '../../../../base/dialogs/custom_nodata_found.dart';
@@ -16,10 +16,6 @@ class CompleteOrderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BookingController>(builder: (controller) {
-      if (controller.bookingsData.isEmpty) {
-        return const CustomNoDataFoundWidget();
-      }
-
       return Column(
         children: [
           Divider(color: Colors.grey.shade400),
@@ -30,6 +26,7 @@ class CompleteOrderWidget extends StatelessWidget {
                 name: 'Goods',
                 onTap: () {
                   controller.handlecompleteOrdersTab(CompleteOrderType.goods);
+                  controller.getAllBooking(status: 'delivered', isClear: true);
                 },
                 isActive: controller.selectedTab == CompleteOrderType.goods,
               ),
@@ -38,6 +35,7 @@ class CompleteOrderWidget extends StatelessWidget {
                 onTap: () {
                   controller.handlecompleteOrdersTab(
                       CompleteOrderType.packersAndMovers);
+                  controller.getAllBooking(status: 'delivered', isClear: true);
                 },
                 isActive: controller.selectedTab ==
                     CompleteOrderType.packersAndMovers,
@@ -45,8 +43,12 @@ class CompleteOrderWidget extends StatelessWidget {
               TabWidget(
                 name: 'Car and bike',
                 onTap: () {
+                  controller.bookingsData.clear();
+                  controller.update();
                   controller
                       .handlecompleteOrdersTab(CompleteOrderType.carAndBike);
+                  controller.getAllCarandBikesBooking(
+                      status: 'delivered', isClear: true);
                 },
                 isActive:
                     controller.selectedTab == CompleteOrderType.carAndBike,
@@ -54,26 +56,53 @@ class CompleteOrderWidget extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: controller.bookingsData.length,
-            itemBuilder: (context, index) {
-              final booking = controller.bookingsData[index];
-              return GestureDetector(
-                onTap: () {
-                  if (booking.id == null) return;
-                  Navigator.of(context).push(getCustomRoute(
-                      child: BookingDetailScreen(
-                    bookingId: booking.id!,
-                  )));
+          Builder(builder: (_) {
+            if (controller.selectedTab == CompleteOrderType.carAndBike) {
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: controller.carBikeBookingData.length,
+                itemBuilder: (context, index) {
+                  final booking = controller.carBikeBookingData[index];
+                  return GestureDetector(
+                    onTap: () {
+                      if (booking.id == null) return;
+                      Navigator.of(context).push(getCustomRoute(
+                          child: BookingDetailScreen(
+                        bookingId: booking.id!,
+                      )));
+                    },
+                    child: CarAndBikeBookingItemWidget(
+                      bookings: booking,
+                    ),
+                  );
                 },
-                child: BookingItemWidget(
-                  bookings: booking,
-                ),
               );
-            },
-          ),
+            }
+            if (controller.bookingsData.isEmpty) {
+              return const CustomNoDataFoundWidget();
+            }
+            return ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: controller.bookingsData.length,
+              itemBuilder: (context, index) {
+                final booking = controller.bookingsData[index];
+                return GestureDetector(
+                  onTap: () {
+                    if (booking.id == null) return;
+                    Navigator.of(context).push(getCustomRoute(
+                        child: BookingDetailScreen(
+                      bookingId: booking.id!,
+                    )));
+                  },
+                  child: BookingItemWidget(
+                    bookings: booking,
+                  ),
+                );
+              },
+            );
+          }),
         ],
       );
     });

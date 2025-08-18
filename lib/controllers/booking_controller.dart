@@ -63,10 +63,8 @@ class BookingController extends GetxController implements GetxService {
       if (!isFinished) {
         log(offset.toString(), name: "Check Offset");
         log("$scrollPercentage", name: "Scroll Percentage");
-
         String url =
-            '${AppConstants.bookingsUri}?status=${isOnGoingOrder ? 'ongoing' : 'delivered'}&page=$offset';
-
+            '${AppConstants.bookingsUri}?status=${isOnGoingOrder ? 'ongoing' : 'delivered'}${getOrderType()} &page=$offset';
         log(url, name: 'ORDERURI');
         await getAllBooking(url: url);
       }
@@ -93,8 +91,11 @@ class BookingController extends GetxController implements GetxService {
 
     update();
     try {
-      Response response =
-          await bookingRepo.getBookings(status: status, url: url);
+      Response response = await bookingRepo.getBookings(
+        status: status,
+        url: url,
+        bookingType: getOrderType(),
+      );
       if (response.statusCode == 200 && response.body['success']) {
         log("${response.bodyString}", name: 'getAllBooking');
         var bookings = (response.body['data']['data'] as List<dynamic>)
@@ -383,9 +384,16 @@ class BookingController extends GetxController implements GetxService {
           await bookingRepo.getCarAndBikesBookings(status: status, url: url);
       if (response.statusCode == 200 && response.body['success']) {
         log("${response.bodyString}", name: 'getAllCarandBikesBooking');
-        carBikeBookingData = (response.body['data'] as List<dynamic>)
-            .map((res) => CarAndBikeModel.fromJson(res))
-            .toList();
+        if (status == 'delivered') {
+          carBikeBookingData = (response.body['data']['data'] as List<dynamic>)
+              .map((res) => CarAndBikeModel.fromJson(res))
+              .toList();
+        } else {
+          carBikeBookingData = (response.body['data'] as List<dynamic>)
+              .map((res) => CarAndBikeModel.fromJson(res))
+              .toList();
+        }
+
         update();
         responseModel = ResponseModel(true, 'success');
       } else {
@@ -519,6 +527,16 @@ class BookingController extends GetxController implements GetxService {
   void handlecompleteOrdersTab(CompleteOrderType tab) {
     selectedTab = tab;
     update();
+  }
+
+  String getOrderType() {
+    if (selectedTab == CompleteOrderType.goods) {
+      return 'goods';
+    }
+    if (selectedTab == CompleteOrderType.packersAndMovers) {
+      return 'packers_and_movers';
+    }
+    return '';
   }
 }
 
