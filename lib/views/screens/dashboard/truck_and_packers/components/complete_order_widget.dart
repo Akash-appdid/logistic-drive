@@ -33,25 +33,20 @@ class CompleteOrderWidget extends StatelessWidget {
               TabWidget(
                 name: 'Packers and movers',
                 onTap: () {
-                  controller.handlecompleteOrdersTab(
-                      CompleteOrderType.packersAndMovers);
+                  controller.handlecompleteOrdersTab(CompleteOrderType.packersAndMovers);
                   controller.getAllBooking(status: 'delivered', isClear: true);
                 },
-                isActive: controller.selectedTab ==
-                    CompleteOrderType.packersAndMovers,
+                isActive: controller.selectedTab == CompleteOrderType.packersAndMovers,
               ),
               TabWidget(
                 name: 'Car and bike',
                 onTap: () {
                   controller.bookingsData.clear();
                   controller.update();
-                  controller
-                      .handlecompleteOrdersTab(CompleteOrderType.carAndBike);
-                  controller.getAllCarandBikesBooking(
-                      status: 'delivered', isClear: true);
+                  controller.handlecompleteOrdersTab(CompleteOrderType.carAndBike);
+                  controller.getAllCarandBikesBooking(status: 'delivered', isClear: true);
                 },
-                isActive:
-                    controller.selectedTab == CompleteOrderType.carAndBike,
+                isActive: controller.selectedTab == CompleteOrderType.carAndBike,
               ),
             ],
           ),
