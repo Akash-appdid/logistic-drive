@@ -51,7 +51,11 @@ class BookingController extends GetxController implements GetxService {
     update();
 
     if (scrollPercentage >= 70) {
-      loadMoreData();
+      if (selectedTab == CompleteOrderType.carAndBike) {
+        loadMoreDataForCarAndBike();
+      } else {
+        loadMoreData();
+      }
     }
   }
 
@@ -71,6 +75,30 @@ class BookingController extends GetxController implements GetxService {
     } catch (e) {
       log('Error loading more data: $e', error: e);
     }
+  }
+
+  Future<void> loadMoreDataForCarAndBike({String? status}) async {
+    if (isPagination) return;
+    try {
+      offset += 1;
+      //
+      if (!isFinished) {
+        log(offset.toString(), name: "Check Offset");
+        log("$scrollPercentage", name: "Scroll Percentage");
+        String url =
+            '${AppConstants.carAndBikebookingsUri}?order_status=delivered${getOrderType()}&page=$offset';
+        log(url, name: 'ORDERURI');
+        getAllCarandBikesBooking(url: url);
+      }
+    } catch (e) {
+      log('Error loading more data: $e', error: e);
+    }
+  }
+
+  void initPagination() {
+    offset = 1;
+    scrollPercentage = 0.0;
+    update();
   }
 
   //----get all booking----------
@@ -377,7 +405,15 @@ class BookingController extends GetxController implements GetxService {
   Future<ResponseModel> getAllCarandBikesBooking(
       {String? status, String? url, bool isClear = false}) async {
     ResponseModel responseModel;
-    _isLoading = true;
+    if (isClear) {
+      bookingsData.clear();
+      isFinished = false;
+    }
+    if (isFinished) {
+      return ResponseModel(true, 'finished');
+    }
+    _isLoading = isClear;
+    isPagination = true;
     update();
     try {
       Response response =
@@ -385,9 +421,15 @@ class BookingController extends GetxController implements GetxService {
       if (response.statusCode == 200 && response.body['success']) {
         log("${response.bodyString}", name: 'getAllCarandBikesBooking');
         if (status == 'delivered') {
-          carBikeBookingData = (response.body['data']['data'] as List<dynamic>)
+          var carBikeBooking = (response.body['data']['data'] as List<dynamic>)
               .map((res) => CarAndBikeModel.fromJson(res))
               .toList();
+
+          if (carBikeBooking.isEmpty) {
+            isFinished = true;
+          }
+          carBikeBookingData.addAll(carBikeBooking);
+          update();
         } else {
           carBikeBookingData = (response.body['data'] as List<dynamic>)
               .map((res) => CarAndBikeModel.fromJson(res))
@@ -538,6 +580,61 @@ class BookingController extends GetxController implements GetxService {
     }
     return '';
   }
+
+  // ///---------pagination------------
+  // bool isPagination = false;
+  // Timer? timer;
+  // bool isFinished = false;
+
+  // // ScrollController scrollController = ScrollController();
+  // int offset = 1;
+  // double scrollPercentage = 0.0;
+
+  // void bookingInitMethodForPagination(
+  //     {required bool isOnGoingOrder,
+  //     required ScrollController scrollController}) async {
+  //   offset = 1;
+  //   scrollPercentage = 0.0;
+  //   scrollController.addListener(() {
+  //     onScroll(
+  //         isOnGoingOrder: isOnGoingOrder, scrollController: scrollController);
+  //   });
+  // }
+
+  // void onScroll(
+  //     {required bool isOnGoingOrder,
+  //     required ScrollController scrollController}) {
+  //   double maxScroll = scrollController.position.maxScrollExtent;
+  //   double currentScroll = scrollController.position.pixels;
+  //   double percentage = (currentScroll / maxScroll) * 100;
+  //   scrollPercentage = percentage;
+  //   update();
+
+  //   if (scrollPercentage >= 70) {
+  //     loadMoreData(isOnGoingOrder: isOnGoingOrder);
+  //   }
+  // }
+
+  // Future<void> loadMoreData(
+  //     {String? status, required bool isOnGoingOrder}) async {
+  //   if (isPagination) return;
+  //   try {
+  //     offset += 1;
+  //     //
+  //     if (!isFinished) {
+  //       log(offset.toString(), name: "Check Offset");
+  //       log("$scrollPercentage", name: "Scroll Percentage");
+
+  //       String url =
+  //           '${AppConstants.allOrders}?status=${isOnGoingOrder ? 'ongoing' : 'delivered'}&page=$offset';
+
+  //       log(url, name: 'ORDERURI');
+  //       await getAllOrder(url: url);
+  //     }
+  //   } catch (e) {
+  //     log('Error loading more data: $e', error: e);
+  //   }
+  // }
 }
 
 enum CompleteOrderType { goods, packersAndMovers, carAndBike }

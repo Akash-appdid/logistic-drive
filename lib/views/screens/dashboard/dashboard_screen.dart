@@ -67,13 +67,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void truckAndPackersDataCallingInInti() async {
     final controller = Get.find<BookingController>();
-    controller.bookingInitMethodForPagination();
     if (controller.isOnGoingOrder) {
       await controller.getAllBooking(isClear: true);
       await controller.getAllCarandBikesBooking();
       controller.combinedCarAndBikeWithGoodsAndPakageAndMoverData();
       log('${controller.bookingData}', name: 'truck data');
     } else {
+      controller.handlecompleteOrdersTab(CompleteOrderType.goods);
       await controller.getAllBooking(status: 'delivered', isClear: true);
     }
   }
