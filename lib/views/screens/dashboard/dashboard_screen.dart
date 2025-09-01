@@ -31,6 +31,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     super.initState();
     Timer.run(() async {
       init();
+      final controller = Get.find<BookingController>();
+      controller.bookingInitMethodForPagination();
     });
   }
 
@@ -40,11 +42,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final basicCtrl = Get.find<BasicController>();
 
     ///------location
-
     locationCtrl.fetchCurrentLocationPlace().then((val) {
       basicCtrl.updateLocation(locationCtrl.updateLocationData());
     });
-
     basicCtrl.initsendinglocation();
 
     ///------pusher
@@ -54,8 +54,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
 
     ///--------analytics
-
-    ///
     if (authCtrl.userModel?.isMotorbike ?? false) {
       await basicCtrl.getBikeTempoAnalyticsData();
       localBikeAndTempoCallingInInit();

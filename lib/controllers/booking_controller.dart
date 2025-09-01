@@ -38,6 +38,7 @@ class BookingController extends GetxController implements GetxService {
   double scrollPercentage = 0.0;
 
   void bookingInitMethodForPagination() async {
+    // log('start pagnation');
     offset = 1;
     scrollPercentage = 0.0;
     scrollController.addListener(onScroll);
@@ -50,6 +51,7 @@ class BookingController extends GetxController implements GetxService {
     scrollPercentage = percentage;
     update();
 
+    // log('$percentage');
     if (scrollPercentage >= 70) {
       if (selectedTab == CompleteOrderType.carAndBike) {
         loadMoreDataForCarAndBike();
@@ -63,10 +65,11 @@ class BookingController extends GetxController implements GetxService {
     if (isPagination) return;
     try {
       offset += 1;
-      //
+      update();
+      // log('$offset');
       if (!isFinished) {
-        log(offset.toString(), name: "Check Offset");
-        log("$scrollPercentage", name: "Scroll Percentage");
+        // log(offset.toString(), name: "Check Offset");
+        // log("$scrollPercentage", name: "Scroll Percentage");
         String url =
             '${AppConstants.bookingsUri}?status=${isOnGoingOrder ? 'ongoing' : 'delivered'}${getOrderType()} &page=$offset';
         log(url, name: 'ORDERURI');
@@ -81,7 +84,7 @@ class BookingController extends GetxController implements GetxService {
     if (isPagination) return;
     try {
       offset += 1;
-      //
+      update();
       if (!isFinished) {
         log(offset.toString(), name: "Check Offset");
         log("$scrollPercentage", name: "Scroll Percentage");
@@ -96,7 +99,9 @@ class BookingController extends GetxController implements GetxService {
   }
 
   void initPagination() {
+    log('call offest $offset', name: "call offest");
     offset = 1;
+    log('call offest $offset', name: "call offest");
     scrollPercentage = 0.0;
     update();
   }
@@ -131,6 +136,7 @@ class BookingController extends GetxController implements GetxService {
             .toList();
         if (bookings.isEmpty) {
           isFinished = true;
+          update();
         }
         bookingsData.addAll(bookings);
 
@@ -156,6 +162,7 @@ class BookingController extends GetxController implements GetxService {
       responseModel = ResponseModel(false, "$e");
     }
     _isLoading = false;
+    isPagination = false;
     update();
     return responseModel;
   }
@@ -420,22 +427,15 @@ class BookingController extends GetxController implements GetxService {
           await bookingRepo.getCarAndBikesBookings(status: status, url: url);
       if (response.statusCode == 200 && response.body['success']) {
         log("${response.bodyString}", name: 'getAllCarandBikesBooking');
-        if (status == 'delivered') {
-          var carBikeBooking = (response.body['data']['data'] as List<dynamic>)
-              .map((res) => CarAndBikeModel.fromJson(res))
-              .toList();
+        var carBikeBooking = (response.body['data']['data'] as List<dynamic>)
+            .map((res) => CarAndBikeModel.fromJson(res))
+            .toList();
 
-          if (carBikeBooking.isEmpty) {
-            isFinished = true;
-          }
-          carBikeBookingData.addAll(carBikeBooking);
+        if (carBikeBooking.isEmpty) {
+          isFinished = true;
           update();
-        } else {
-          carBikeBookingData = (response.body['data'] as List<dynamic>)
-              .map((res) => CarAndBikeModel.fromJson(res))
-              .toList();
         }
-
+        carBikeBookingData.addAll(carBikeBooking);
         update();
         responseModel = ResponseModel(true, 'success');
       } else {
@@ -448,6 +448,7 @@ class BookingController extends GetxController implements GetxService {
       responseModel = ResponseModel(false, "$e");
     }
     _isLoading = false;
+    isPagination = false;
     update();
     return responseModel;
   }

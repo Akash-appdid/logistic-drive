@@ -46,7 +46,7 @@ class CompleteOrderWidget extends StatelessWidget {
                 name: 'Car and bike',
                 onTap: () {
                   controller.initPagination();
-                  controller.bookingsData.clear();
+                  controller.carBikeBookingData.clear();
                   controller.update();
                   controller
                       .handlecompleteOrdersTab(CompleteOrderType.carAndBike);
