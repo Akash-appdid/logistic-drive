@@ -49,8 +49,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     ///------pusher
     if (authCtrl.userModel != null) {
-      Get.find<PusherController>().initializePusher(
-          driverId: Get.find<AuthController>().userModel?.id ?? 0);
+      Get.find<PusherController>().initializePusher(driverId: Get.find<AuthController>().userModel?.id ?? 0);
     }
 
     ///--------analytics
@@ -81,9 +80,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void localBikeAndTempoCallingInInit() async {
     final controller = Get.find<BookingController>();
     final orderController = Get.find<LocalBikeTempoController>();
-    orderController.bookingInitMethodForPagination(
-        isOnGoingOrder: controller.isOnGoingOrder,
-        scrollController: controller.scrollController);
+    orderController.bookingInitMethodForPagination(isOnGoingOrder: controller.isOnGoingOrder, scrollController: controller.scrollController);
     if (controller.isOnGoingOrder) {
       await orderController.getAllOrder(isClear: true);
     } else {

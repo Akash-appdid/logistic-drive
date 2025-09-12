@@ -63,8 +63,7 @@ class BookingController extends GetxController implements GetxService {
       if (!isFinished) {
         log(offset.toString(), name: "Check Offset");
         log("$scrollPercentage", name: "Scroll Percentage");
-        String url =
-            '${AppConstants.bookingsUri}?status=${isOnGoingOrder ? 'ongoing' : 'delivered'}${getOrderType()} &page=$offset';
+        String url = '${AppConstants.bookingsUri}?status=${isOnGoingOrder ? 'ongoing' : 'delivered'}${getOrderType()} &page=$offset';
         log(url, name: 'ORDERURI');
         await getAllBooking(url: url);
       }
@@ -76,8 +75,7 @@ class BookingController extends GetxController implements GetxService {
   //----get all booking----------
   bool isanyongoing = false;
   List<BookingsModel> bookingsData = [];
-  Future<ResponseModel> getAllBooking(
-      {String? status, String? url, bool isClear = false}) async {
+  Future<ResponseModel> getAllBooking({String? status, String? url, bool isClear = false}) async {
     ResponseModel responseModel;
     if (isClear) {
       bookingsData.clear();
@@ -98,19 +96,15 @@ class BookingController extends GetxController implements GetxService {
       );
       if (response.statusCode == 200 && response.body['success']) {
         log("${response.bodyString}", name: 'getAllBooking');
-        var bookings = (response.body['data']['data'] as List<dynamic>)
-            .map((res) => BookingsModel.fromJson(res))
-            .toList();
+        var bookings = (response.body['data']['data'] as List<dynamic>).map((res) => BookingsModel.fromJson(res)).toList();
         if (bookings.isEmpty) {
           isFinished = true;
         }
         bookingsData.addAll(bookings);
 
-        if ((status == "ongoing" || status == null) &&
-            bookingsData.isNotEmpty) {
+        if ((status == "ongoing" || status == null) && bookingsData.isNotEmpty) {
           isanyongoing = true;
-        } else if ((status == "ongoing" || status == null) &&
-            bookingsData.isEmpty) {
+        } else if ((status == "ongoing" || status == null) && bookingsData.isEmpty) {
           isanyongoing = false;
         }
         update();
@@ -168,8 +162,7 @@ class BookingController extends GetxController implements GetxService {
     _isLoading = true;
     update();
     try {
-      Response response = await bookingRepo.startBookingTrip(
-          tripOtp: tripOtp, bookingId: bookingId);
+      Response response = await bookingRepo.startBookingTrip(tripOtp: tripOtp, bookingId: bookingId);
       if (response.statusCode == 200 && response.body['success']) {
         // _userModel =
         //     UserModel.fromJson(response.body['data'] as Map<String, dynamic>);
@@ -241,9 +234,7 @@ class BookingController extends GetxController implements GetxService {
 
     if (bookingsDetailData?.locations == null) return;
     if (bookingsDetailData?.locations?[oldIndex].getLocationType ?? false) {
-      Fluttertoast.showToast(
-          msg:
-              'Position update is not allowed after the product has been dropped.');
+      Fluttertoast.showToast(msg: 'Position update is not allowed after the product has been dropped.');
     } else {
       if (newIndex > oldIndex) {
         newIndex -= 1;
@@ -374,24 +365,18 @@ class BookingController extends GetxController implements GetxService {
 
   //------------------------Car and Bikes----------------------------
   List<CarAndBikeModel> carBikeBookingData = [];
-  Future<ResponseModel> getAllCarandBikesBooking(
-      {String? status, String? url, bool isClear = false}) async {
+  Future<ResponseModel> getAllCarandBikesBooking({String? status, String? url, bool isClear = false}) async {
     ResponseModel responseModel;
     _isLoading = true;
     update();
     try {
-      Response response =
-          await bookingRepo.getCarAndBikesBookings(status: status, url: url);
+      Response response = await bookingRepo.getCarAndBikesBookings(status: status, url: url);
       if (response.statusCode == 200 && response.body['success']) {
         log("${response.bodyString}", name: 'getAllCarandBikesBooking');
         if (status == 'delivered') {
-          carBikeBookingData = (response.body['data']['data'] as List<dynamic>)
-              .map((res) => CarAndBikeModel.fromJson(res))
-              .toList();
+          carBikeBookingData = (response.body['data']['data'] as List<dynamic>).map((res) => CarAndBikeModel.fromJson(res)).toList();
         } else {
-          carBikeBookingData = (response.body['data'] as List<dynamic>)
-              .map((res) => CarAndBikeModel.fromJson(res))
-              .toList();
+          carBikeBookingData = (response.body['data'] as List<dynamic>).map((res) => CarAndBikeModel.fromJson(res)).toList();
         }
 
         update();
@@ -401,8 +386,7 @@ class BookingController extends GetxController implements GetxService {
         responseModel = ResponseModel(false, "${response.statusText}");
       }
     } catch (e) {
-      log('---- ${e.toString()} ----',
-          name: "ERROR AT getAllCarandBikesBooking()");
+      log('---- ${e.toString()} ----', name: "ERROR AT getAllCarandBikesBooking()");
       responseModel = ResponseModel(false, "$e");
     }
     _isLoading = false;
@@ -419,8 +403,7 @@ class BookingController extends GetxController implements GetxService {
       Response response = await bookingRepo.getCarAndBikesBookingDetail(id: id);
       if (response.statusCode == 200 && response.body['success']) {
         log('${response.bodyString}', name: 'getCarAndBikeBookingDetail');
-        carAndBokingDetailData =
-            CarAndBikeModel.fromJson(response.body['data']);
+        carAndBokingDetailData = CarAndBikeModel.fromJson(response.body['data']);
         responseModel = ResponseModel(true, 'success');
         // updateIndexOfBookingOrder();
         // selectLocation();
@@ -429,8 +412,7 @@ class BookingController extends GetxController implements GetxService {
         responseModel = ResponseModel(false, "${response.statusText}");
       }
     } catch (e) {
-      log('---- ${e.toString()} ----',
-          name: "ERROR AT getCarAndBikeBookingDetail()");
+      log('---- ${e.toString()} ----', name: "ERROR AT getCarAndBikeBookingDetail()");
       responseModel = ResponseModel(false, "$e");
     }
     _isLoading = false;
@@ -442,17 +424,16 @@ class BookingController extends GetxController implements GetxService {
   void combinedCarAndBikeWithGoodsAndPakageAndMoverData() {
     bookingData = [...bookingsData, ...carBikeBookingData];
     update();
+    log(bookingData.toString(), name: "Bookingdatsa");
   }
 
   //-------------start booking trip for car and bike------------------
-  Future<ResponseModel> startBookingTripForCarAndBike(
-      {required String tripOtp, required int bookingId}) async {
+  Future<ResponseModel> startBookingTripForCarAndBike({required String tripOtp, required int bookingId}) async {
     ResponseModel responseModel;
     _isLoading = true;
     update();
     try {
-      Response response = await bookingRepo.startBookingTripForCarAndBike(
-          tripOtp: tripOtp, bookingId: bookingId);
+      Response response = await bookingRepo.startBookingTripForCarAndBike(tripOtp: tripOtp, bookingId: bookingId);
       if (response.statusCode == 200 && response.body['success']) {
         // _userModel =
         //     UserModel.fromJson(response.body['data'] as Map<String, dynamic>);
@@ -470,14 +451,12 @@ class BookingController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  Future<ResponseModel> markAsDonrForCarAndBike(
-      {required int bookingId, bool isPickup = false}) async {
+  Future<ResponseModel> markAsDonrForCarAndBike({required int bookingId, bool isPickup = false}) async {
     ResponseModel responseModel;
     _isLoading = true;
     update();
     try {
-      Response response = await bookingRepo.markAsDoneCarAndBike(
-          id: bookingId, isPickup: isPickup);
+      Response response = await bookingRepo.markAsDoneCarAndBike(id: bookingId, isPickup: isPickup);
       if (response.statusCode == 200 && response.body['success']) {
         // _userModel =
         //     UserModel.fromJson(response.body['data'] as Map<String, dynamic>);
@@ -487,8 +466,7 @@ class BookingController extends GetxController implements GetxService {
         responseModel = ResponseModel(false, "${response.statusText}");
       }
     } catch (e) {
-      log('---- ${e.toString()} ----',
-          name: "ERROR AT markAsDonrForCarAndBike()");
+      log('---- ${e.toString()} ----', name: "ERROR AT markAsDonrForCarAndBike()");
       responseModel = ResponseModel(false, "$e");
     }
     _isLoading = false;
@@ -496,14 +474,12 @@ class BookingController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  Future<ResponseModel> orderDeliveredForCarAndBike(
-      {required int bookingId}) async {
+  Future<ResponseModel> orderDeliveredForCarAndBike({required int bookingId}) async {
     ResponseModel responseModel;
     _isLoading = true;
     update();
     try {
-      Response response =
-          await bookingRepo.orderDelivredCarAndBike(id: bookingId);
+      Response response = await bookingRepo.orderDelivredCarAndBike(id: bookingId);
       if (response.statusCode == 200 && response.body['success']) {
         // _userModel =
         //     UserModel.fromJson(response.body['data'] as Map<String, dynamic>);
@@ -513,8 +489,7 @@ class BookingController extends GetxController implements GetxService {
         responseModel = ResponseModel(false, "${response.statusText}");
       }
     } catch (e) {
-      log('---- ${e.toString()} ----',
-          name: "ERROR AT orderDeliveredForCarAndBike()");
+      log('---- ${e.toString()} ----', name: "ERROR AT orderDeliveredForCarAndBike()");
       responseModel = ResponseModel(false, "$e");
     }
     _isLoading = false;
@@ -530,7 +505,7 @@ class BookingController extends GetxController implements GetxService {
   }
 
   String getOrderType() {
-    if (selectedTab == CompleteOrderType.goods) {
+    if (selectedTab == CompleteOrderType.goods && !isOnGoingOrder) {
       return 'goods';
     }
     if (selectedTab == CompleteOrderType.packersAndMovers) {
