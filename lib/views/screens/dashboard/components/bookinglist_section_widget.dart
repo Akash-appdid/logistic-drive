@@ -89,8 +89,12 @@ class BookingsListSectionWidget extends StatelessWidget {
                         localBikeCtrl.getAllOrder(
                             status: 'delivered', isClear: true);
                       } else {
+                        controller
+                            .handlecompleteOrdersTab(CompleteOrderType.goods);
                         controller.getAllBooking(
                             status: 'delivered', isClear: true);
+                        // controller.getAllBooking(
+                        //     status: 'delivered', isClear: true);
                       }
                     }
                   },

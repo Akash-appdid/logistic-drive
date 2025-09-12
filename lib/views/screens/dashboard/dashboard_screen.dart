@@ -31,6 +31,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     super.initState();
     Timer.run(() async {
       init();
+      final controller = Get.find<BookingController>();
+      controller.bookingInitMethodForPagination();
     });
   }
 
@@ -40,11 +42,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final basicCtrl = Get.find<BasicController>();
 
     ///------location
-
     locationCtrl.fetchCurrentLocationPlace().then((val) {
       basicCtrl.updateLocation(locationCtrl.updateLocationData());
     });
-
     basicCtrl.initsendinglocation();
 
     ///------pusher
@@ -53,8 +53,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
 
     ///--------analytics
-
-    ///
     if (authCtrl.userModel?.isMotorbike ?? false) {
       await basicCtrl.getBikeTempoAnalyticsData();
       localBikeAndTempoCallingInInit();
@@ -66,13 +64,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void truckAndPackersDataCallingInInti() async {
     final controller = Get.find<BookingController>();
-    controller.bookingInitMethodForPagination();
     if (controller.isOnGoingOrder) {
       await controller.getAllBooking(isClear: true);
       await controller.getAllCarandBikesBooking();
       controller.combinedCarAndBikeWithGoodsAndPakageAndMoverData();
       log('${controller.bookingData}', name: 'truck data');
     } else {
+      controller.handlecompleteOrdersTab(CompleteOrderType.goods);
       await controller.getAllBooking(status: 'delivered', isClear: true);
     }
   }
