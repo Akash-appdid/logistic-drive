@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "706184671920",
-    "project_id": "pkup-9a134",
-    "storage_bucket": "pkup-9a134.firebasestorage.app"
+    "project_number": "247588969751",
+    "project_id": "pkup-ac08c",
+    "storage_bucket": "pkup-ac08c.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:706184671920:android:16d55bd115690b3ba3c175",
+        "mobilesdk_app_id": "1:247588969751:android:140389b59114df7959ab52",
         "android_client_info": {
           "package_name": "com.easyshiftlogistics"
         }
@@ -15,7 +15,26 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBkj1jTFFmMMsNfBZ5-5NoRGs90QrAqFrM"
+          "current_key": "AIzaSyBe8vkUGUV4SDZ2ww0qaMGY8NH12kYa-h8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:247588969751:android:34d438f0e3ca818259ab52",
+        "android_client_info": {
+          "package_name": "com.easyshiftlogisticsdriver"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBe8vkUGUV4SDZ2ww0qaMGY8NH12kYa-h8"
         }
       ],
       "services": {

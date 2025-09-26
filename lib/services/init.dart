@@ -8,6 +8,7 @@ import 'package:logistic_driver/controllers/basic_controller.dart';
 import 'package:logistic_driver/controllers/booking_controller.dart';
 import 'package:logistic_driver/controllers/local_bike_tempo_controller.dart';
 import 'package:logistic_driver/controllers/location_controller.dart';
+import 'package:logistic_driver/controllers/notification_controller.dart';
 import 'package:logistic_driver/controllers/otp_autofill_controller.dart';
 import 'package:logistic_driver/controllers/packer_mover_controller.dart';
 import 'package:logistic_driver/controllers/pusher_controller.dart';
@@ -69,6 +70,7 @@ class Init {
       Get.lazyPut(
           () => PackerAndMoverController(pakerAndMoverRepo: Get.find()));
       Get.lazyPut(() => OTPAutofillController());
+      Get.lazyPut(() => NotificationController());
     } catch (e) {
       log('---- ${e.toString()} ----', name: "ERROR AT initialize()");
     }

@@ -1,18 +1,38 @@
 import 'dart:developer';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logistic_driver/firebase_options.dart';
 import 'package:logistic_driver/services/constants.dart';
 import 'package:logistic_driver/services/theme.dart';
+import 'controllers/notification_controller.dart';
 import 'controllers/one_signal_controller.dart';
 import 'services/init.dart';
 import 'views/screens/splash_screen/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await Init().initialize();
   await Init().intializeAppBuildInfo();
   await Init().stopAppRotation();
+  await Get.find<NotificationController>().notificationInitMethod();
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   runApp(const MyApp());
+}
+
+//-----------baground notification---------------
+@pragma('vm:entry-point')
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  log('Baground notification received: ${message.toMap().toString()}',
+      name: 'FCM');
+  if (message.messageId != null) {
+    log("Handling a background messageId: ${message.messageId}");
+    log("Handling a background Data: ${message.data}");
+    log('ID:${message.data['id']}', name: 'ID');
+    /////
+  }
 }
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
