@@ -34,9 +34,9 @@
 	<key>NSCameraUsageDescription</key>
 	<string>PKUP Driver requires camera access to take photos of documents for identity verification.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>Pkup Driver uses your location to find nearby delivery or ride requests and to track trip progress during active rides.</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Pkup Driver uses your location to find nearby delivery or ride requests and to track trip progress during active rides.</string>
+	<string>Pkup Driver uses your location to find nearby delivery or ride requests and to track trip progress during active rides.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Pkup Driver uses your location to find nearby delivery or ride requests and to track trip progress during active rides.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We don't actively use this permission if you see this message contact our support team.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -46,6 +46,7 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
+		<string>fetch</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

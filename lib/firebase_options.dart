@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'pkup-ac08c.firebasestorage.app',
     iosBundleId: 'com.easyshiftlogisticsdriver',
   );
+
 }
