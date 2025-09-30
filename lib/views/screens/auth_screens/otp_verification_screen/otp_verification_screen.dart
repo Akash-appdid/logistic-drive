@@ -1,11 +1,11 @@
 import 'dart:developer';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:logistic_driver/controllers/auth_controller.dart';
-import 'package:logistic_driver/controllers/one_signal_controller.dart';
 import 'package:logistic_driver/controllers/otp_autofill_controller.dart';
 import 'package:logistic_driver/views/screens/dashboard/dashboard_screen.dart';
 import 'package:sms_autofill/sms_autofill.dart';
@@ -145,7 +145,8 @@ class OtpVerificationScreen extends StatelessWidget {
     Map<String, dynamic> data = {
       "phone": authController.numberController.text.trim(),
       "otp": otpController.currentCode,
-      "device_id": await Get.find<OneSingleController>().getDeviceId(),
+      "device_id": await FirebaseMessaging.instance.getToken(),
+      // "device_id": await Get.find<OneSingleController>().getDeviceId(),
     };
     log("$data");
     if (otpController.currentCode.isNotEmpty) {
