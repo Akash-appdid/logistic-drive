@@ -3,12 +3,9 @@ import 'dart:convert';
 import 'booking_model.dart';
 import 'order_model.dart';
 
-List<CarAndBikeModel> carAndBikeModelFromJson(String str) =>
-    List<CarAndBikeModel>.from(
-        json.decode(str).map((x) => CarAndBikeModel.fromJson(x)));
+List<CarAndBikeModel> carAndBikeModelFromJson(String str) => List<CarAndBikeModel>.from(json.decode(str).map((x) => CarAndBikeModel.fromJson(x)));
 
-String carAndBikeModelToJson(List<CarAndBikeModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String carAndBikeModelToJson(List<CarAndBikeModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class CarAndBikeModel {
   int? id;
@@ -42,8 +39,8 @@ class CarAndBikeModel {
   DateTime? updatedAt;
   String? rcBook;
   String? insurance;
-  int? amountForDriver;
-  int? amountForUser;
+  double? amountForDriver;
+  double? amountForUser;
   DateTime? pickupDate;
   DateTime? estimatedDeliveryDate;
   String? deliveryStatus;
@@ -113,18 +110,12 @@ class CarAndBikeModel {
     this.payoutBookingDriver,
   });
 
-  factory CarAndBikeModel.fromJson(Map<String, dynamic> json) =>
-      CarAndBikeModel(
+  factory CarAndBikeModel.fromJson(Map<String, dynamic> json) => CarAndBikeModel(
         id: json["id"],
         bookingId: json["booking_id"],
         userId: json["user_id"],
-        vehicleData: json["vehicle_data"] == null
-            ? []
-            : List<VehicleDatum>.from(
-                json["vehicle_data"]!.map((x) => VehicleDatum.fromJson(x))),
-        estimatedMovingDate: json["estimated_moving_date"] == null
-            ? null
-            : DateTime.parse(json["estimated_moving_date"]),
+        vehicleData: json["vehicle_data"] == null ? [] : List<VehicleDatum>.from(json["vehicle_data"]!.map((x) => VehicleDatum.fromJson(x))),
+        estimatedMovingDate: json["estimated_moving_date"] == null ? null : DateTime.parse(json["estimated_moving_date"]),
         whereToMove: json["where_to_move"],
         pickupUserName: json["pickup_user_name"],
         pickupUserPhone: json["pickup_user_phone"],
@@ -148,51 +139,27 @@ class CarAndBikeModel {
         dropLongitude: json["drop_longitude"],
         status: json["status"],
         createdAt: json["created_at"],
-        updatedAt: json["updated_at"] == null
-            ? null
-            : DateTime.parse(json["updated_at"]),
+        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
         rcBook: json["rc_book"],
         insurance: json["insurance"],
-        amountForDriver: json["amount_for_driver"],
-        amountForUser: json["amount_for_user"],
-        pickupDate: json["pickup_date"] == null
-            ? null
-            : DateTime.parse(json["pickup_date"]),
-        estimatedDeliveryDate: json["estimated_delivery_date"] == null
-            ? null
-            : DateTime.parse(json["estimated_delivery_date"]),
+        amountForDriver: json["amount_for_driver"]?.toDouble(),
+        amountForUser: json["amount_for_user"]?.toDouble(),
+        pickupDate: json["pickup_date"] == null ? null : DateTime.parse(json["pickup_date"]),
+        estimatedDeliveryDate: json["estimated_delivery_date"] == null ? null : DateTime.parse(json["estimated_delivery_date"]),
         deliveryStatus: json["delivery_status"],
         driverId: json["driver_id"],
-        confirmed: json["confirmed"] == null
-            ? null
-            : DateTime.parse(json["confirmed"]),
+        confirmed: json["confirmed"] == null ? null : DateTime.parse(json["confirmed"]),
         cancelReason: json["cancel_reason"],
-        cancelled: json["cancelled"] == null
-            ? null
-            : DateTime.parse(json["cancelled"]),
-        intransit: json["intransit"] == null
-            ? null
-            : DateTime.parse(json["intransit"]),
-        delivered: json["delivered"] == null
-            ? null
-            : DateTime.parse(json["delivered"]),
-        pickupDoneAt: json["pickup_done_at"] == null
-            ? null
-            : DateTime.parse(json["pickup_done_at"]),
-        dropDoneAt: json["drop_done_at"] == null
-            ? null
-            : DateTime.parse(json["drop_done_at"]),
+        cancelled: json["cancelled"] == null ? null : DateTime.parse(json["cancelled"]),
+        intransit: json["intransit"] == null ? null : DateTime.parse(json["intransit"]),
+        delivered: json["delivered"] == null ? null : DateTime.parse(json["delivered"]),
+        pickupDoneAt: json["pickup_done_at"] == null ? null : DateTime.parse(json["pickup_done_at"]),
+        dropDoneAt: json["drop_done_at"] == null ? null : DateTime.parse(json["drop_done_at"]),
         bookingType: json["booking_type"],
         user: json["user"] == null ? null : User.fromJson(json["user"]),
         driver: json["driver"] == null ? null : Driver.fromJson(json["driver"]),
-        payoutBookingUsers: json["payout_booking_users"] == null
-            ? []
-            : List<PayoutBookingGood>.from(json["payout_booking_users"]!
-                .map((x) => PayoutBookingGood.fromJson(x))),
-        payoutBookingDriver: json["payout_booking_driver"] == null
-            ? []
-            : List<PayoutBookingGood>.from(json["payout_booking_driver"]!
-                .map((x) => PayoutBookingGood.fromJson(x))),
+        payoutBookingUsers: json["payout_booking_users"] == null ? [] : List<PayoutBookingGood>.from(json["payout_booking_users"]!.map((x) => PayoutBookingGood.fromJson(x))),
+        payoutBookingDriver: json["payout_booking_driver"] == null ? [] : List<PayoutBookingGood>.from(json["payout_booking_driver"]!.map((x) => PayoutBookingGood.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -247,8 +214,7 @@ class CarAndBikeModel {
   String get getPickupAddress {
     String address = '';
     if (pickupAddressLineTwo != null) {
-      address =
-          "$pickupAddressLineOne $pickupAddressLineTwo $pickupCity $pickupPincode";
+      address = "$pickupAddressLineOne $pickupAddressLineTwo $pickupCity $pickupPincode";
     } else {
       address = "$pickupAddressLineOne $pickupCity $pickupPincode";
     }
@@ -258,8 +224,7 @@ class CarAndBikeModel {
   String get getDropAddress {
     String address = '';
     if (dropAddressLineTwo != null) {
-      address =
-          "$dropAddressLineOne $dropAddressLineTwo $dropCity $dropPincode";
+      address = "$dropAddressLineOne $dropAddressLineTwo $dropCity $dropPincode";
     } else {
       address = "$dropAddressLineOne $dropCity $dropPincode";
     }
@@ -277,8 +242,7 @@ class CarAndBikeModel {
     return amt;
   }
 
-  double get calcualteRemaingAmtAfterSubAmt =>
-      (amountForDriver?.toDouble() ?? 0) - remaingAmount;
+  double get calcualteRemaingAmtAfterSubAmt => (amountForDriver?.toDouble() ?? 0) - remaingAmount;
 
   bool get isDelivered => (status != null && status == 'delivered');
 }
