@@ -139,6 +139,7 @@ class BookingController extends GetxController implements GetxService {
           update();
         }
         bookingsData.addAll(bookings);
+
         if ((status == "ongoing" || status == null) &&
             bookingsData.isNotEmpty) {
           isanyongoing = true;
@@ -426,7 +427,7 @@ class BookingController extends GetxController implements GetxService {
           await bookingRepo.getCarAndBikesBookings(status: status, url: url);
       if (response.statusCode == 200 && response.body['success']) {
         log("${response.bodyString}", name: 'getAllCarandBikesBooking');
-        var carBikeBooking = (response.body['data']['data'] as List<dynamic>)
+        var carBikeBooking = (response.body['data'] as List<dynamic>)
             .map((res) => CarAndBikeModel.fromJson(res))
             .toList();
 
@@ -439,7 +440,7 @@ class BookingController extends GetxController implements GetxService {
         responseModel = ResponseModel(true, 'success');
       } else {
         ApiChecker.checkApi(response);
-        responseModel = ResponseModel(false, "${response.statusText}");
+        responseModel = ResponseModel(false, "${"response.statusText"}");
       }
     } catch (e) {
       log('---- ${e.toString()} ----',
