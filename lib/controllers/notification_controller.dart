@@ -10,8 +10,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 class NotificationController extends GetxController implements GetxService {
   String? savedFcmToken;
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   Future<void> notificationInitMethod() async {
     await _requestNotificationPermission();
@@ -34,12 +33,9 @@ class NotificationController extends GetxController implements GetxService {
   Future<void> initializeFirebaseMessaging() async {
     await FirebaseMessaging.instance.requestPermission();
 
-    FirebaseMessaging.instance
-        .getInitialMessage()
-        .then((RemoteMessage? message) {
+    FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
       if (message != null) {
-        log('App opened from terminated state with data: ${message.data}',
-            name: 'FCM');
+        log('App opened from terminated state with data: ${message.data}', name: 'FCM');
         WidgetsBinding.instance.addPostFrameCallback((_) {
           handleMessageNavigation(message);
         });
@@ -47,8 +43,7 @@ class NotificationController extends GetxController implements GetxService {
     });
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      log('Foreground notification received: ${message.toMap().toString()}',
-          name: 'FCM');
+      log('Foreground notification received: ${message.toMap().toString()}', name: 'FCM');
       Timer.run(
         () {
           // handleForgroundmessage(message);
@@ -60,40 +55,35 @@ class NotificationController extends GetxController implements GetxService {
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      log('Notification opened: ${message.notification?.apple?.sound?.name}',
-          name: 'FCM');
+      log('Notification opened: ${message.notification?.apple?.sound?.name}', name: 'FCM');
       handleMessageNavigation(message);
     });
   }
 
   Future<void> initializeNotifications() async {
-    const AndroidInitializationSettings androidSettings =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+    const AndroidInitializationSettings androidSettings = AndroidInitializationSettings('@drawable/ic_notification');
 
-    const DarwinInitializationSettings iosSettings =
-        DarwinInitializationSettings();
+    const DarwinInitializationSettings iosSettings = DarwinInitializationSettings();
 
-    const InitializationSettings settings =
-        InitializationSettings(android: androidSettings, iOS: iosSettings);
+    const InitializationSettings settings = InitializationSettings(android: androidSettings, iOS: iosSettings);
 
     await flutterLocalNotificationsPlugin.initialize(
       settings,
-      onDidReceiveNotificationResponse:
-          (NotificationResponse notificationResponse) async {
+      onDidReceiveNotificationResponse: (NotificationResponse notificationResponse) async {
         // Handle notification tap on iOS/Android
-        log("Notification tapped with payload: ${notificationResponse.payload}",
-            name: "LocalNotification");
+        log("Notification tapped with payload: ${notificationResponse.payload}", name: "LocalNotification");
       },
     );
   }
 
   Future<void> showLocalNotification(RemoteMessage message) async {
-    const AndroidNotificationDetails androidDetails =
-        AndroidNotificationDetails(
+    const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
       'channel_id',
       'channel_name',
       importance: Importance.high,
       priority: Priority.high,
+      color: Color(0xFFDA2021),
+      colorized: true,
       // sound: RawResourceAndroidNotificationSound('notification_sound'),
     );
 
