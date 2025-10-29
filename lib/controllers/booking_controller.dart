@@ -139,7 +139,6 @@ class BookingController extends GetxController implements GetxService {
           update();
         }
         bookingsData.addAll(bookings);
-
         if ((status == "ongoing" || status == null) &&
             bookingsData.isNotEmpty) {
           isanyongoing = true;
